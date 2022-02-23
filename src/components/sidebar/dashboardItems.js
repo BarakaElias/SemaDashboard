@@ -135,6 +135,11 @@ const pagesSection = [
     title: "API",
   },
   {
+    href: "/admin_manage_sender_ids",
+    icon: User,
+    title: "Manage SIDs",
+  },
+  {
     href: "/pages",
     icon: Layout,
     title: "Pages",

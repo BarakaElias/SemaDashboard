@@ -45,6 +45,8 @@ import ContactLists from "./pages/pages/contactLists/contactlists";
 import SmsTransactions from "./pages/pages/messaging/reports/transactions/transactions";
 import DlrReport from "./pages/pages/messaging/reports/dlrReport/dlrReport";
 import ContactList from "./pages/pages/contactLists/contactList/contactList";
+//ADDED ADMIN PAGES
+import Admin_sender_id_manager from "./pages/pages/admin/sender_ids/admin_sender_id";
 
 // Auth
 import Page500 from "./pages/auth/Page500";
@@ -216,6 +218,10 @@ const routes = [
         element: <DlrReport />,
       },
     ],
+  },
+  {
+    path: "admin_manage_sender_ids",
+    element: <Admin_sender_id_manager />,
   },
   {
     path: "dashboard",
