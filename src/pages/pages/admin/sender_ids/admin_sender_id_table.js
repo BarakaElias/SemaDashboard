@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Row, Table, Col } from "react-bootstrap";
+import { Row, Table, Col, Form, Button } from "react-bootstrap";
 import {
   useSortBy,
   useTable,
@@ -7,7 +7,13 @@ import {
   useFilters,
   usePagination,
 } from "react-table";
-import { Edit2, Trash } from "react-feather";
+import { Edit2, Trash, Calendar } from "react-feather";
+import {
+  faSort,
+  faSortUp,
+  faSortDown,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { ColumnFilter } from "./ColumnFilter";
 import { GlobalFilter } from "./GlobalFilter";
@@ -21,6 +27,80 @@ const Admin_sender_id_table = () => {
     []
   );
   //End of Table data
+  function DateColumnFilter({ column: { filterValue, setFilter } }) {
+    return (
+      <Form.Group className="mb-3">
+        <Form.Control
+          onChange={(event) => setFilter(event.target.value)}
+          type="datetime-local"
+          min="11/07/2021 19:30 21"
+          placeholder=""
+        />
+      </Form.Group>
+    );
+  }
+
+  function EmptyColumnFilter() {
+    return <div className="mb-4">&nbsp;</div>;
+  }
+
+  function MnoColumnFilter() {
+    return (
+      <div className="d-inline-flex mb-2 w-100 justify-content-around">
+        <div>
+          <div
+            style={{ width: "15px", height: "4px" }}
+            className="bg-success rounded-circle"
+          ></div>
+          <p className="text-weight-light">Registered</p>
+        </div>
+        <div>
+          <div
+            style={{ width: "15px", height: "4px" }}
+            className="bg-warning rounded-circle"
+          ></div>
+          Pending
+        </div>
+        <div>
+          <div
+            style={{ width: "15px", height: "4px" }}
+            className="bg-danger rounded-circle"
+          ></div>
+          Not Allowed
+        </div>
+      </div>
+    );
+  }
+
+  function SelectColumnFilter({
+    column: { filterValue, setFilter, preFilteredRows, id },
+  }) {
+    // Calculate the options for filtering
+    // using the preFilteredRows
+    // const options = React.useMemo(() => {
+    //   const options = new Set();
+    //   preFilteredRows.forEach((row) => {
+    //     options.add(row.values[id]);
+    //   });
+    //   return [...options.values()];
+    // }, [id, preFilteredRows]);
+
+    // Render a multi-select box
+    return (
+      <Form.Group className="mb-3">
+        <Form.Select
+          value={filterValue}
+          onChange={(e) => {
+            setFilter(e.target.value || undefined);
+          }}
+        >
+          <option value="">All</option>
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </Form.Select>
+      </Form.Group>
+    );
+  }
 
   //Table columns
   const columns = React.useMemo(
@@ -28,47 +108,41 @@ const Admin_sender_id_table = () => {
       {
         Header: "#",
         accessor: "id", // accessor is the "key" in the data
-        Filter: ColumnFilter,
-        disableFilters: true,
+        Filter: EmptyColumnFilter,
+        disableSortby: true,
       },
 
       {
         Header: "Country",
-
         accessor: "country",
         Filter: ColumnFilter,
-        disableFilters: true,
       },
       {
         Header: "Name",
         accessor: "name",
         Filter: ColumnFilter,
-        disableFilters: true,
       },
       {
         Header: "Status",
         accessor: "status",
-        Filter: ColumnFilter,
-        disableFilters: true,
+        filter: "includes",
+        Filter: SelectColumnFilter,
       },
       {
         Header: "Date created",
         accessor: "date_created",
-        Filter: ColumnFilter,
-        disableFilters: true,
+        Filter: DateColumnFilter,
       },
       {
         Header: "User",
         accessor: "user",
-        Filter: ColumnFilter,
-        disableFilters: true,
+        Filter: EmptyColumnFilter,
       },
       {
         Header: "MNO Registered",
         accessor: "mno",
         maxWidth: 50,
-        disableFilters: true,
-        Filter: ColumnFilter,
+        Filter: MnoColumnFilter,
         Cell: ({ value }) =>
           value == null
             ? "No Registered Networks"
@@ -98,26 +172,36 @@ const Admin_sender_id_table = () => {
                 );
               }),
       },
+      {
+        Header: "Actions",
+        accessor: "actions",
+        Filter: EmptyColumnFilter,
+        disableSortby: true,
+        Cell: ({ value, row }) =>
+          value == null
+            ? "No actions"
+            : value.map((action) => {
+                const data = row.original;
+                let link = "/edit-sender-id/";
+                link += data.id;
+                if (action === "edit") {
+                  return (
+                    <Link to={link}>
+                      <Edit2 className="m-3" size={24} />
+                    </Link>
+                  );
+                }
+                if (action === "delete") {
+                  return <Trash className="m-3" size={24} />;
+                } else {
+                  return "";
+                }
+              }),
+      },
     ],
-
     []
   );
   //End of Table columns
-
-  //Filtering
-  //Active or Inactive
-  // const ColumnFilter = ({ column }) => {
-  //   const { filterValue, setFilter } = column;
-  //   return (
-  //     <span>
-  //       Search:{" "}
-  //       <input
-  //         value={filterValue || ""}
-  //         onChange={(e) => setFilter(e.target.value)}
-  //       />
-  //     </span>
-  //   );
-  // };
 
   //Instantiating the table
 
@@ -149,17 +233,27 @@ const Admin_sender_id_table = () => {
   return (
     <React.Fragment>
       <Row>
-        <Col lg={8}>
+        <Col lg={9}>
           <h1>Sema Sender IDs</h1>
           <h6 className="text-muted">List of all Client Sender IDS</h6>
         </Col>
-        <Col lg={2}>
-          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <Col lg={3}>
+          <Row>
+            <Col lg={7}>
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+            </Col>
+            <Col lg={5}>
+              <div className="mb-2">&nbsp;</div>
+              <Button variant="info" size="lg" className="mb-3">
+                Create Sender ID
+              </Button>
+            </Col>
+          </Row>
         </Col>
       </Row>
       <Row>
         <Table {...getTableProps()} responsive>
-          <thead>
+          <thead className="thead-dark">
             {
               //Loop over the header rows
               headerGroups.map((headerGroup) => (
@@ -170,35 +264,46 @@ const Admin_sender_id_table = () => {
                     headerGroup.headers.map((column) => (
                       //Apply the header cell props
 
-                      <th
-                        {...column.getHeaderProps(
-                          column.getSortByToggleProps()
-                        )}
-                      >
-                        {
-                          //Render the header
-                          column.render("Header")
-                        }
+                      <th>
+                        <div
+                          className="mb-1"
+                          {...column.getHeaderProps(
+                            column.getSortByToggleProps()
+                          )}
+                        >
+                          {
+                            //Render the header
+                            column.render("Header")
+                          }
+                          <span>
+                            {column.isSorted ? (
+                              column.isSortedDesc ? (
+                                <FontAwesomeIcon
+                                  className="ms-2"
+                                  icon={faSortDown}
+                                />
+                              ) : (
+                                <FontAwesomeIcon
+                                  className="ms-2"
+                                  icon={faSortUp}
+                                />
+                              )
+                            ) : (
+                              <FontAwesomeIcon className="ms-2" icon={faSort} />
+                            )}
+                          </span>
+                        </div>
                         <div>
                           {column.canFilter ? column.render("Filter") : null}
                         </div>
-
-                        <span>
-                          {column.isSorted
-                            ? column.isSortedDesc
-                              ? "Desc"
-                              : "Asc"
-                            : ""}
-                        </span>
                       </th>
                     ))
                   }
-                  <th>Actions</th>
                 </tr>
               ))
             }
           </thead>
-          <tbody {...getTableBodyProps()}>
+          <tbody className="table-hover" {...getTableBodyProps()}>
             {
               //Loop over the table rows
               page.map((row) => {
@@ -223,12 +328,6 @@ const Admin_sender_id_table = () => {
                         );
                       })
                     }
-                    <td>
-                      <Link to="#">
-                        <Edit2 className="m-3" size={24} />
-                      </Link>
-                      <Trash className="m-3" size={24} />
-                    </td>
                   </tr>
                 );
               })
