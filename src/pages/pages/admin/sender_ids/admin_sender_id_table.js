@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { Row, Table, Col, Form, Button } from "react-bootstrap";
 import {
   useSortBy,
@@ -18,8 +18,203 @@ import { Link } from "react-router-dom";
 import { ColumnFilter } from "./ColumnFilter";
 import { GlobalFilter } from "./GlobalFilter";
 import sid_data from "./sid_data";
+import CountryList from "./../../messaging/manage/senderID/countryList";
+import ModalForm from "../../../ui/ModalForm/modalForm";
+import AlertDialog from "../../../ui/AlertDialog/AlertDialog";
+import axios from "axios";
 
 const Admin_sender_id_table = () => {
+  //Modal State
+  const [modalState, setModalState] = useState({
+    modalOpen: false,
+    alertOpen: false,
+    alertContent: "",
+  });
+
+  let sid_to_delete = "";
+
+  const closeModal = () => {
+    setModalState({ modalOpen: false });
+  };
+  let modalFormElements = {
+    title: {
+      value: "Add a New Sender ID",
+    },
+    country: {
+      type: "select",
+      label: "Sender ID Country",
+      placeHolder: "Select sender ID country",
+      required: true,
+      options: CountryList,
+      value: "hi",
+    },
+    sender_id: {
+      label: "Sender ID Name",
+      type: "text",
+      placeHolder: "Enter Sender ID",
+      required: true,
+      options: null,
+      value: "dddd",
+    },
+    active: {
+      label: "Active",
+      type: "checkbox",
+      value: "Active",
+    },
+    vodacom: {
+      label: "Vodacom",
+      type: "select",
+      placeHolder: "Registration state",
+      required: true,
+      options: ["Registered", "Pending", "Not Allowed"],
+      value: "",
+    },
+    halotel: {
+      label: "Halotel",
+      type: "select",
+      placeHolder: "Registration state",
+      required: true,
+      options: ["Registered", "Pending", "Not Allowed"],
+      value: "",
+    },
+    tigo: {
+      label: "Tigo",
+      type: "select",
+      placeHolder: "Registration state",
+      required: true,
+      options: ["Registered", "Pending", "Not Allowed"],
+      value: "",
+    },
+    zantel: {
+      label: "Zantel",
+      type: "select",
+      placeHolder: "Registration state",
+      required: true,
+      options: ["Registered", "Pending", "Not Allowed"],
+      value: "",
+    },
+    smile: {
+      label: "Smile",
+      type: "select",
+      placeHolder: "Registration state",
+      required: true,
+      options: ["Registered", "Pending", "Not Allowed"],
+      value: "",
+    },
+    airtel: {
+      label: "Airtel",
+      type: "select",
+      placeHolder: "Registration state",
+      required: true,
+      options: ["Registered", "Pending", "Not Allowed"],
+      value: "",
+    },
+    submitButton: {
+      type: "button",
+      placeHolder: "Add Sender ID",
+    },
+  };
+  const [modalFormState, setModalFormState] = useState({
+    formState: modalFormElements,
+  });
+
+  const onAddButtonClicked = () => {
+    setModalState({ modalOpen: true });
+  };
+  const onEditButtonClicked = (id) => {
+    // setModalState({ modalOpen: true });
+    const sender_ids = sid_data.filter((sid) => sid.id === id);
+    const sender_id = sender_ids[0];
+    Object.keys(modalFormElements).map((key) => {
+      switch (key) {
+        case "country":
+          modalFormElements[key].value = sender_id.country;
+          break;
+        case "sender_id":
+          modalFormElements[key].value = sender_id.name;
+          break;
+        case "vodacom":
+          const mno = sender_id.mno.filter((mno) => mno.name == "Vodacom");
+          modalFormElements[key].value = mno.status;
+          break;
+        case "Airtel":
+          const airtel = sender_id.mno.filter((mno) => mno.name == "Airtel");
+          modalFormElements[key].value = airtel.status;
+          break;
+        case "Tigo":
+          const tigo = sender_id.mno.filter((mno) => mno.name == "Tigo");
+          modalFormElements[key].value = tigo.status;
+          break;
+        case "zantel":
+          const zantel = sender_id.mno.filter((mno) => mno.name == "Zantel");
+          modalFormElements[key].value = zantel.status;
+          break;
+        case "halotel":
+          const halotel = sender_id.mno.filter((mno) => mno.name == "Halotel");
+          modalFormElements[key].value = halotel.status;
+          break;
+        case "smile":
+          const vodacom = sender_id.mno.filter((mno) => mno.name == "vodacom");
+          modalFormElements[key].value = vodacom.status;
+          break;
+        default:
+          break;
+      }
+    });
+    setModalFormState({ modalForm: modalFormElements });
+    setModalState({ modalOpen: true });
+    console.log(sender_id);
+    console.log(modalFormState.formState);
+  };
+
+  const addSenderID = (parameters) => {
+    axios
+      .post("url", { params: parameters })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  let form = modalState.modalOpen ? (
+    <ModalForm
+      content={modalFormState.formState}
+      closeModalFunc={closeModal}
+      submitFormFunc={addSenderID}
+    />
+  ) : null;
+
+  //Alert Diaolog data
+  const alertDialogContent = {
+    type: "Certainty",
+    title: "Are you sure?",
+    message:
+      "Do you really want to delete this sender id " +
+      modalState.alertContent +
+      "?",
+  };
+  const closeAlertModal = () => {
+    setModalState({ alertOpen: false });
+  };
+
+  const openAlertModal = (sid_name, dd) => {
+    setModalState({ alertOpen: true, alertContent: sid_name });
+  };
+
+  const deleteSenderID = () => {
+    console.log("Deleteing");
+  };
+
+  let dialog = modalState.alertOpen ? (
+    <AlertDialog
+      content={alertDialogContent}
+      closeAlertFunc={closeAlertModal}
+      sendSMSFunc={deleteSenderID}
+    />
+  ) : null;
+
   //Table data
   const data = React.useMemo(
     () => sid_data,
@@ -75,17 +270,6 @@ const Admin_sender_id_table = () => {
   function SelectColumnFilter({
     column: { filterValue, setFilter, preFilteredRows, id },
   }) {
-    // Calculate the options for filtering
-    // using the preFilteredRows
-    // const options = React.useMemo(() => {
-    //   const options = new Set();
-    //   preFilteredRows.forEach((row) => {
-    //     options.add(row.values[id]);
-    //   });
-    //   return [...options.values()];
-    // }, [id, preFilteredRows]);
-
-    // Render a multi-select box
     return (
       <Form.Group className="mb-3">
         <Form.Select
@@ -131,7 +315,7 @@ const Admin_sender_id_table = () => {
       {
         Header: "Date created",
         accessor: "date_created",
-        Filter: DateColumnFilter,
+        Filter: EmptyColumnFilter,
       },
       {
         Header: "User",
@@ -186,13 +370,21 @@ const Admin_sender_id_table = () => {
                 link += data.id;
                 if (action === "edit") {
                   return (
-                    <Link to={link}>
-                      <Edit2 className="m-3" size={24} />
-                    </Link>
+                    <Edit2
+                      onClick={() => onEditButtonClicked(data.id)}
+                      className="m-3"
+                      size={24}
+                    />
                   );
                 }
                 if (action === "delete") {
-                  return <Trash className="m-3" size={24} />;
+                  return (
+                    <Trash
+                      onClick={() => openAlertModal(data.name, data.id)}
+                      className="m-3"
+                      size={24}
+                    />
+                  );
                 } else {
                   return "";
                 }
@@ -232,6 +424,8 @@ const Admin_sender_id_table = () => {
   const { pageIndex } = state;
   return (
     <React.Fragment>
+      {form}
+      {dialog}
       <Row>
         <Col lg={9}>
           <h1>Sema Sender IDs</h1>
@@ -244,7 +438,12 @@ const Admin_sender_id_table = () => {
             </Col>
             <Col lg={5}>
               <div className="mb-2">&nbsp;</div>
-              <Button variant="info" size="lg" className="mb-3">
+              <Button
+                onClick={onAddButtonClicked}
+                variant="info"
+                size="lg"
+                className="mb-3"
+              >
                 Create Sender ID
               </Button>
             </Col>

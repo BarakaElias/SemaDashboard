@@ -45,7 +45,7 @@ const ModalForm = (props) => {
       <Modal.Header>
         <h2>{formEl["title"].value}</h2>
       </Modal.Header>
-      <Modal.Body className="text-center m-3">
+      <Modal.Body className="m-3">
         <Form>
           {formElementsArray.map((formElement) => (
             <FormControl

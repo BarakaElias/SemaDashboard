@@ -1,3 +1,4 @@
+import { faShieldVirus } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 // import { Helmet } from "react-helmet-async";
 
@@ -16,6 +17,7 @@ const formControl = (props) => {
           <Form.Control
             onChange={(event) => props.setValToState(event, props.ident)}
             type="text"
+            value={props.value}
             key={props.placeHolder + "control"}
             placeholder={props.placeHolder}
           />
@@ -51,6 +53,22 @@ const formControl = (props) => {
             key={props.placeHolder + "control"}
             as="textarea"
             placeholder={props.placeHolder}
+          />
+        </Form.Group>
+      );
+      break;
+    case "checkbox":
+      inputControl = (
+        <Form.Group key={props.label} className="m-5 w-25">
+          <Form.Label key={props.label + "label"}>
+            Is the Sender ID Active?
+          </Form.Label>
+          <Form.Check
+            type="checkbox"
+            value="Active"
+            variant={"lg"}
+            key={props.label + "control"}
+            label="Active"
           />
         </Form.Group>
       );
