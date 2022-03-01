@@ -41,7 +41,7 @@ const ModalForm = (props) => {
   };
 
   return (
-    <Modal show={true} centered>
+    <Modal key="haha" show={true} size="lg" centered>
       <Modal.Header>
         <h2>{formEl["title"].value}</h2>
       </Modal.Header>

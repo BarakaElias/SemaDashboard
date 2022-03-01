@@ -1,8 +1,7 @@
-import { faShieldVirus } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 // import { Helmet } from "react-helmet-async";
 
-import { Form } from "react-bootstrap";
+import { Form, Row, Col } from "react-bootstrap";
 // import { Navigate } from "react-router";
 
 const formControl = (props) => {
@@ -71,6 +70,55 @@ const formControl = (props) => {
             label="Active"
           />
         </Form.Group>
+      );
+      break;
+    case "two-times-selection":
+      inputControl = (
+        <Row className="g-2" key={props.label}>
+          <h4>{props.label}</h4>
+          <Col lg={6}>
+            <Form.Group>
+              <Form.Label>Mno</Form.Label>
+              <Form.Select>
+                <option>Vodacom</option>
+                <option>Tigo</option>
+                <option>Airtel</option>
+                <option>Halotel</option>
+                <option>Zantel</option>
+                <option>TTCL</option>
+                <option>Smile</option>
+              </Form.Select>
+            </Form.Group>
+          </Col>
+          <Col lg={6}>
+            <Form.Group>
+              <Form.Label>Status</Form.Label>
+              <div key="inline-radio" className="mb-3">
+                <Form.Check
+                  inline
+                  label="Registered"
+                  name={props.label}
+                  type="radio"
+                  id="inline-radio-1"
+                />
+                <Form.Check
+                  inline
+                  label="Not Registered"
+                  name={props.label}
+                  type="radio"
+                  id="inline-radio-2"
+                />
+                <Form.Check
+                  inline
+                  label="Pending"
+                  type="radio"
+                  name={props.label}
+                  id="inline-radio-3"
+                />
+              </div>
+            </Form.Group>
+          </Col>
+        </Row>
       );
       break;
     default:

@@ -73,3 +73,19 @@
 @import "5-vendor/react-bootstrap-table";
 @import "5-vendor/react-select";
 @import "5-vendor/react-datetime";
+
+
+
+
+//For the Matrix
+.matrix{
+    .matrix-header{
+        padding-bottom: 2rem;
+    }
+    .mno-list{
+        li{
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    }
+}

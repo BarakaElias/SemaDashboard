@@ -89,7 +89,7 @@ const HeatmapChart = () => {
     dataLabels: {
       enabled: false,
     },
-    colors: ["#008FFB"],
+    colors: ["#008FFB", "#d34d48", "#ecbb02"],
     xaxis: {
       type: "category",
     },

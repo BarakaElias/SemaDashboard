@@ -13,10 +13,10 @@ const NavbarUser = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logUserOut());
-    navigate("/auth/sing-in");
-  };
+  // const handleLogout = () => {
+  //   dispatch(logUserOut());
+  //   navigate("/auth/sing-in");
+  // };
   const user = useSelector((state: RootStateOrAny) => state.user.value);
   return (
     <Dropdown className="nav-item" align="end">

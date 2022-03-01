@@ -1,37 +1,41 @@
-import React, { useMemo, useState } from "react";
-import { Row, Table, Col, Form, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Row, Table, Col, Button } from "react-bootstrap";
 import {
   useSortBy,
   useTable,
   useGlobalFilter,
   useFilters,
   usePagination,
+  useExpanded,
 } from "react-table";
-import { Edit2, Trash, Calendar } from "react-feather";
+import { Edit2, Trash, Eye, EyeOff } from "react-feather";
 import {
   faSort,
   faSortUp,
   faSortDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import { ColumnFilter } from "./ColumnFilter";
-import { GlobalFilter } from "./GlobalFilter";
+import {
+  ColumnFilter,
+  SelectColumnFilter,
+  EmptyColumnFilter,
+} from "./sender_id_table_extensions/ColumnFilter";
+import { GlobalFilter } from "./sender_id_table_extensions/GlobalFilter";
 import sid_data from "./sid_data";
 import CountryList from "./../../messaging/manage/senderID/countryList";
 import ModalForm from "../../../ui/ModalForm/modalForm";
 import AlertDialog from "../../../ui/AlertDialog/AlertDialog";
 import axios from "axios";
+// import Matrix from "./Matrix/Matrix";
+import MatrixTable from "./Matrix/MatrixTable";
 
-const Admin_sender_id_table = () => {
+const AdminSenderIdTable = () => {
   //Modal State
   const [modalState, setModalState] = useState({
     modalOpen: false,
     alertOpen: false,
     alertContent: "",
   });
-
-  let sid_to_delete = "";
 
   const closeModal = () => {
     setModalState({ modalOpen: false });
@@ -63,7 +67,7 @@ const Admin_sender_id_table = () => {
     },
     vodacom: {
       label: "Vodacom",
-      type: "select",
+      type: "two-times-selection",
       placeHolder: "Registration state",
       required: true,
       options: ["Registered", "Pending", "Not Allowed"],
@@ -71,7 +75,7 @@ const Admin_sender_id_table = () => {
     },
     halotel: {
       label: "Halotel",
-      type: "select",
+      type: "two-times-selection",
       placeHolder: "Registration state",
       required: true,
       options: ["Registered", "Pending", "Not Allowed"],
@@ -79,7 +83,7 @@ const Admin_sender_id_table = () => {
     },
     tigo: {
       label: "Tigo",
-      type: "select",
+      type: "two-times-selection",
       placeHolder: "Registration state",
       required: true,
       options: ["Registered", "Pending", "Not Allowed"],
@@ -87,7 +91,7 @@ const Admin_sender_id_table = () => {
     },
     zantel: {
       label: "Zantel",
-      type: "select",
+      type: "two-times-selection",
       placeHolder: "Registration state",
       required: true,
       options: ["Registered", "Pending", "Not Allowed"],
@@ -95,7 +99,7 @@ const Admin_sender_id_table = () => {
     },
     smile: {
       label: "Smile",
-      type: "select",
+      type: "two-times-selection",
       placeHolder: "Registration state",
       required: true,
       options: ["Registered", "Pending", "Not Allowed"],
@@ -103,12 +107,13 @@ const Admin_sender_id_table = () => {
     },
     airtel: {
       label: "Airtel",
-      type: "select",
+      type: "two-times-selection",
       placeHolder: "Registration state",
       required: true,
       options: ["Registered", "Pending", "Not Allowed"],
       value: "",
     },
+
     submitButton: {
       type: "button",
       placeHolder: "Add Sender ID",
@@ -134,36 +139,37 @@ const Admin_sender_id_table = () => {
           modalFormElements[key].value = sender_id.name;
           break;
         case "vodacom":
-          const mno = sender_id.mno.filter((mno) => mno.name == "Vodacom");
+          const mno = sender_id.mno.filter((mno) => mno.name === "Vodacom");
           modalFormElements[key].value = mno.status;
           break;
         case "Airtel":
-          const airtel = sender_id.mno.filter((mno) => mno.name == "Airtel");
+          const airtel = sender_id.mno.filter((mno) => mno.name === "Airtel");
           modalFormElements[key].value = airtel.status;
           break;
         case "Tigo":
-          const tigo = sender_id.mno.filter((mno) => mno.name == "Tigo");
+          const tigo = sender_id.mno.filter((mno) => mno.name === "Tigo");
           modalFormElements[key].value = tigo.status;
           break;
         case "zantel":
-          const zantel = sender_id.mno.filter((mno) => mno.name == "Zantel");
+          const zantel = sender_id.mno.filter((mno) => mno.name === "Zantel");
           modalFormElements[key].value = zantel.status;
           break;
         case "halotel":
-          const halotel = sender_id.mno.filter((mno) => mno.name == "Halotel");
+          const halotel = sender_id.mno.filter((mno) => mno.name === "Halotel");
           modalFormElements[key].value = halotel.status;
           break;
         case "smile":
-          const vodacom = sender_id.mno.filter((mno) => mno.name == "vodacom");
+          const vodacom = sender_id.mno.filter((mno) => mno.name === "vodacom");
           modalFormElements[key].value = vodacom.status;
           break;
         default:
           break;
       }
+      return null;
     });
     setModalFormState({ modalForm: modalFormElements });
     setModalState({ modalOpen: true });
-    console.log(sender_id);
+    // console.log(sender_id);
     console.log(modalFormState.formState);
   };
 
@@ -222,69 +228,7 @@ const Admin_sender_id_table = () => {
     []
   );
   //End of Table data
-  function DateColumnFilter({ column: { filterValue, setFilter } }) {
-    return (
-      <Form.Group className="mb-3">
-        <Form.Control
-          onChange={(event) => setFilter(event.target.value)}
-          type="datetime-local"
-          min="11/07/2021 19:30 21"
-          placeholder=""
-        />
-      </Form.Group>
-    );
-  }
-
-  function EmptyColumnFilter() {
-    return <div className="mb-4">&nbsp;</div>;
-  }
-
-  function MnoColumnFilter() {
-    return (
-      <div className="d-inline-flex mb-2 w-100 justify-content-around">
-        <div>
-          <div
-            style={{ width: "15px", height: "4px" }}
-            className="bg-success rounded-circle"
-          ></div>
-          <p className="text-weight-light">Registered</p>
-        </div>
-        <div>
-          <div
-            style={{ width: "15px", height: "4px" }}
-            className="bg-warning rounded-circle"
-          ></div>
-          Pending
-        </div>
-        <div>
-          <div
-            style={{ width: "15px", height: "4px" }}
-            className="bg-danger rounded-circle"
-          ></div>
-          Not Allowed
-        </div>
-      </div>
-    );
-  }
-
-  function SelectColumnFilter({
-    column: { filterValue, setFilter, preFilteredRows, id },
-  }) {
-    return (
-      <Form.Group className="mb-3">
-        <Form.Select
-          value={filterValue}
-          onChange={(e) => {
-            setFilter(e.target.value || undefined);
-          }}
-        >
-          <option value="">All</option>
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-        </Form.Select>
-      </Form.Group>
-    );
-  }
+  let i = 0;
 
   //Table columns
   const columns = React.useMemo(
@@ -312,50 +256,17 @@ const Admin_sender_id_table = () => {
         filter: "includes",
         Filter: SelectColumnFilter,
       },
-      {
-        Header: "Date created",
-        accessor: "date_created",
-        Filter: EmptyColumnFilter,
-      },
+      // {
+      //   Header: "Date created",
+      //   accessor: "date_created",
+      //   Filter: EmptyColumnFilter,
+      // },
       {
         Header: "User",
         accessor: "user",
         Filter: EmptyColumnFilter,
       },
-      {
-        Header: "MNO Registered",
-        accessor: "mno",
-        maxWidth: 50,
-        Filter: MnoColumnFilter,
-        Cell: ({ value }) =>
-          value == null
-            ? "No Registered Networks"
-            : value.map((vendor) => {
-                let classNameVals = "";
-                switch (vendor.status) {
-                  case "Registered":
-                    classNameVals =
-                      "font-weight-bold rounded text-white m-2 p-2 bg-success";
-                    break;
-                  case "Pending":
-                    classNameVals =
-                      "font-weight-bold rounded text-white m-2 p-2 bg-warning";
-                    break;
-                  case "Not Allowed":
-                    classNameVals =
-                      "font-weight-bold rounded text-white m-2 p-2 bg-danger";
-                    break;
-                  default:
-                    classNameVals =
-                      "font-weight-bold rounded text-white m-2 p-2 bg-light";
-                    break;
-                }
 
-                return (
-                  <div className={classNameVals}>{String(vendor.name)}</div>
-                );
-              }),
-      },
       {
         Header: "Actions",
         accessor: "actions",
@@ -366,8 +277,7 @@ const Admin_sender_id_table = () => {
             ? "No actions"
             : value.map((action) => {
                 const data = row.original;
-                let link = "/edit-sender-id/";
-                link += data.id;
+
                 if (action === "edit") {
                   return (
                     <Edit2
@@ -376,14 +286,26 @@ const Admin_sender_id_table = () => {
                       size={24}
                     />
                   );
-                }
-                if (action === "delete") {
+                } else if (action === "delete") {
                   return (
                     <Trash
                       onClick={() => openAlertModal(data.name, data.id)}
                       className="m-3"
                       size={24}
                     />
+                  );
+                } else if (action === "view") {
+                  return (
+                    <span
+                      {...row.getToggleRowExpandedProps()}
+                      onClick={() => row.toggleRowExpanded()}
+                    >
+                      {row.isExpanded ? (
+                        <EyeOff className="m-3" size={22} />
+                      ) : (
+                        <Eye className="m-3" size={24} />
+                      )}
+                    </span>
                   );
                 } else {
                   return "";
@@ -407,9 +329,11 @@ const Admin_sender_id_table = () => {
     canNextPage,
     canPreviousPage,
     pageOptions,
+    visibleColumns,
     gotoPage,
     pageCount,
     prepareRow,
+    // state: { expanded },
     state,
     setGlobalFilter,
   } = useTable(
@@ -417,9 +341,15 @@ const Admin_sender_id_table = () => {
     useFilters,
     useGlobalFilter,
     useSortBy,
+    useExpanded,
     usePagination
   );
+  // setPageSize(8);
 
+  const renderRowSubComponent = React.useCallback(
+    (data) => <MatrixTable data={data.row.original.mno} />,
+    []
+  );
   const { globalFilter } = state;
   const { pageIndex } = state;
   return (
@@ -427,11 +357,11 @@ const Admin_sender_id_table = () => {
       {form}
       {dialog}
       <Row>
-        <Col lg={9}>
+        <Col lg={7}>
           <h1>Sema Sender IDs</h1>
           <h6 className="text-muted">List of all Client Sender IDS</h6>
         </Col>
-        <Col lg={3}>
+        <Col lg={5}>
           <Row>
             <Col lg={7}>
               <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
@@ -457,13 +387,14 @@ const Admin_sender_id_table = () => {
               //Loop over the header rows
               headerGroups.map((headerGroup) => (
                 //apply the header row props
-                <tr {...headerGroup.getHeaderGroupProps()}>
+
+                <tr key={i++} {...headerGroup.getHeaderGroupProps()}>
                   {
                     //loop over the headers in each row
                     headerGroup.headers.map((column) => (
                       //Apply the header cell props
 
-                      <th>
+                      <th key={column.Header}>
                         <div
                           className="mb-1"
                           {...column.getHeaderProps(
@@ -510,24 +441,40 @@ const Admin_sender_id_table = () => {
                 prepareRow(row);
                 return (
                   //Apply the row props
-                  <tr {...row.getRowProps()}>
-                    {
-                      //Loop over the rows cells
-                      row.cells.map((cell) => {
-                        //Apply the cell props
-                        return (
-                          <td {...cell.getCellProps()}>
-                            <div className="d-inline-flex flex-wrap">
-                              {
-                                //Render the cell contents
-                                cell.render("Cell")
-                              }
-                            </div>
-                          </td>
-                        );
-                      })
-                    }
-                  </tr>
+                  <React.Fragment key={i++ + "datarow"}>
+                    <tr {...row.getRowProps()}>
+                      {
+                        //Loop over the rows cells
+                        row.cells.map((cell) => {
+                          //Apply the cell props
+                          return (
+                            <td key={i++ + "datacell"} {...cell.getCellProps()}>
+                              <div className="d-inline-flex flex-wrap">
+                                {
+                                  //Render the cell contents
+                                  cell.render("Cell")
+                                }
+                              </div>
+                            </td>
+                          );
+                        })
+                      }
+                    </tr>
+                    {row.isExpanded ? (
+                      <tr className="bg-light">
+                        <td
+                          className="text-center"
+                          colSpan={visibleColumns.length}
+                        >
+                          <Row>
+                            <Col lg={3}></Col>
+                            <Col>{renderRowSubComponent({ row })}</Col>
+                            <Col lg={3}></Col>
+                          </Row>
+                        </td>
+                      </tr>
+                    ) : null}
+                  </React.Fragment>
                 );
               })
             }
@@ -579,4 +526,4 @@ const Admin_sender_id_table = () => {
   );
 };
 
-export default Admin_sender_id_table;
+export default AdminSenderIdTable;
