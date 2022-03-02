@@ -47,15 +47,20 @@ const MatrixTable = (props) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
 
+  let i = 0;
+
   return (
     <React.Fragment>
       <Row>
         <Table {...getTableProps()} className="m-1">
           <thead>
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr
+                key={i++ + "matrixrow"}
+                {...headerGroup.getHeaderGroupProps()}
+              >
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
+                  <th key={i++ + "matrixth"} {...column.getHeaderProps()}>
                     {column.render("Header")}
                   </th>
                 ))}
@@ -66,10 +71,12 @@ const MatrixTable = (props) => {
             {rows.map((row) => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps}>
+                <tr key={i++ + "datarow"} {...row.getRowProps}>
                   {row.cells.map((cell) => {
                     return (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td key={i++ + "datacell"} {...cell.getCellProps()}>
+                        {cell.render("Cell")}
+                      </td>
                     );
                   })}
                 </tr>

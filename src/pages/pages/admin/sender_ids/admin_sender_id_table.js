@@ -28,6 +28,10 @@ import AlertDialog from "../../../ui/AlertDialog/AlertDialog";
 import axios from "axios";
 // import Matrix from "./Matrix/Matrix";
 import MatrixTable from "./Matrix/MatrixTable";
+import {
+  createSenderIdInitialFormValues,
+  formValuesValidation,
+} from "./sender_id_table_extensions/FormikForm";
 
 const AdminSenderIdTable = () => {
   //Modal State
@@ -52,7 +56,7 @@ const AdminSenderIdTable = () => {
       options: CountryList,
       value: "hi",
     },
-    sender_id: {
+    sender_name: {
       label: "Sender ID Name",
       type: "text",
       placeHolder: "Enter Sender ID",
@@ -60,12 +64,12 @@ const AdminSenderIdTable = () => {
       options: null,
       value: "dddd",
     },
-    active: {
+    isActive: {
       label: "Active",
       type: "checkbox",
       value: "Active",
     },
-    vodacom: {
+    Vodacom: {
       label: "Vodacom",
       type: "two-times-selection",
       placeHolder: "Registration state",
@@ -73,7 +77,7 @@ const AdminSenderIdTable = () => {
       options: ["Registered", "Pending", "Not Allowed"],
       value: "",
     },
-    halotel: {
+    Halotel: {
       label: "Halotel",
       type: "two-times-selection",
       placeHolder: "Registration state",
@@ -81,7 +85,7 @@ const AdminSenderIdTable = () => {
       options: ["Registered", "Pending", "Not Allowed"],
       value: "",
     },
-    tigo: {
+    Tigo: {
       label: "Tigo",
       type: "two-times-selection",
       placeHolder: "Registration state",
@@ -89,7 +93,7 @@ const AdminSenderIdTable = () => {
       options: ["Registered", "Pending", "Not Allowed"],
       value: "",
     },
-    zantel: {
+    Zantel: {
       label: "Zantel",
       type: "two-times-selection",
       placeHolder: "Registration state",
@@ -97,7 +101,7 @@ const AdminSenderIdTable = () => {
       options: ["Registered", "Pending", "Not Allowed"],
       value: "",
     },
-    smile: {
+    Smile: {
       label: "Smile",
       type: "two-times-selection",
       placeHolder: "Registration state",
@@ -105,9 +109,9 @@ const AdminSenderIdTable = () => {
       options: ["Registered", "Pending", "Not Allowed"],
       value: "",
     },
-    airtel: {
+    Airtel: {
       label: "Airtel",
-      type: "two-times-selection",
+      type: "two-times-selection-2",
       placeHolder: "Registration state",
       required: true,
       options: ["Registered", "Pending", "Not Allowed"],
@@ -183,9 +187,11 @@ const AdminSenderIdTable = () => {
         console.log(err);
       });
   };
-
+  //For the modal form
   let form = modalState.modalOpen ? (
     <ModalForm
+      initialValues={createSenderIdInitialFormValues}
+      validationSchema={formValuesValidation}
       content={modalFormState.formState}
       closeModalFunc={closeModal}
       submitFormFunc={addSenderID}

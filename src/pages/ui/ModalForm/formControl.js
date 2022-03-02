@@ -14,8 +14,11 @@ const formControl = (props) => {
             {props.label}
           </Form.Label>
           <Form.Control
-            onChange={(event) => props.setValToState(event, props.ident)}
+            // onChange={(event) => props.setValToState(event, props.ident)}
             type="text"
+            onBlur={props.onControlBlur}
+            onChange={props.handleChange}
+            name={props.controlName}
             value={props.value}
             key={props.placeHolder + "control"}
             placeholder={props.placeHolder}
@@ -31,7 +34,9 @@ const formControl = (props) => {
           </Form.Label>
           <Form.Select
             key={props.placeholder + "select"}
-            onChange={(event) => props.setValToState(event, props.ident)}
+            // onChange={(event) => props.setValToState(event, props.ident)}
+            onChange={props.handleChange}
+            name={props.controlName}
             placeholder={props.placeHolder}
           >
             <option></option>
@@ -49,6 +54,8 @@ const formControl = (props) => {
             {props.label}
           </Form.Label>
           <Form.Control
+            onChange={props.handleChange}
+            name={props.controlName}
             key={props.placeHolder + "control"}
             as="textarea"
             placeholder={props.placeHolder}
@@ -64,7 +71,9 @@ const formControl = (props) => {
           </Form.Label>
           <Form.Check
             type="checkbox"
-            value="Active"
+            onChange={props.handleChange}
+            name={props.controlName}
+            value={true}
             variant={"lg"}
             key={props.label + "control"}
             label="Active"
@@ -119,6 +128,161 @@ const formControl = (props) => {
             </Form.Group>
           </Col>
         </Row>
+      );
+      break;
+    case "two-times-selection-2":
+      inputControl = (
+        <React.Fragment>
+          <h3>Vendor registration status</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Vendor/MNO</th>
+                <th>Vodacom</th>
+                <th>Tigo</th>
+                <th>Airtel</th>
+                <th>Halotel</th>
+                <th>Zantel</th>
+                <th>TTCL</th>
+                <th>Smile</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Vodacom</th>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+              </tr>
+              <tr>
+                <th>Tigo</th>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+                <td>
+                  <Form.Group className="m-1">
+                    <Form.Select>
+                      <option>Registered</option>
+                      <option>Not Registered</option>
+                      <option>Pending</option>
+                    </Form.Select>
+                  </Form.Group>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </React.Fragment>
       );
       break;
     default:

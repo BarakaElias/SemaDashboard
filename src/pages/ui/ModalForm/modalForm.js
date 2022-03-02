@@ -4,6 +4,7 @@ import FormControl from "./formControl";
 
 import { Button, Modal, Form } from "react-bootstrap";
 import { useSelector, RootStateOrAny } from "react-redux";
+import { Formik } from "formik";
 
 const ModalForm = (props) => {
   const user = useSelector((state: RootStateOrAny) => state.user.value);
@@ -45,29 +46,54 @@ const ModalForm = (props) => {
       <Modal.Header>
         <h2>{formEl["title"].value}</h2>
       </Modal.Header>
-      <Modal.Body className="m-3">
-        <Form>
-          {formElementsArray.map((formElement) => (
-            <FormControl
-              ident={formElement.key}
-              type={formElement.config.type}
-              label={formElement.config.label}
-              placeHolder={formElement.config.placeHolder}
-              required={formElement.config.required}
-              options={formElement.config.options}
-              setValToState={inputChangedHandler}
-            />
-          ))}
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="outline-danger" onClick={props.closeModalFunc}>
-          Cancel
-        </Button>{" "}
-        <Button onClick={formDataToParams}>
-          {formEl["submitButton"].placeHolder}
-        </Button>
-      </Modal.Footer>
+      <Formik
+        initialValues={props.initialValues}
+        // validationSchema={props.validationSchema}
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+          //function to call
+          console.log(values);
+        }}
+      >
+        {({
+          errors,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          isSubmitting,
+          touched,
+          values,
+        }) => (
+          <Form onSubmit={handleSubmit}>
+            <Modal.Body className="m-3">
+              {formElementsArray.map((formElement) => (
+                <FormControl
+                  onControlBlur={handleBlur}
+                  controlName={formElement.key}
+                  handleChange={handleChange}
+                  ident={formElement.key}
+                  type={formElement.config.type}
+                  label={formElement.config.label}
+                  placeHolder={formElement.config.placeHolder}
+                  required={formElement.config.required}
+                  options={formElement.config.options}
+                  setValToState={inputChangedHandler}
+                />
+              ))}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="outline-danger" onClick={props.closeModalFunc}>
+                Cancel
+              </Button>{" "}
+              <Button
+                type="submit"
+                // onClick={formDataToParams}
+              >
+                {formEl["submitButton"].placeHolder}
+              </Button>
+            </Modal.Footer>
+          </Form>
+        )}
+      </Formik>
     </Modal>
   );
 };

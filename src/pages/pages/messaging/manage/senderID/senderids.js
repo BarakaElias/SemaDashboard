@@ -6,6 +6,7 @@ import SenderIDTable from "./senderidTable";
 import ModalForm from "../../../../ui/ModalForm/modalForm";
 import CountryList from "./countryList";
 import axios from "axios";
+import { initialValues, validationSchema } from "./FormikForm";
 
 const SenderIDs = () => {
   const [modalState, setModalState] = useState({
@@ -66,6 +67,8 @@ const SenderIDs = () => {
 
   let form = modalState.modalOpen ? (
     <ModalForm
+      initialValues={initialValues}
+      validationSchema={validationSchema}
       content={modalFormElements}
       closeModalFunc={closeModal}
       submitFormFunc={requestSenderID}
