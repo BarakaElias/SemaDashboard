@@ -6,6 +6,7 @@ import { Form, Row, Col } from "react-bootstrap";
 
 const formControl = (props) => {
   let inputControl = null;
+  // console.log(props.controlName);
   switch (props.type) {
     case "text":
       inputControl = (
@@ -19,7 +20,7 @@ const formControl = (props) => {
             onBlur={props.onControlBlur}
             onChange={props.handleChange}
             name={props.controlName}
-            value={props.value}
+            value={props.initValue}
             key={props.placeHolder + "control"}
             placeholder={props.placeHolder}
           />
@@ -37,12 +38,21 @@ const formControl = (props) => {
             // onChange={(event) => props.setValToState(event, props.ident)}
             onChange={props.handleChange}
             name={props.controlName}
+            value={props.initValue}
             placeholder={props.placeHolder}
           >
             <option></option>
-            {props.options.map((option) => (
-              <option>{option}</option>
-            ))}
+            {props.options.map((option) =>
+              props.initValue === option ? (
+                <option key={option} value={option} selected>
+                  {option}
+                </option>
+              ) : (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              )
+            )}
           </Form.Select>
         </Form.Group>
       );
@@ -56,6 +66,7 @@ const formControl = (props) => {
           <Form.Control
             onChange={props.handleChange}
             name={props.controlName}
+            value={props.initValue}
             key={props.placeHolder + "control"}
             as="textarea"
             placeholder={props.placeHolder}
@@ -64,7 +75,7 @@ const formControl = (props) => {
       );
       break;
     case "checkbox":
-      inputControl = (
+      inputControl = props.initValue ? (
         <Form.Group key={props.label} className="m-5 w-25">
           <Form.Label key={props.label + "label"}>
             Is the Sender ID Active?
@@ -73,15 +84,31 @@ const formControl = (props) => {
             type="checkbox"
             onChange={props.handleChange}
             name={props.controlName}
-            value={true}
+            value={props.initValue}
+            checked
             variant={"lg"}
+            key={props.label + "control"}
+            label="Active"
+          />
+        </Form.Group>
+      ) : (
+        <Form.Group key={props.label} className="m-5 w-25">
+          <Form.Label key={props.label + "label"}>
+            Is the Sender ID Active?
+          </Form.Label>
+          <Form.Check
+            type="checkbox"
+            onChange={props.handleChange}
+            name={props.controlName}
+            variant={"lg"}
+            value={props.initValue}
             key={props.label + "control"}
             label="Active"
           />
         </Form.Group>
       );
       break;
-    case "two-times-selection":
+    case "mno-matrix1":
       inputControl = (
         <Row className="g-2" key={props.label}>
           <h4>{props.label}</h4>
@@ -130,7 +157,17 @@ const formControl = (props) => {
         </Row>
       );
       break;
-    case "two-times-selection-2":
+    case "mno-matrix":
+      let i = 0;
+      const mnos = [
+        "Vodacom",
+        "Tigo",
+        "Airtel",
+        "Halotel",
+        "Zantel",
+        "TTCL",
+        "Smile",
+      ];
       inputControl = (
         <React.Fragment>
           <h3>Vendor registration status</h3>
@@ -148,13 +185,29 @@ const formControl = (props) => {
               </tr>
             </thead>
             <tbody>
+              {mnos.map((mno) => (
+                <tr key={mno + "th"}>
+                  <th>{mnos[i]}</th>
+                  {mnos.map((mno) => (
+                    <td key={mno + "td"}>
+                      <Form.Group className="m-1">
+                        <Form.Select name={mno}>
+                          <option>Not Registered</option>
+                          <option>Registered</option>
+                          <option>Pending</option>
+                        </Form.Select>
+                      </Form.Group>
+                    </td>
+                  ))}
+                </tr>
+              ))}
               <tr>
                 <th>Vodacom</th>
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -162,8 +215,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -171,8 +224,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
+                      <option>NotRegistered</option>
                       <option>Registered</option>
-                      <option>Not Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -180,8 +233,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -189,8 +242,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -198,8 +251,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -207,8 +260,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -219,8 +272,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -228,8 +281,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -237,8 +290,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -246,8 +299,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -255,8 +308,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -264,8 +317,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>
@@ -273,8 +326,8 @@ const formControl = (props) => {
                 <td>
                   <Form.Group className="m-1">
                     <Form.Select>
-                      <option>Registered</option>
                       <option>Not Registered</option>
+                      <option>Registered</option>
                       <option>Pending</option>
                     </Form.Select>
                   </Form.Group>

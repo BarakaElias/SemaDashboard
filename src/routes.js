@@ -7,6 +7,7 @@ import React from "react";
 import AuthLayout from "./layouts/Auth";
 import DashboardLayout from "./layouts/Dashboard";
 import DocLayout from "./layouts/Doc";
+import AdminLayout from "./layouts/Admin";
 import LandingLayout from "./layouts/Landing";
 
 // Guards
@@ -46,7 +47,7 @@ import SmsTransactions from "./pages/pages/messaging/reports/transactions/transa
 import DlrReport from "./pages/pages/messaging/reports/dlrReport/dlrReport";
 import ContactList from "./pages/pages/contactLists/contactList/contactList";
 //ADDED ADMIN PAGES
-import Admin_sender_id_manager from "./pages/pages/admin/sender_ids/admin_sender_id";
+import AdminSenderIdManager from "./pages/pages/admin/sender_ids/admin_sender_id";
 
 // Auth
 import Page500 from "./pages/auth/Page500";
@@ -220,9 +221,16 @@ const routes = [
     ],
   },
   {
-    path: "admin_manage_sender_ids",
-    element: <Admin_sender_id_manager />,
+    path: "admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "admin_manage_sender_ids",
+        element: <AdminSenderIdManager />,
+      },
+    ],
   },
+
   {
     path: "dashboard",
     element: <DashboardLayout />,

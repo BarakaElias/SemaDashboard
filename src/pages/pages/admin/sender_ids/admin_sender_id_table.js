@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Row, Table, Col, Button } from "react-bootstrap";
+import { Row, Table, Col, Button, Form } from "react-bootstrap";
+import { Formik } from "formik";
 import {
   useSortBy,
   useTable,
@@ -69,51 +70,52 @@ const AdminSenderIdTable = () => {
       type: "checkbox",
       value: "Active",
     },
-    Vodacom: {
-      label: "Vodacom",
-      type: "two-times-selection",
-      placeHolder: "Registration state",
-      required: true,
-      options: ["Registered", "Pending", "Not Allowed"],
-      value: "",
-    },
-    Halotel: {
-      label: "Halotel",
-      type: "two-times-selection",
-      placeHolder: "Registration state",
-      required: true,
-      options: ["Registered", "Pending", "Not Allowed"],
-      value: "",
-    },
-    Tigo: {
-      label: "Tigo",
-      type: "two-times-selection",
-      placeHolder: "Registration state",
-      required: true,
-      options: ["Registered", "Pending", "Not Allowed"],
-      value: "",
-    },
-    Zantel: {
-      label: "Zantel",
-      type: "two-times-selection",
-      placeHolder: "Registration state",
-      required: true,
-      options: ["Registered", "Pending", "Not Allowed"],
-      value: "",
-    },
-    Smile: {
-      label: "Smile",
-      type: "two-times-selection",
-      placeHolder: "Registration state",
-      required: true,
-      options: ["Registered", "Pending", "Not Allowed"],
-      value: "",
-    },
+
+    // Vodacom: {
+    //   label: "Vodacom",
+    //   type: "two-times-selection-2",
+    //   placeHolder: "Registration state",
+    //   required: true,
+    //   options: ["Registered", "Pending", "Not Allowed"],
+    //   value: "",
+    // },
+    // Halotel: {
+    //   label: "Halotel",
+    //   type: "two-times-selection-2",
+    //   placeHolder: "Registration state",
+    //   required: true,
+    //   options: ["Registered", "Pending", "Not Allowed"],
+    //   value: "",
+    // },
+    // Tigo: {
+    //   label: "Tigo",
+    //   type: "two-times-selection-2",
+    //   placeHolder: "Registration state",
+    //   required: true,
+    //   options: ["Registered", "Pending", "Not Allowed"],
+    //   value: "",
+    // },
+    // Zantel: {
+    //   label: "Zantel",
+    //   type: "two-times-selection-2",
+    //   placeHolder: "Registration state",
+    //   required: true,
+    //   options: ["Registered", "Pending", "Not Allowed"],
+    //   value: "",
+    // },
+    // Smile: {
+    //   label: "Smile",
+    //   type: "two-times-selection-2",
+    //   placeHolder: "Registration state",
+    //   required: true,
+    //   options: ["Registered", "Pending", "Not Allowed"],
+    //   value: "",
+    // },
     Airtel: {
       label: "Airtel",
-      type: "two-times-selection-2",
+      type: "mno-matrix",
       placeHolder: "Registration state",
-      required: true,
+      required: false,
       options: ["Registered", "Pending", "Not Allowed"],
       value: "",
     },
@@ -126,55 +128,31 @@ const AdminSenderIdTable = () => {
   const [modalFormState, setModalFormState] = useState({
     formState: modalFormElements,
   });
+  const [initialFormState, setFormState] = useState({
+    initialValues: { ...createSenderIdInitialFormValues },
+  });
+  const [senderCountry, setSenderCountry] = useState({});
 
   const onAddButtonClicked = () => {
+    setFormState({ initialValues: { ...createSenderIdInitialFormValues } });
     setModalState({ modalOpen: true });
   };
-  const onEditButtonClicked = (id) => {
+  const onEditButtonClicked = (data) => {
     // setModalState({ modalOpen: true });
-    const sender_ids = sid_data.filter((sid) => sid.id === id);
-    const sender_id = sender_ids[0];
-    Object.keys(modalFormElements).map((key) => {
-      switch (key) {
-        case "country":
-          modalFormElements[key].value = sender_id.country;
-          break;
-        case "sender_id":
-          modalFormElements[key].value = sender_id.name;
-          break;
-        case "vodacom":
-          const mno = sender_id.mno.filter((mno) => mno.name === "Vodacom");
-          modalFormElements[key].value = mno.status;
-          break;
-        case "Airtel":
-          const airtel = sender_id.mno.filter((mno) => mno.name === "Airtel");
-          modalFormElements[key].value = airtel.status;
-          break;
-        case "Tigo":
-          const tigo = sender_id.mno.filter((mno) => mno.name === "Tigo");
-          modalFormElements[key].value = tigo.status;
-          break;
-        case "zantel":
-          const zantel = sender_id.mno.filter((mno) => mno.name === "Zantel");
-          modalFormElements[key].value = zantel.status;
-          break;
-        case "halotel":
-          const halotel = sender_id.mno.filter((mno) => mno.name === "Halotel");
-          modalFormElements[key].value = halotel.status;
-          break;
-        case "smile":
-          const vodacom = sender_id.mno.filter((mno) => mno.name === "vodacom");
-          modalFormElements[key].value = vodacom.status;
-          break;
-        default:
-          break;
-      }
-      return null;
-    });
-    setModalFormState({ modalForm: modalFormElements });
+    // const sender_ids = sid_data.filter((sid) => sid.id === id);
+    // const sender_id = sender_ids[0];
+    console.log("inedt");
+    const initialValues = { ...createSenderIdInitialFormValues };
+    initialValues.sender_name = data.name;
+    initialValues.country = data.country;
+    initialValues.status = data.status;
+
+    // createSenderIdInitialFormValues = { ...initialValues };
+    // console.log(initialValues);
+
+    setFormState({ initialValues: initialValues });
+    // console.log(initialFormState.initialValues);
     setModalState({ modalOpen: true });
-    // console.log(sender_id);
-    console.log(modalFormState.formState);
   };
 
   const addSenderID = (parameters) => {
@@ -190,7 +168,7 @@ const AdminSenderIdTable = () => {
   //For the modal form
   let form = modalState.modalOpen ? (
     <ModalForm
-      initialValues={createSenderIdInitialFormValues}
+      initialValues={initialFormState.initialValues}
       validationSchema={formValuesValidation}
       content={modalFormState.formState}
       closeModalFunc={closeModal}
@@ -286,11 +264,12 @@ const AdminSenderIdTable = () => {
 
                 if (action === "edit") {
                   return (
-                    <Edit2
-                      onClick={() => onEditButtonClicked(data.id)}
-                      className="m-3"
-                      size={24}
-                    />
+                    <span
+                      className="p-1 m-3"
+                      onClick={() => onEditButtonClicked(data)}
+                    >
+                      <Edit2 size={24} />
+                    </span>
                   );
                 } else if (action === "delete") {
                   return (
@@ -369,11 +348,38 @@ const AdminSenderIdTable = () => {
         </Col>
         <Col lg={5}>
           <Row>
-            <Col lg={7}>
-              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+            <Col lg={4}>
+              <Formik
+                initialValues={{ country: "Tanzania" }}
+                onSubmit={async (values) => {
+                  //function to api to fetch tanzanian sender ids
+                  console.log("From submit", values);
+                }}
+              >
+                {({ handleChange, handleSubmit }) => (
+                  <Form>
+                    <Form.Group>
+                      <Form.Label>Country</Form.Label>
+                      <Form.Select
+                        onChange={(e) => {
+                          handleChange(e);
+                          handleSubmit();
+                        }}
+                        name="country"
+                      >
+                        <option>Tanzania</option>
+                        <option>Kenya</option>
+                      </Form.Select>
+                    </Form.Group>
+                  </Form>
+                )}
+              </Formik>
             </Col>
             <Col lg={5}>
-              <div className="mb-2">&nbsp;</div>
+              <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+            </Col>
+            <Col lg={3}>
+              <div className="m-1">&nbsp;</div>
               <Button
                 onClick={onAddButtonClicked}
                 variant="info"
@@ -467,7 +473,7 @@ const AdminSenderIdTable = () => {
                       }
                     </tr>
                     {row.isExpanded ? (
-                      <tr className="bg-light">
+                      <tr className="p-1">
                         <td
                           className="text-center"
                           colSpan={visibleColumns.length}

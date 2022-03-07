@@ -4,38 +4,35 @@ import { useSelector, RootStateOrAny } from "react-redux";
 // import { retrieveSenderIDs } from "../../../redux/slices/senderids";
 import { Card, Col, Container, Row } from "react-bootstrap";
 
-import DashboardLayout from "../../../../layouts/Dashboard";
 import AdminSenderIdTable from "./admin_sender_id_table";
 
-const Admin_sender_id_manager = () => {
+const AdminSenderIdManager = () => {
   // const user = useSelector((state: RootStateOrAny) => state.user.value);
 
   return (
-    <DashboardLayout>
-      <React.Fragment>
-        <Helmet title="Manage Sender IDs" />
-        <Container fluid className="p-0">
-          <h1 className="h3 mb-3">Sender ID Management</h1>
-          <Row>
-            <Col lg={12}>
-              <Card>
-                <Card.Body>
-                  <AdminSenderIdTable />
-                </Card.Body>
-              </Card>
-            </Col>
-            {/* <Col lg={5}>
+    <React.Fragment>
+      <Helmet title="Manage Sender IDs" />
+      <Container fluid className="p-0">
+        <h1 className="h3 mb-3">Sender ID Management</h1>
+        <Row>
+          <Col lg={12}>
+            <Card>
+              <Card.Body>
+                <AdminSenderIdTable />
+              </Card.Body>
+            </Card>
+          </Col>
+          {/* <Col lg={5}>
               <Card>
                 <Card.Body>
                   <Matrix />
                 </Card.Body>
               </Card>
             </Col> */}
-          </Row>
-        </Container>
-      </React.Fragment>
-    </DashboardLayout>
+        </Row>
+      </Container>
+    </React.Fragment>
   );
 };
 
-export default Admin_sender_id_manager;
+export default AdminSenderIdManager;

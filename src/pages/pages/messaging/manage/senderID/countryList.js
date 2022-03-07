@@ -217,7 +217,7 @@ const countryList = [
   "Syrian Arab Republic",
   "Taiwan",
   "Tajikistan",
-  "Tanzania, United Republic of",
+  "Tanzania",
   "Thailand",
   "Timor-Leste",
   "Togo",

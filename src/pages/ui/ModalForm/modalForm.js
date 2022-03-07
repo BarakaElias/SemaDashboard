@@ -41,13 +41,16 @@ const ModalForm = (props) => {
     props.submitFormFunc(params);
   };
 
+  // console.log(props.initialValues);
+
   return (
-    <Modal key="haha" show={true} size="lg" centered>
+    <Modal key="haha" show={true} size="xl" centered>
       <Modal.Header>
         <h2>{formEl["title"].value}</h2>
       </Modal.Header>
       <Formik
-        initialValues={props.initialValues}
+        initialValues={{ ...props.initialValues }}
+        enableReinitialize={true}
         // validationSchema={props.validationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           //function to call
@@ -66,18 +69,21 @@ const ModalForm = (props) => {
           <Form onSubmit={handleSubmit}>
             <Modal.Body className="m-3">
               {formElementsArray.map((formElement) => (
-                <FormControl
-                  onControlBlur={handleBlur}
-                  controlName={formElement.key}
-                  handleChange={handleChange}
-                  ident={formElement.key}
-                  type={formElement.config.type}
-                  label={formElement.config.label}
-                  placeHolder={formElement.config.placeHolder}
-                  required={formElement.config.required}
-                  options={formElement.config.options}
-                  setValToState={inputChangedHandler}
-                />
+                <React.Fragment>
+                  <FormControl
+                    initValue={values[formElement.key]}
+                    onControlBlur={handleBlur}
+                    controlName={formElement.key}
+                    handleChange={handleChange}
+                    ident={formElement.key}
+                    type={formElement.config.type}
+                    label={formElement.config.label}
+                    placeHolder={formElement.config.placeHolder}
+                    required={formElement.config.required}
+                    options={formElement.config.options}
+                    setValToState={inputChangedHandler}
+                  />
+                </React.Fragment>
               ))}
             </Modal.Body>
             <Modal.Footer>

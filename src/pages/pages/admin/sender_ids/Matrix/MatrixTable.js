@@ -1,10 +1,50 @@
 import React from "react";
-import { Row, Table } from "react-bootstrap";
+import { Row, Table, Badge } from "react-bootstrap";
 import { useTable } from "react-table";
 
 const MatrixTable = (props) => {
   const mno_data = [...props.data];
   const data = React.useMemo(() => mno_data, []);
+
+  const registerState = (value) => {
+    switch (value) {
+      case "Registered":
+        return (
+          <div className="d-flex justify-content-center">
+            <div
+              style={{ height: "20px", width: "20px" }}
+              className="rounded-circle bg-success"
+            >
+              &nbsp;
+            </div>
+          </div>
+        );
+      case "Not Registered":
+        return (
+          <div className="d-flex justify-content-center">
+            <div
+              style={{ height: "20px", width: "20px" }}
+              className="rounded-circle bg-light"
+            >
+              &nbsp;
+            </div>
+          </div>
+        );
+      case "Pending":
+        return (
+          <div className="d-flex justify-content-center">
+            <div
+              style={{ height: "20px", width: "20px" }}
+              className="rounded-circle bg-warning"
+            >
+              &nbsp;
+            </div>
+          </div>
+        );
+      default:
+        return <p>{value}</p>;
+    }
+  };
 
   const columns = React.useMemo(
     () => [
@@ -15,30 +55,37 @@ const MatrixTable = (props) => {
       {
         Header: "Vodacom",
         accessor: "vodacom",
+        Cell: ({ value }) => registerState(value),
       },
       {
         Header: "Tigo",
         accessor: "tigo",
+        Cell: ({ value }) => registerState(value),
       },
       {
         Header: "Airtel",
         accessor: "airtel",
+        Cell: ({ value }) => registerState(value),
       },
       {
         Header: "Halotel",
         accessor: "halotel",
+        Cell: ({ value }) => registerState(value),
       },
       {
         Header: "Zantel",
         accessor: "zantel",
+        Cell: ({ value }) => registerState(value),
       },
       {
         Header: "TTCL",
         accessor: "ttcl",
+        Cell: ({ value }) => registerState(value),
       },
       {
         Header: "Smile",
         accessor: "smile",
+        Cell: ({ value }) => registerState(value),
       },
     ],
     []
@@ -52,7 +99,7 @@ const MatrixTable = (props) => {
   return (
     <React.Fragment>
       <Row>
-        <Table {...getTableProps()} className="m-1">
+        <Table {...getTableProps()} className="table table-borderless m-1">
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr
@@ -67,7 +114,7 @@ const MatrixTable = (props) => {
               </tr>
             ))}
           </thead>
-          <tbody {...getTableBodyProps()}>
+          <tbody className="table-hover" {...getTableBodyProps()}>
             {rows.map((row) => {
               prepareRow(row);
               return (
