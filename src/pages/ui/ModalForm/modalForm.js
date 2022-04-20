@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { Helmet } from "react-helmet-async";
 import FormControl from "./formControl";
 
@@ -27,6 +27,8 @@ const ModalForm = (props) => {
     setModalFormState({ modForm: updatedForm });
   };
 
+  const [matrixState, setMatrixState] = useState({ country: "Tanzania" });
+
   const formDataToParams = () => {
     const params = {
       api_id: user.api_id,
@@ -40,6 +42,9 @@ const ModalForm = (props) => {
     }
     props.submitFormFunc(params);
   };
+
+  let mno_list = [];
+  // console.log("From Modal Form", props.content);
 
   // console.log(props.initialValues);
 
@@ -75,6 +80,7 @@ const ModalForm = (props) => {
                     onControlBlur={handleBlur}
                     controlName={formElement.key}
                     handleChange={handleChange}
+                    registered_nets={values.registered_networks}
                     ident={formElement.key}
                     type={formElement.config.type}
                     label={formElement.config.label}

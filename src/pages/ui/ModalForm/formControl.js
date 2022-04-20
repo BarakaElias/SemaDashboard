@@ -2,10 +2,15 @@ import React from "react";
 // import { Helmet } from "react-helmet-async";
 
 import { Form, Row, Col } from "react-bootstrap";
+import { FieldArray, Field, ErrorMessage } from "formik";
 // import { Navigate } from "react-router";
+import { Check, Loader, X } from "react-feather";
 
 const formControl = (props) => {
   let inputControl = null;
+  let ind = -1;
+  // console.log("h", props.initValue);
+
   // console.log(props.controlName);
   switch (props.type) {
     case "text":
@@ -108,57 +113,7 @@ const formControl = (props) => {
         </Form.Group>
       );
       break;
-    case "mno-matrix1":
-      inputControl = (
-        <Row className="g-2" key={props.label}>
-          <h4>{props.label}</h4>
-          <Col lg={6}>
-            <Form.Group>
-              <Form.Label>Mno</Form.Label>
-              <Form.Select>
-                <option>Vodacom</option>
-                <option>Tigo</option>
-                <option>Airtel</option>
-                <option>Halotel</option>
-                <option>Zantel</option>
-                <option>TTCL</option>
-                <option>Smile</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col lg={6}>
-            <Form.Group>
-              <Form.Label>Status</Form.Label>
-              <div key="inline-radio" className="mb-3">
-                <Form.Check
-                  inline
-                  label="Registered"
-                  name={props.label}
-                  type="radio"
-                  id="inline-radio-1"
-                />
-                <Form.Check
-                  inline
-                  label="Not Registered"
-                  name={props.label}
-                  type="radio"
-                  id="inline-radio-2"
-                />
-                <Form.Check
-                  inline
-                  label="Pending"
-                  type="radio"
-                  name={props.label}
-                  id="inline-radio-3"
-                />
-              </div>
-            </Form.Group>
-          </Col>
-        </Row>
-      );
-      break;
     case "mno-matrix":
-      let i = 0;
       const mnos = [
         "Vodacom",
         "Tigo",
@@ -168,174 +123,150 @@ const formControl = (props) => {
         "TTCL",
         "Smile",
       ];
+
       inputControl = (
-        <React.Fragment>
-          <h3>Vendor registration status</h3>
-          <table>
+        <Form.Group>
+          <Form.Label>{props.label}</Form.Label>
+          <table className="form-matrix">
             <thead>
               <tr>
                 <th>Vendor/MNO</th>
-                <th>Vodacom</th>
-                <th>Tigo</th>
-                <th>Airtel</th>
-                <th>Halotel</th>
-                <th>Zantel</th>
-                <th>TTCL</th>
-                <th>Smile</th>
+                {mnos.map((mno) => (
+                  <th key={mno + "theadth"}>{mno}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {mnos.map((mno) => (
-                <tr key={mno + "th"}>
-                  <th>{mnos[i]}</th>
-                  {mnos.map((mno) => (
-                    <td key={mno + "td"}>
-                      <Form.Group className="m-1">
-                        <Form.Select name={mno}>
-                          <option>Not Registered</option>
-                          <option>Registered</option>
-                          <option>Pending</option>
-                        </Form.Select>
-                      </Form.Group>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-              <tr>
-                <th>Vodacom</th>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>NotRegistered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-              </tr>
-              <tr>
-                <th>Tigo</th>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-                <td>
-                  <Form.Group className="m-1">
-                    <Form.Select>
-                      <option>Not Registered</option>
-                      <option>Registered</option>
-                      <option>Pending</option>
-                    </Form.Select>
-                  </Form.Group>
-                </td>
-              </tr>
+              {mnos.map((mno_) => {
+                ind++;
+                return (
+                  <tr key={mno_ + "th"}>
+                    {/* <h1>{mno}</h1> */}
+                    <th>{mno_}</th>
+                    {/* <th>{mnos[i]}</th> */}
+                    {mnos.map((mno) => {
+                      // console.log(row);
+
+                      return (
+                        <td key={mno + "td"}>
+                          <FieldArray
+                            name="registered_networks"
+                            render={(arrayHelpers) => {
+                              return (
+                                <Form.Group className="m-1">
+                                  <div className="tw-toggle">
+                                    <div className="toggle nr">
+                                      <input
+                                        type="radio"
+                                        onChange={props.handleChange}
+                                        name={`registered_networks.${ind}`}
+                                        value={{
+                                          network: mno,
+                                          registar: mno_,
+                                          status: "Not Registered",
+                                        }}
+                                      />
+                                      <div className="toggle pd">
+                                        <input
+                                          type="radio"
+                                          onChange={props.handleChange}
+                                          name={`registered_networks.${ind}`}
+                                          value={{
+                                            network: mno,
+                                            registar: mno_,
+                                            status: "Pending",
+                                          }}
+                                        />
+                                      </div>
+                                      <div className="toggle rd">
+                                        <input
+                                          type="radio"
+                                          onChange={props.handleChange}
+                                          name={`registered_networks.${ind}`}
+                                          value={{
+                                            network: mno,
+                                            registar: mno_,
+                                            status: "Registered",
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </Form.Group>
+                              );
+                            }}
+                          />
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
-        </React.Fragment>
+        </Form.Group>
+      );
+      break;
+    case "matrix":
+      inputControl = (
+        <FieldArray name="registered_networks">
+          {(fieldArrayProps) => {
+            const { push, remove, form } = fieldArrayProps;
+            const { values } = form;
+            const { registered_networks } = values;
+            // console.log("a", registered_networks);
+
+            return (
+              <div className="d-lg-flex flex-wrap">
+                {registered_networks.map((network, index) => {
+                  // console.log(props.initValue);
+                  return (
+                    <Form.Group className="p-1" key={index}>
+                      <Form.Label>Mobile Network {++index}</Form.Label>
+                      <br></br>
+                      <label>Network</label>
+                      <Field
+                        className="form-control w-100"
+                        placeholder="Network"
+                        value={network.network}
+                        name={`registered_networks[${index}].network`}
+                      />
+                      <label>Registerer</label>
+                      <Field
+                        className="form-control w-100"
+                        placeholder="Network registered under"
+                        value={network.registerer}
+                        name={`registered_networks[${index}].registerer`}
+                      />
+                      <label>Status</label>
+                      <Field
+                        className="form-control w-100"
+                        placeholder="Pending/Registered"
+                        value={network.status}
+                        name={`registered_networks[${index}].status`}
+                      />
+
+                      <button
+                        className="btn btn-secondary"
+                        type="button"
+                        onClick={() => remove(index)}
+                      >
+                        -
+                      </button>
+                      <button
+                        className="btn btn-success"
+                        type="button"
+                        onClick={() => push("")}
+                      >
+                        +
+                      </button>
+                    </Form.Group>
+                  );
+                })}
+              </div>
+            );
+          }}
+        </FieldArray>
       );
       break;
     default:

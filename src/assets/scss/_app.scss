@@ -89,3 +89,122 @@
         }
     }
 }
+
+// .tw-toggle{
+//     display: inline-block;
+//     padding: 5px 6px;
+//     border-radius: 20px;
+//     position: relative;
+//     border: 2px solid #95a5a6;
+
+//     label{
+//         text-align: center;
+//         display: inline-block;
+//         color: $blue;
+//         position: relative;
+//         z-index: 2;
+//         margin: 0;
+//         text-align: center;
+//         padding: 2px 3px;
+//         font-size: 15px;
+//     }
+//     input{
+//         position: absolute;
+//         z-index: 3;
+//         // opacity: 0;
+//         cursor: pointer;
+//         // background-color: aqua;
+
+//         &[value="Pending"]:checked ~ span{
+//             background: #e74c3c;
+//             left: 33%;
+//             color: $white;
+//         }
+//         &[value="Registered"]:checked ~ span{
+//             background: #27ae60;
+//             left: 64px;
+//             .tw-toggle{
+//                 border-color: #27ae60;
+//             }
+//             // right: 2px;
+//         }
+//         &[value="Not Registered"]:checked ~ span{
+//             background: #95a5a6;
+//             // background: purple;
+//             left: 2px;
+//         }
+//         &[value="Not Registered"]:checked + label, &[value="Registered"]:checked + label{
+//             color: $white;
+//         }
+//         &[value="Pending"]:checked + label{
+//             color: $white;
+//         }
+//     }
+//     span{
+//         height: 24px;
+//         width: 24px;
+//         line-height: 21px;
+//         border-radius: 50%;
+//         background: $white;
+//         display: block;
+//         position: absolute;
+//         left: 22px;
+//         top: 2px;
+//         transition: all 0.3s ease-in-out;
+//     }
+// }
+
+
+.tw-toggle{
+    display: flex;
+    flex-direction: row;
+    flex: auto;
+    border: 1px solid $gray-300;
+    border-radius: 20px;
+    justify-content: space-around;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    position: relative;
+    padding: 8px;
+
+    // .toggle{
+    //     width: 25px;
+    //     height: 25px;
+    //     position: relative;
+    //     border-radius: 50%;
+    //     // cursor: pointer;
+
+
+        input{
+            width: 24px;
+            display: block;
+            cursor: pointer;
+            padding: 5px;
+            height: 24px;
+            // opacity: 0;
+            position: relative;
+            z-index: 2;
+
+            &[value="Pending"]:checked ~ label{
+                background: $warning;
+                color: $white;
+            }
+            &[value="Registered"]:checked ~ label{
+                background: $success;
+                color: $white;                      
+            }
+            &[value="Not Registered"]:checked ~ label{
+                background: $gray-300;
+                color: $white;
+            }
+        }
+
+        label{
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            border-radius: 50%;
+        }
+    // }
+}

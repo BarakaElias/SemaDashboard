@@ -119,7 +119,10 @@ const MatrixTable = (props) => {
               prepareRow(row);
               return (
                 <tr key={i++ + "datarow"} {...row.getRowProps}>
+                  <td>{row.original.network}</td>
                   {row.cells.map((cell) => {
+                    console.log(cell);
+
                     return (
                       <td key={i++ + "datacell"} {...cell.getCellProps()}>
                         {cell.render("Cell")}

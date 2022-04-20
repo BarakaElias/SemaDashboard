@@ -85,14 +85,33 @@ const sid_data = [
     country: "Tanzania",
     name: "LAINA",
     status: "Active",
-    mno: [
-      { name: "Vodacom", status: "Registered" },
-      { name: "Zantel", status: "Registered" },
-      { name: "Halotel", status: "Registered" },
-      { name: "Airtel", status: "Registered" },
-      { name: "Tigo", status: "Not Allowed" },
-      { name: "TTCL", status: "Pending" },
-      { name: "Smile", status: "Pending" },
+    mno: [],
+    registered_networks: [
+      {
+        network: "Halotel",
+        registerer: "Halotel",
+        status: "Pending",
+      },
+      {
+        network: "Vodacom",
+        registerer: "Vodacom",
+        status: "Pending",
+      },
+      {
+        network: "Tigo",
+        registerer: "Halotel",
+        status: "Pending",
+      },
+      {
+        network: "Smile",
+        registerer: "Halotel",
+        status: "Registered",
+      },
+      {
+        network: "Airtel",
+        registerer: "Airtel",
+        status: "Registered",
+      },
     ],
     date_created: "8/20/2019 11:59:30 AM",
     user: "isaac@aimfirms.com",

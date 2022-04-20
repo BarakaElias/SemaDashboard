@@ -70,56 +70,14 @@ const AdminSenderIdTable = () => {
       type: "checkbox",
       value: "Active",
     },
-
-    // Vodacom: {
-    //   label: "Vodacom",
-    //   type: "two-times-selection-2",
-    //   placeHolder: "Registration state",
-    //   required: true,
-    //   options: ["Registered", "Pending", "Not Allowed"],
-    //   value: "",
-    // },
-    // Halotel: {
-    //   label: "Halotel",
-    //   type: "two-times-selection-2",
-    //   placeHolder: "Registration state",
-    //   required: true,
-    //   options: ["Registered", "Pending", "Not Allowed"],
-    //   value: "",
-    // },
-    // Tigo: {
-    //   label: "Tigo",
-    //   type: "two-times-selection-2",
-    //   placeHolder: "Registration state",
-    //   required: true,
-    //   options: ["Registered", "Pending", "Not Allowed"],
-    //   value: "",
-    // },
-    // Zantel: {
-    //   label: "Zantel",
-    //   type: "two-times-selection-2",
-    //   placeHolder: "Registration state",
-    //   required: true,
-    //   options: ["Registered", "Pending", "Not Allowed"],
-    //   value: "",
-    // },
-    // Smile: {
-    //   label: "Smile",
-    //   type: "two-times-selection-2",
-    //   placeHolder: "Registration state",
-    //   required: true,
-    //   options: ["Registered", "Pending", "Not Allowed"],
-    //   value: "",
-    // },
-    Airtel: {
-      label: "Airtel",
-      type: "mno-matrix",
+    registered_networks: {
+      label: "MNO Registration Stauts",
+      type: "matrix",
       placeHolder: "Registration state",
       required: false,
       options: ["Registered", "Pending", "Not Allowed"],
-      value: "",
+      value: [],
     },
-
     submitButton: {
       type: "button",
       placeHolder: "Add Sender ID",
@@ -146,6 +104,7 @@ const AdminSenderIdTable = () => {
     initialValues.sender_name = data.name;
     initialValues.country = data.country;
     initialValues.status = data.status;
+    initialValues.registered_networks = data.registered_networks;
 
     // createSenderIdInitialFormValues = { ...initialValues };
     // console.log(initialValues);
@@ -332,7 +291,7 @@ const AdminSenderIdTable = () => {
   // setPageSize(8);
 
   const renderRowSubComponent = React.useCallback(
-    (data) => <MatrixTable data={data.row.original.mno} />,
+    (data) => <MatrixTable data={data.row.original.registered_networks} />, //was .mno
     []
   );
   const { globalFilter } = state;
