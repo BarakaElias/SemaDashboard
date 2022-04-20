@@ -4,9 +4,31 @@ import { useTable } from "react-table";
 
 const MatrixTable = (props) => {
   const mno_data = [...props.data];
-  const data = React.useMemo(() => mno_data, []);
+  const raw_data = React.useMemo(() => mno_data, []);
+  // const data = React.useMemo(() => {}, []);
+  const row_data = [];
 
-  const registerState = (value) => {
+  console.log("Before processing:", raw_data);
+
+  raw_data.map((r_data) => {
+    console.log(r_data);
+    const dd = {
+      // [r_data.registerer.toLowerCase()]: {
+      //   network: r_data.network,
+      //   status: r_data.status,
+      // },
+      [r_data.registerer.toLowerCase()]: r_data.status,
+      vendor: r_data.network,
+    };
+    console.log(dd);
+    row_data.push(dd);
+  });
+
+  console.log(row_data);
+  const data = React.useMemo(() => row_data, []);
+  const registerState = (value, column) => {
+    if (column !== undefined) {
+    }
     switch (value) {
       case "Registered":
         return (
@@ -55,7 +77,7 @@ const MatrixTable = (props) => {
       {
         Header: "Vodacom",
         accessor: "vodacom",
-        Cell: ({ value }) => registerState(value),
+        Cell: ({ value, column }) => registerState(value, column),
       },
       {
         Header: "Tigo",
@@ -119,9 +141,9 @@ const MatrixTable = (props) => {
               prepareRow(row);
               return (
                 <tr key={i++ + "datarow"} {...row.getRowProps}>
-                  <td>{row.original.network}</td>
+                  {/* <td>{row.original.network}</td> */}
                   {row.cells.map((cell) => {
-                    console.log(cell);
+                    // console.log(cell);
 
                     return (
                       <td key={i++ + "datacell"} {...cell.getCellProps()}>
