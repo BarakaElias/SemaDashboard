@@ -1,0 +1,11 @@
+.tw-toggle{
+    display: inline-block;
+    padding: 2px 3px;
+    border-radius: 20px;
+    position: relative;
+    border: 2px solid #95a5a6;
+}
+
+.tw-toggle label{
+    text-align: center;
+}

@@ -134,6 +134,7 @@ const pagesSection = [
     icon: User,
     title: "API",
   },
+
   {
     href: "/pages",
     icon: Layout,

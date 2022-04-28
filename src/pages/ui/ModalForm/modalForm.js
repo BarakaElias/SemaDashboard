@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { Helmet } from "react-helmet-async";
 import FormControl from "./formControl";
 
 import { Button, Modal, Form } from "react-bootstrap";
 import { useSelector, RootStateOrAny } from "react-redux";
+import { Formik } from "formik";
 
 const ModalForm = (props) => {
   const user = useSelector((state: RootStateOrAny) => state.user.value);
@@ -26,6 +27,8 @@ const ModalForm = (props) => {
     setModalFormState({ modForm: updatedForm });
   };
 
+  const [matrixState, setMatrixState] = useState({ country: "Tanzania" });
+
   const formDataToParams = () => {
     const params = {
       api_id: user.api_id,
@@ -40,34 +43,69 @@ const ModalForm = (props) => {
     props.submitFormFunc(params);
   };
 
+  let mno_list = [];
+  // console.log("From Modal Form", props.content);
+
+  // console.log(props.initialValues);
+
   return (
-    <Modal show={true} centered>
+    <Modal key="haha" show={true} size="xl" centered>
       <Modal.Header>
         <h2>{formEl["title"].value}</h2>
       </Modal.Header>
-      <Modal.Body className="text-center m-3">
-        <Form>
-          {formElementsArray.map((formElement) => (
-            <FormControl
-              ident={formElement.key}
-              type={formElement.config.type}
-              label={formElement.config.label}
-              placeHolder={formElement.config.placeHolder}
-              required={formElement.config.required}
-              options={formElement.config.options}
-              setValToState={inputChangedHandler}
-            />
-          ))}
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="outline-danger" onClick={props.closeModalFunc}>
-          Cancel
-        </Button>{" "}
-        <Button onClick={formDataToParams}>
-          {formEl["submitButton"].placeHolder}
-        </Button>
-      </Modal.Footer>
+      <Formik
+        initialValues={{ ...props.initialValues }}
+        enableReinitialize={true}
+        // validationSchema={props.validationSchema}
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+          //function to call
+          console.log(values);
+        }}
+      >
+        {({
+          errors,
+          handleBlur,
+          handleChange,
+          handleSubmit,
+          isSubmitting,
+          touched,
+          values,
+        }) => (
+          <Form onSubmit={handleSubmit}>
+            <Modal.Body className="m-3">
+              {formElementsArray.map((formElement) => (
+                <React.Fragment>
+                  <FormControl
+                    initValue={values[formElement.key]}
+                    onControlBlur={handleBlur}
+                    controlName={formElement.key}
+                    handleChange={handleChange}
+                    registered_nets={values.registered_networks}
+                    ident={formElement.key}
+                    type={formElement.config.type}
+                    label={formElement.config.label}
+                    placeHolder={formElement.config.placeHolder}
+                    required={formElement.config.required}
+                    options={formElement.config.options}
+                    setValToState={inputChangedHandler}
+                  />
+                </React.Fragment>
+              ))}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="outline-danger" onClick={props.closeModalFunc}>
+                Cancel
+              </Button>{" "}
+              <Button
+                type="submit"
+                // onClick={formDataToParams}
+              >
+                {formEl["submitButton"].placeHolder}
+              </Button>
+            </Modal.Footer>
+          </Form>
+        )}
+      </Formik>
     </Modal>
   );
 };

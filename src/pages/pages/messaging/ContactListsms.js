@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
@@ -12,7 +11,7 @@ import { useSelector, RootStateOrAny } from "react-redux";
 // );
 
 const ContactListSMS = (props) => {
-  const user = useSelector((state: RootStateOrAny) => state.user.value);
+  // const user = useSelector((state: RootStateOrAny) => state.user.value);
   const sender_ids = useSelector(
     (state: RootStateOrAny) => state.sender_ids.values
   );
@@ -103,19 +102,19 @@ const ContactListSMS = (props) => {
   const sendSMSHandler = (event) => {
     event.preventDefault();
   };
-  const alertDialogContent = {
-    type: "certainty",
-    title: "Are you sure?",
-    message:
-      "Your message will be sent in 1 Part & contains 2 characters. Do you want to send sms?",
-    feedback: "Fucntiosn",
-  };
-  const openAlertModal = () => {
-    this.setState({ alertOpen: true });
-  };
-  const closeAlertModal = () => {
-    this.setState({ alertOpen: false });
-  };
+  // const alertDialogContent = {
+  //   type: "certainty",
+  //   title: "Are you sure?",
+  //   message:
+  //     "Your message will be sent in 1 Part & contains 2 characters. Do you want to send sms?",
+  //   feedback: "Fucntiosn",
+  // };
+  // const openAlertModal = () => {
+  //   this.setState({ alertOpen: true });
+  // };
+  // const closeAlertModal = () => {
+  //   this.setState({ alertOpen: false });
+  // };
   let scheduleForm =
     formState.contactListForm["sms_schedule"].value === "yes" ? (
       <Row>

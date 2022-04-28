@@ -5,6 +5,7 @@ import { Card, Container, Row, Button } from "react-bootstrap";
 import ContactListsTable from "./contactlistsTable";
 import DashboardLayout from "../../../layouts/Dashboard";
 import ModalForm from "../../ui/ModalForm/modalForm";
+import { initialValues, validationSchema } from "./FormikForm";
 
 const ContactLists = (props) => {
   const [modalState, setModalState] = useState({
@@ -33,7 +34,12 @@ const ContactLists = (props) => {
     setModalState({ modalOpen: true });
   };
   let form = modalState.modalOpen ? (
-    <ModalForm content={modalFormElements} closeModalFunc={closeModal} />
+    <ModalForm
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      content={modalFormElements}
+      closeModalFunc={closeModal}
+    />
   ) : null;
   return (
     <DashboardLayout>

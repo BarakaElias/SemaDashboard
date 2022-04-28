@@ -1,6 +1,5 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-import { Badge, Col, Card, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 // import { DollarSign, ShoppingBag, Users, MessageCircle } from "react-feather";
 
@@ -13,7 +12,7 @@ import SmsSent from "./statisticsData/smsSent";
 // import illustration from "../../../assets/img/illustrations/customer-support.png";
 
 const Statistics = () => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   return (
     <Row>

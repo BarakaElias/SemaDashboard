@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { Card, Container, Row, Button } from "react-bootstrap";
 import TemplateTable from "./templateTable";
 import ModalForm from "../../../../ui/ModalForm/modalForm";
+import { initialValues, validationSchema } from "./FormikForm";
 
 const SmsTemplates = (props) => {
   const [modalState, setModalState] = useState({
@@ -53,7 +54,12 @@ const SmsTemplates = (props) => {
     setModalState({ modalOpen: true });
   };
   let form = modalState.modalOpen ? (
-    <ModalForm content={modalFormElements} closeModalFunc={closeModal} />
+    <ModalForm
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      content={modalFormElements}
+      closeModalFunc={closeModal}
+    />
   ) : null;
   return (
     <React.Fragment>
