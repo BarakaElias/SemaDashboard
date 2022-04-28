@@ -20,7 +20,7 @@ const contactListsTable = () => (
       <tbody>
         <tr>
           <td>Jijali Customers</td>
-          <td>300</td>
+          <td>500</td>
           <td className="table-action">
             <Link to="/contact-lists/edit-contact-list">
               <Edit2 className="align-middle me-1" size={18} />
@@ -29,8 +29,8 @@ const contactListsTable = () => (
           </td>
         </tr>
         <tr>
-          <td>Jijali Customers</td>
-          <td>300</td>
+          <td>My Frequent Customers</td>
+          <td>150</td>
           <td className="table-action">
             <Link to="/contact-lists/edit-contact-list">
               <Edit2 className="align-middle me-1" size={18} />
@@ -39,7 +39,7 @@ const contactListsTable = () => (
           </td>
         </tr>
         <tr>
-          <td>Jijali Customers</td>
+          <td>Subscribers</td>
           <td>300</td>
           <td className="table-action">
             <Link to="/contact-lists/edit-contact-list">
@@ -48,14 +48,14 @@ const contactListsTable = () => (
             <Trash className="align-middle" size={18} />
           </td>
         </tr>
-        <tr>
+        {/* <tr>
           <td>Jijali Customers</td>
           <td>300</td>
           <td className="table-action">
             <Edit2 className="align-middle me-1" size={18} />
             <Trash className="align-middle" size={18} />
           </td>
-        </tr>
+        </tr> */}
       </tbody>
     </Table>
   </Row>

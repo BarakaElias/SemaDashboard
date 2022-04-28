@@ -64,7 +64,16 @@ const MatrixTable = (props) => {
           </div>
         );
       default:
-        return <p>{value}</p>;
+        return (
+          <div className="d-flex justify-content-center">
+            <div
+              style={{ height: "20px", width: "20px" }}
+              className="rounded-circle bg-light"
+            >
+              &nbsp;
+            </div>
+          </div>
+        );
     }
   };
 

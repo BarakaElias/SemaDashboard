@@ -40,13 +40,10 @@ const templateTable = () => (
           <td>Active</td>
           <td>Sema</td>
           <td>
-            Hey #V1, Thank you for signing up for Sema Communications! We’re
-            stoked to see what you’re able todo with our communication platform.
-            To get started, we recommend checking out our Quick-Start Guide
-            that’ll walk you through the basics of each Sema Services
-            step-by-step. We also have a two - minute intro video if you’re more
-            of a movie buff. And if you’re ready to start reaching out to your
-            customers, you can log in below! https://login.sema.co.tz/ Cheers!
+            Hey [client name], Thank you for signing up for Sema Communications!
+            We’re stoked to see what you’re able todo with our communication
+            platform. To get started, we recommend checking out our Quick-Start
+            Guide or you can log in below! https://login.sema.co.tz/ Cheers!
           </td>
           <td>March, 22nd 2020</td>
           <td>March, 23rd 2020</td>
