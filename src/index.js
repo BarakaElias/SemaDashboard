@@ -13,6 +13,8 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 // axios.interceptors.request.use((request) => {
 //   console.log(request);
+//   axios.defaults.withCredentials = true;
+//   // return request;
 // });
 
 ReactDOM.render(

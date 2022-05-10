@@ -115,14 +115,35 @@ const AdminSenderIdTable = () => {
   };
 
   const addSenderID = (parameters) => {
+    console.log("from addsender", parameters);
     axios
-      .post("url", { params: parameters })
+      .get("http://localhost/semaapi/public/sanctum/csrf-cookie")
       .then((response) => {
         console.log(response);
+        axios
+          .post("http://localhost/semaapi/public/api/register_sender_id", {
+            params: parameters,
+          })
+          .then((res) => {
+            console.log("add", res);
+          })
+          .catch((err) => {
+            console.log("add", err);
+          });
       })
       .catch((err) => {
-        console.log(err);
+        console.log("from add", err);
       });
+    //   axios
+    //     .post("http://localhost/semaapi/public/api/register_sender_id", {
+    //       params: parameters,
+    //     })
+    //     .then((response) => {
+    //       console.log(response);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
   };
   //For the modal form
   let form = modalState.modalOpen ? (

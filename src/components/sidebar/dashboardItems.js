@@ -130,6 +130,25 @@ const pagesSection = [
     ],
   },
   {
+    href: "/users",
+    icon: User,
+    title: "Users",
+    children: [
+      {
+        href: "/users/all_users",
+        title: "All Users",
+      },
+      {
+        href: "/users/add_user",
+        title: "Add User",
+      },
+      {
+        href: "/users/my_profile",
+        title: "My Profile",
+      },
+    ],
+  },
+  {
     href: "/profile",
     icon: User,
     title: "API",

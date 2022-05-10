@@ -12,6 +12,8 @@ import LandingLayout from "./layouts/Landing";
 
 // Guards
 import AuthGuard from "./components/guards/AuthGuard";
+import AdminGuard from "./components/guards/AdminGuard";
+import GuestGuard from "./components/guards/GuestGuard";
 
 // Landing
 import Landing from "./pages/landing/Landing";
@@ -46,6 +48,9 @@ import ContactLists from "./pages/pages/contactLists/contactlists";
 import SmsTransactions from "./pages/pages/messaging/reports/transactions/transactions";
 import DlrReport from "./pages/pages/messaging/reports/dlrReport/dlrReport";
 import ContactList from "./pages/pages/contactLists/contactList/contactList";
+import Users from "./pages/pages/users/users";
+import AddUser from "./pages/pages/users/add_user";
+import MyProfile from "./pages/pages/users/my_profile";
 //ADDED ADMIN PAGES
 import AdminSenderIdManager from "./pages/pages/admin/sender_ids/admin_sender_id";
 
@@ -132,7 +137,19 @@ import Dashboard from "./layouts/Dashboard";
 const routes = [
   {
     path: "/",
-    element: <Default />,
+    element: (
+      <AuthGuard>
+        <Default />
+      </AuthGuard>
+    ),
+  },
+  {
+    path: "/dash",
+    element: (
+      <AuthGuard>
+        <Default />
+      </AuthGuard>
+    ),
     // children: [
     //   {
     //     path: "",
@@ -146,7 +163,11 @@ const routes = [
     children: [
       {
         path: "quicksms",
-        element: <QuickSMS />,
+        element: (
+          <AuthGuard>
+            <QuickSMS />
+          </AuthGuard>
+        ),
       },
       {
         path: "contactlistsms",
@@ -221,12 +242,35 @@ const routes = [
     ],
   },
   {
+    path: "users",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "all_users",
+        element: <Users />,
+      },
+      {
+        path: "add_user",
+        element: <AddUser />,
+      },
+      {
+        path: "my_profile",
+        element: <MyProfile />,
+      },
+    ],
+  },
+  {
     path: "admin",
     element: <AdminLayout />,
     children: [
       {
         path: "admin_manage_sender_ids",
-        element: <AdminSenderIdManager />,
+        element: (
+          <AdminGuard>
+            {" "}
+            <AdminSenderIdManager />
+          </AdminGuard>
+        ),
       },
     ],
   },

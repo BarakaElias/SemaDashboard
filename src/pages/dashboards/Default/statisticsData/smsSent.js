@@ -23,17 +23,21 @@ const SmsSent = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const dataValue = await axios.get(
-        "https://api.sema.co.tz/api/CheckBalance?api_id=API3462965997&api_password=Licks@2021!"
-      );
-      let val =
-        dataValue.data.CurrenceCode + " " + dataValue.data.BalanceAmount;
+      try {
+        const dataValue = await axios.get(
+          "https://api.sema.co.tz/api/CheckBalance?api_id=API3462965997&api_password=Licks@2021!"
+        );
+        let val =
+          dataValue.data.CurrenceCode + " " + dataValue.data.BalanceAmount;
 
-      setData({
-        value: val,
-        icon: "sent",
-        title: "SMS Sent",
-      });
+        setData({
+          value: val,
+          icon: "sent",
+          title: "SMS Sent",
+        });
+      } catch (e) {
+        console.log(e);
+      }
     }
     fetchData();
   }, []);

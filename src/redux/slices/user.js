@@ -11,6 +11,7 @@ export const userSlice = createSlice({
       email: "",
       api_id: "API3462965997",
       api_password: "Licks@2021!",
+      token: "7|iGA0wE5O1J8wClcSAC5ZEFAr9hQeZl92qUvgmMxt",
     },
   },
   reducers: {
@@ -32,11 +33,12 @@ export function logUserOut() {
 export function logUserIn(email, password) {
   return async (dispatch) => {
     const response = await axios.get(
-      "https://api.sema.co.tz/api/GetSenderIDList",
+      "https://localhost/semaapi/public/api/loginuser",
       {
         params: { email: email, password: password },
       }
     );
+    // console.log(response);
     dispatch(userSlice.actions.login(response.data));
   };
 }

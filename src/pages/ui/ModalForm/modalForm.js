@@ -7,12 +7,14 @@ import { useSelector, RootStateOrAny } from "react-redux";
 import { Formik } from "formik";
 
 const ModalForm = (props) => {
+  console.log("To see props", props);
+
   const user = useSelector((state: RootStateOrAny) => state.user.value);
   let formEl = { ...props.content };
   const formElementsArray = [];
   // const formElObject = {};
   for (let key in formEl) {
-    if (key !== "title" && key !== "submitButton") {
+    if (key !== "title" && key !== "submitButton" && key !== "submitFunction") {
       formElementsArray.push({
         key: key,
         config: formEl[key],
@@ -59,6 +61,7 @@ const ModalForm = (props) => {
         // validationSchema={props.validationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           //function to call
+          props.submitFormFunc(values);
           console.log(values);
         }}
       >

@@ -3,15 +3,22 @@ import { Navigate } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
 
-// For routes that can only be accessed by authenticated users
-function AuthGuard({ children }) {
-  const { isAuthenticated, isInitialized } = useAuth();
+// For routes that can only be accessed by admin users
+function AdminGuard({ children }) {
+  const { isAuthenticated, isInitialized, user } = useAuth();
+  console.log("admin guard", user.isSemaAdmin);
+
+  console.log("Admin Guard", isAuthenticated);
 
   if (isInitialized && !isAuthenticated) {
     return <Navigate to="/auth/sign-in" />;
   }
 
-  return <React.Fragment>{children}</React.Fragment>;
+  if (user.isSemaAdmin) {
+    return <React.Fragment>{children}</React.Fragment>;
+  }
+
+  return <Navigate to="/auth/sign-in" />;
 }
 
-export default AuthGuard;
+export default AdminGuard;

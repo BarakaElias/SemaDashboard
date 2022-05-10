@@ -14,8 +14,8 @@ function SignIn() {
   return (
     <Formik
       initialValues={{
-        email: "demo@bootlab.io",
-        password: "unsafepassword",
+        email: "baraka@aimfirms.com",
+        password: "LoginPass123",
         submit: false,
       }}
       validationSchema={Yup.object().shape({
@@ -27,14 +27,26 @@ function SignIn() {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await signIn(values.email, values.password);
+          const useR = await signIn(values.email, values.password);
 
-          navigate("/private");
+          // console.log("after awaiting", useR.isSemaAdmin);
+          if (useR.isSemaAdmin) {
+            navigate("/admin");
+          } else {
+            navigate("/dash");
+          }
+
+          // navigate("/admin/admin_manage_sender_ids");
         } catch (error) {
+          console.log("errs", error);
+
           const message = error.message || "Something went wrong";
 
           setStatus({ success: false });
           setErrors({ submit: message });
+          if (error.message === "useR is undefined") {
+            setErrors({ submit: "Email or password is wrong" });
+          }
           setSubmitting(false);
         }
       }}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import SignUp from "../../components/auth/SignUp";
 
@@ -19,6 +20,7 @@ const SignUpPage = () => (
         <div className="m-sm-4">
           <SignUp />
         </div>
+        <Link to="/auth/sign-in">I already have an account</Link>
       </Card.Body>
     </Card>
   </React.Fragment>

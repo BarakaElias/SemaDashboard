@@ -5,9 +5,11 @@ import useAuth from "../../hooks/useAuth";
 
 // For routes that can only be accessed by unauthenticated users
 function GuestGuard({ children }) {
-  const { isAuthenticated, isInitialized } = useAuth();
+  const { isAuthenticated, isInitialized, user } = useAuth();
 
-  if (isInitialized && isAuthenticated) {
+  // console.log("guest", user);
+
+  if (isInitialized && isAuthenticated && !user.isSemaAdmin) {
     return <Navigate to="/" />;
   }
 

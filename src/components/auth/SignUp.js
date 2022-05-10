@@ -2,9 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Form, Row, Col } from "react-bootstrap";
 
 import useAuth from "../../hooks/useAuth";
+import country_dial_codes from "../../utils/country_dial_codes";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -13,32 +14,42 @@ function SignUp() {
   return (
     <Formik
       initialValues={{
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         email: "",
         password: "",
+        country_code: "",
         confirmPassword: "",
         submit: false,
       }}
       validationSchema={Yup.object().shape({
-        firstName: Yup.string().max(255).required("First name is required"),
-        lastName: Yup.string().max(255).required("Last name is required"),
+        first_name: Yup.string().max(255).required("First name is required"),
+        last_name: Yup.string().max(255).required("Last name is required"),
         email: Yup.string()
           .email("Must be a valid email")
           .max(255)
           .required("Email is required"),
+        phone_number: Yup.string().required("Phone number is required").max(13),
+        country_code: Yup.string().required("Country code required").max(5),
         password: Yup.string()
           .min(12, "Must be at least 12 characters")
           .max(255)
           .required("Required"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        //slicing the phone nnumber
+        if (values.phone_number.length >= 10) {
+          values.phone_number = values.phone_number.slice(1);
+        }
+        values.phone_number = values.country_code + values.phone_number;
+        values.phone_number.slice(1);
         try {
           signUp(
             values.email,
             values.password,
-            values.firstName,
-            values.lastName
+            values.first_name,
+            values.last_name,
+            values.phone_number
           );
           navigate("/auth/sign-in");
         } catch (error) {
@@ -69,16 +80,16 @@ function SignUp() {
             <Form.Label>First name</Form.Label>
             <Form.Control
               type="text"
-              name="firstName"
+              name="first_name"
               placeholder="First name"
               value={values.firstName}
-              isInvalid={Boolean(touched.firstName && errors.firstName)}
+              isInvalid={Boolean(touched.first_name && errors.first_name)}
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            {!!touched.firstName && (
+            {!!touched.first_name && (
               <Form.Control.Feedback type="invalid">
-                {errors.firstName}
+                {errors.first_name}
               </Form.Control.Feedback>
             )}
           </Form.Group>
@@ -86,16 +97,16 @@ function SignUp() {
             <Form.Label>Last name</Form.Label>
             <Form.Control
               type="text"
-              name="lastName"
+              name="last_name"
               placeholder="Last name"
               value={values.lastName}
-              isInvalid={Boolean(touched.lastName && errors.lastName)}
+              isInvalid={Boolean(touched.last_name && errors.last_name)}
               onBlur={handleBlur}
               onChange={handleChange}
             />
-            {!!touched.lastName && (
+            {!!touched.last_name && (
               <Form.Control.Feedback type="invalid">
-                {errors.lastName}
+                {errors.last_name}
               </Form.Control.Feedback>
             )}
           </Form.Group>
@@ -116,6 +127,41 @@ function SignUp() {
               </Form.Control.Feedback>
             )}
           </Form.Group>
+          <Row>
+            <Col md={4}>
+              <Form.Group>
+                <Form.Label>Country</Form.Label>
+                <Form.Select
+                  name="country_code"
+                  value={values.country_code}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                >
+                  {country_dial_codes.map((option) => (
+                    <option key={option.code} value={option.dial_code}>
+                      {option.name} {option.dial_code}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col md={8}>
+              <Form.Group className="mb-3">
+                <Form.Label>Phone number</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="phone_number"
+                  placeholder="Eg. 0624xxxxxx"
+                  isInvalid={Boolean(
+                    touched.phone_number && errors.phone_number
+                  )}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                ></Form.Control>
+              </Form.Group>
+            </Col>
+          </Row>
+
           <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
             <Form.Control

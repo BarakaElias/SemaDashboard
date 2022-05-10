@@ -3,8 +3,9 @@ import React from "react";
 import { Dropdown } from "react-bootstrap";
 
 import { Settings, Lock, Key } from "react-feather";
-import { useSelector, RootStateOrAny, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 
 import avatar1 from "../../assets/img/avatars/avatar.jpg";
 import { logUserOut } from "../../redux/slices/user";
@@ -12,12 +13,13 @@ import { logUserOut } from "../../redux/slices/user";
 const NavbarUser = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { user } = useAuth();
 
-  // const handleLogout = () => {
-  //   dispatch(logUserOut());
-  //   navigate("/auth/sing-in");
-  // };
-  const user = useSelector((state: RootStateOrAny) => state.user.value);
+  const handleLogout = () => {
+    dispatch(logUserOut());
+    navigate("/auth/sign-in");
+  };
+  // const user = useSelector((state: RootStateOrAny) => //state.user.value);
   return (
     <Dropdown className="nav-item" align="end">
       <span className="d-inline-block d-sm-none">
@@ -32,7 +34,7 @@ const NavbarUser = () => {
             className="avatar img-fluid rounded-circle me-1"
             alt="Chris Wood"
           />
-          <span className="text-dark">{user.name}</span>
+          <span className="text-dark">{/*user.username*/}</span>
         </Dropdown.Toggle>
       </span>
       <Dropdown.Menu drop="end">
@@ -47,7 +49,7 @@ const NavbarUser = () => {
         <Dropdown.Divider />
         <Dropdown.Item>Last Login</Dropdown.Item>
         <Dropdown.Item>Help</Dropdown.Item>
-        <Dropdown.Item>Sign out</Dropdown.Item>
+        <Dropdown.Item onClick={handleLogout}>Sign out</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );

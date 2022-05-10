@@ -34,6 +34,11 @@ export function retrieveSenderIDs() {
           params: { api_id: "API3462965997", api_password: "Licks@2021!" },
         }
       );
+
+      // const response = await axios.get(
+      //   "http://localhost/semaapi/public/api/list_users",
+      //   { params: { company_id: "2020" } }
+      // );
       dispatch(senderIDSlice.actions.setSenderIDs(response.data));
       console.log(response);
     } catch (err) {

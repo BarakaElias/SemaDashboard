@@ -4,6 +4,7 @@ import { Card } from "react-bootstrap";
 
 import SignIn from "../../components/auth/SignIn";
 import avatar from "../../assets/img/avatars/avatar.jpg";
+import { Link } from "react-router-dom";
 
 const SignInPage = () => (
   <React.Fragment>
@@ -27,6 +28,7 @@ const SignInPage = () => (
           </div>
           <SignIn />
         </div>
+        <Link to="/auth/sign-up">Create a free account</Link>
       </Card.Body>
     </Card>
   </React.Fragment>
