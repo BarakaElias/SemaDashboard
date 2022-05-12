@@ -34,13 +34,13 @@ const NavbarUser = () => {
             className="avatar img-fluid rounded-circle me-1"
             alt="Chris Wood"
           />
-          <span className="text-dark">{/*user.username*/}</span>
+          <span className="text-dark">{user ? user.username : "hhh"}</span>
         </Dropdown.Toggle>
       </span>
       <Dropdown.Menu drop="end">
         <Dropdown.Item>
           <Lock size={18} className="align-middle me-2" />
-          <Link to="/auth/reset-password">Change Password</Link>
+          <Link to="/users/my_profile">Change Password</Link>
         </Dropdown.Item>
         <Dropdown.Item>
           <Key size={18} className="align-middle me-2" />

@@ -8,6 +8,7 @@ import {
   Shield,
   Users,
   User,
+  Briefcase,
 } from "react-feather";
 
 const gettingStartedSection = [
@@ -25,6 +26,21 @@ const gettingStartedSection = [
     href: "/admin/admin_manage_sender_ids",
     icon: User,
     title: "Manage SIDs",
+  },
+  {
+    href: "/admin/",
+    icon: Briefcase,
+    title: "Manage Accounts",
+    children: [
+      {
+        href: "/admin/manage_accounts/new_accounts",
+        title: "All New Accounts",
+      },
+      {
+        href: "/admin/manage_accounts/activate",
+        title: "Activate Account",
+      },
+    ],
   },
 ];
 

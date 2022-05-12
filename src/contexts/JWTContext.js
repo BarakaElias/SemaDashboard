@@ -228,7 +228,10 @@ function AuthProvider({ children }) {
     // });
   };
 
-  const resetPassword = (email) => console.log(email);
+  const resetPassword = async (password, new_password, user_id) => {
+    console.log(password);
+    return "reached reset password";
+  };
 
   return (
     <AuthContext.Provider

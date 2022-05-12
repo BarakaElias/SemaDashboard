@@ -53,6 +53,8 @@ import AddUser from "./pages/pages/users/add_user";
 import MyProfile from "./pages/pages/users/my_profile";
 //ADDED ADMIN PAGES
 import AdminSenderIdManager from "./pages/pages/admin/sender_ids/admin_sender_id";
+import ActivateAccounts from "./pages/pages/admin/Accounts/activation/ActivateAccounts";
+import NewAccounts from "./pages/pages/admin/Accounts/new_accounts/NewAccounts";
 
 // Auth
 import Page500 from "./pages/auth/Page500";
@@ -171,19 +173,37 @@ const routes = [
       },
       {
         path: "contactlistsms",
-        element: <ContactListSMS />,
+        element: (
+          <AuthGuard>
+            <ContactListSMS />
+          </AuthGuard>
+        ),
       },
       {
         path: "contactlistrange",
-        element: <ContactListRange />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <ContactListRange />
+          </AuthGuard>
+        ),
       },
       {
         path: "uploadfilesms",
-        element: <UploadFileSMS />,
+        element: (
+          <AuthGuard>
+            <UploadFileSMS />
+          </AuthGuard>
+        ),
       },
       {
         path: "dbcampaign",
-        element: <DbCampaignSMS />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <DbCampaignSMS />
+          </AuthGuard>
+        ),
       },
     ],
   },
@@ -193,11 +213,21 @@ const routes = [
     children: [
       {
         path: "inbox",
-        element: <Inbox />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <Inbox />
+          </AuthGuard>
+        ),
       },
       {
         path: "channels",
-        element: <Channels />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <Channels />
+          </AuthGuard>
+        ),
       },
     ],
   },
@@ -207,25 +237,50 @@ const routes = [
     children: [
       {
         path: "senderIDS",
-        element: <SenderIDs />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <SenderIDs />
+          </AuthGuard>
+        ),
       },
       {
         path: "templates",
-        element: <SmsTemplates />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <SmsTemplates />
+          </AuthGuard>
+        ),
       },
       {
         path: "job-management",
-        element: <SmsJobs />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <SmsJobs />
+          </AuthGuard>
+        ),
       },
     ],
   },
   {
     path: "contact-lists",
-    element: <ContactLists />,
+    element: (
+      <AuthGuard>
+        {" "}
+        <ContactLists />
+      </AuthGuard>
+    ),
   },
   {
     path: "contact-lists/edit-contact-list",
-    element: <ContactList />,
+    element: (
+      <AuthGuard>
+        {" "}
+        <ContactList />
+      </AuthGuard>
+    ),
   },
   {
     path: "reports",
@@ -233,11 +288,21 @@ const routes = [
     children: [
       {
         path: "transactions",
-        element: <SmsTransactions />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <SmsTransactions />
+          </AuthGuard>
+        ),
       },
       {
         path: "dlr-reports",
-        element: <DlrReport />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <DlrReport />
+          </AuthGuard>
+        ),
       },
     ],
   },
@@ -247,15 +312,30 @@ const routes = [
     children: [
       {
         path: "all_users",
-        element: <Users />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <Users />
+          </AuthGuard>
+        ),
       },
       {
         path: "add_user",
-        element: <AddUser />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <AddUser />
+          </AuthGuard>
+        ),
       },
       {
         path: "my_profile",
-        element: <MyProfile />,
+        element: (
+          <AuthGuard>
+            {" "}
+            <MyProfile />
+          </AuthGuard>
+        ),
       },
     ],
   },
@@ -269,6 +349,22 @@ const routes = [
           <AdminGuard>
             {" "}
             <AdminSenderIdManager />
+          </AdminGuard>
+        ),
+      },
+      {
+        path: "manage_accounts/new_accounts",
+        element: (
+          <AdminGuard>
+            <NewAccounts />
+          </AdminGuard>
+        ),
+      },
+      {
+        path: "manage_accounts/activate",
+        element: (
+          <AdminGuard>
+            <ActivateAccounts />
           </AdminGuard>
         ),
       },

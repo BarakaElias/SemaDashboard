@@ -82,7 +82,7 @@ function SignUp() {
               type="text"
               name="first_name"
               placeholder="First name"
-              value={values.firstName}
+              value={values.first_name}
               isInvalid={Boolean(touched.first_name && errors.first_name)}
               onBlur={handleBlur}
               onChange={handleChange}
@@ -99,7 +99,7 @@ function SignUp() {
               type="text"
               name="last_name"
               placeholder="Last name"
-              value={values.lastName}
+              value={values.last_name}
               isInvalid={Boolean(touched.last_name && errors.last_name)}
               onBlur={handleBlur}
               onChange={handleChange}

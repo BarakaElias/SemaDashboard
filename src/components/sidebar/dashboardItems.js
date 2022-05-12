@@ -12,6 +12,7 @@ import {
   MapPin,
   Users,
   Share,
+  Code,
   Mail,
   Inbox,
   Monitor,
@@ -150,7 +151,7 @@ const pagesSection = [
   },
   {
     href: "/profile",
-    icon: User,
+    icon: Code,
     title: "API",
   },
 
