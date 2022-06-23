@@ -20,6 +20,7 @@ import {
   EmptyColumnFilter,
   DateColumnFilter,
 } from "../../sender_ids/sender_id_table_extensions/ColumnFilter";
+import { SelectColumnFilter } from "./table_extenstions/ColumnFilter";
 // import { GlobalFilter } from "../../sender_ids/sender_id_table_extensions/GlobalFilter";
 
 const NewAccountsTable = () => {
@@ -48,7 +49,7 @@ const NewAccountsTable = () => {
         email: "marcellacarolos@yahoo.com",
         phone_number: "0624327900",
         created_at: "2022-05-12 07:49:40",
-        status: "Trial",
+        status: "Requests Activation",
       },
       {
         id: "4",
@@ -77,7 +78,7 @@ const NewAccountsTable = () => {
       {
         Header: "Phone number",
         accessor: "phone_number",
-        Filter: ColumnFilter,
+        Filter: EmptyColumnFilter,
       },
       {
         Header: "Created at",
@@ -87,12 +88,14 @@ const NewAccountsTable = () => {
       {
         Header: "Status",
         accessor: "status",
-        Filter: ColumnFilter,
+        Filter: SelectColumnFilter,
         Cell: ({ value }) => {
           if (value === "Activated") {
             return <strong className="text-success">Activated</strong>;
           } else if (value === "Trial") {
             return <span>Trial</span>;
+          } else if (value === "Requests Activation") {
+            return <span className="text-warning">Requests Activation</span>;
           }
         },
       },

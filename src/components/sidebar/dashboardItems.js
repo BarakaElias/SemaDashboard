@@ -150,9 +150,19 @@ const pagesSection = [
     ],
   },
   {
-    href: "/profile",
+    href: "/account",
     icon: Code,
-    title: "API",
+    title: "Account",
+    children: [
+      {
+        href: "/account/general",
+        title: "General",
+      },
+      {
+        href: "/account/api",
+        title: "API",
+      },
+    ],
   },
 
   {

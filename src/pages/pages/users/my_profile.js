@@ -61,10 +61,10 @@ const MyProfile = () => (
       <h1 className="h3 mb-3">Settings</h1>
 
       <Row>
-        <Col md="3" xl="2">
-          {/* <Navigation /> */}
-        </Col>
-        <Col md="9" xl="10">
+        {/* <Col md="3" xl="2"> */}
+        {/* <Navigation /> */}
+        {/* </Col> */}
+        <Col xl="10">
           <PublicInfo />
           <PrivateInfo />
         </Col>

@@ -1,13 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Table, Badge } from "react-bootstrap";
 import avatar1 from "./../../../../assets/img/avatars/avatar.jpg";
 import avatar2 from "../../../../assets/img/avatars/avatar-2.jpg";
 import avatar3 from "../../../../assets/img/avatars/avatar-3.jpg";
 import avatar4 from "../../../../assets/img/avatars/avatar-4.jpg";
 import avatar5 from "../../../../assets/img/avatars/avatar-5.jpg";
-
+import { useQuery } from "react-query";
+import useAuth from "../../../../hooks/useAuth";
 import { useTable } from "react-table";
+import axios from "axios";
 const UserList = () => {
+  const { user } = useAuth();
+  // const queryClient = new QueryClient();
+
+  // const { isLoading, list_data } = useQuery("users_list", () => {
+  //   return axios.get("http://localhost/semaapi/public/api/list_users", {
+  //     account_id: user.account_id,
+  //   });
+  // });
+
+  useEffect(() => {
+    async function getUsers() {
+      try {
+        const users = await axios.get(
+          "http://localhost/semaapi/public/api/list_users",
+          { account_id: user.account_id }
+        );
+
+        console.log("List users: ", users);
+      } catch (e) {
+        console.log("List users: ", e);
+      }
+    }
+    getUsers();
+  });
+
   const data = React.useMemo(() => [
     {
       avatar: "",
@@ -152,210 +179,6 @@ const UserList = () => {
                 </tr>
               );
             })}
-            {/* <tr>
-              <td>
-                <img
-                  src={avatar3}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Angelica Ramos</td>
-              <td>The Wiz</td>
-              <td>angelica@ramos.com</td>
-              <td>
-                <Badge bg="success">Active</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar1}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Ashton Cox</td>
-              <td>Levitz Furniture</td>
-              <td>ashton@cox.com</td>
-              <td>
-                <Badge bg="success">Active</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar4}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Brenden Wagner</td>
-              <td>The Wiz</td>
-              <td>brenden@wagner.com</td>
-              <td>
-                <Badge bg="warning">Inactive</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar2}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Charde Marshall</td>
-              <td>Price Savers</td>
-              <td>charde@marshall.com</td>
-              <td>
-                <Badge bg="success">Active</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar3}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Doris Wilder</td>
-              <td>Red Robin Stores</td>
-              <td>doris@wilder.com</td>
-              <td>
-                <Badge bg="warning">Inactive</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar4}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Fiona Green</td>
-              <td>The Sample</td>
-              <td>fiona@green.com</td>
-              <td>
-                <Badge bg="warning">Inactive</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar1}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Garrett Winters</td>
-              <td>Good Guys</td>
-              <td>garrett@winters.com</td>
-              <td>
-                <Badge bg="success">Active</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar5}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Gavin Cortez</td>
-              <td>Red Robin Stores</td>
-              <td>gavin@cortez.com</td>
-              <td>
-                <Badge bg="success">Active</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar2}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Haley Kennedy</td>
-              <td>Helping Hand</td>
-              <td>haley@kennedy.com</td>
-              <td>
-                <Badge bg="danger">Deleted</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar5}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Howard Hatfield</td>
-              <td>Price Savers</td>
-              <td>howard@hatfield.com</td>
-              <td>
-                <Badge bg="warning">Inactive</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar1}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Jena Gaines</td>
-              <td>Helping Hand</td>
-              <td>jena@gaines.com</td>
-              <td>
-                <Badge bg="success">Active</Badge>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <img
-                  src={avatar4}
-                  width="32"
-                  height="32"
-                  className="rounded-circle my-n1"
-                  alt="Avatar"
-                />
-              </td>
-              <td>Jennifer Chang</td>
-              <td>Helping Hand</td>
-              <td>jennifer@chang.com</td>
-              <td>
-                <Badge bg="warning">Inactive</Badge>
-              </td>
-            </tr> */}
           </tbody>
         </Table>
       </Card.Body>

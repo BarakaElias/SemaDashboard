@@ -3,29 +3,33 @@ import { Row, Table, Badge } from "react-bootstrap";
 import { useTable } from "react-table";
 
 const MatrixTable = (props) => {
-  const mno_data = [...props.data];
+  // const mno_data = mno_data != null) ?[...props.data]: null;
+  const mno_data = props.data != null ? [...props.data] : null;
+
+  // const rrdata = json_encode();
+
   const raw_data = React.useMemo(() => mno_data, []);
   // const data = React.useMemo(() => {}, []);
   const row_data = [];
 
   console.log("Before processing:", raw_data);
 
-  raw_data.map((r_data) => {
-    console.log(r_data);
-    const dd = {
-      // [r_data.registerer.toLowerCase()]: {
-      //   network: r_data.network,
-      //   status: r_data.status,
-      // },
-      [r_data.registerer.toLowerCase()]: r_data.status,
-      vendor: r_data.network,
-    };
-    console.log(dd);
-    row_data.push(dd);
-  });
+  if (raw_data != null) {
+    raw_data.map((r_data) => {
+      if (r_data.registerer != null || "") {
+        const dd = {
+          [r_data.registerer.toLowerCase()]: r_data.status,
+          vendor: r_data.network,
+        };
+        row_data.push(dd);
+      }
+    });
+  }
 
-  console.log(row_data);
+  // console.log(row_data);
+
   const data = React.useMemo(() => row_data, []);
+
   const registerState = (value, column) => {
     if (column !== undefined) {
     }
@@ -126,6 +130,11 @@ const MatrixTable = (props) => {
     useTable({ columns, data });
 
   let i = 0;
+
+  // console.log("why no data", mno_data);
+  if (mno_data == null || mno_data === "" || mno_data.length === 0) {
+    return <div>No data</div>;
+  }
 
   return (
     <React.Fragment>

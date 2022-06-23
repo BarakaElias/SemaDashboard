@@ -10,7 +10,7 @@ const SignInPage = () => (
   <React.Fragment>
     <Helmet title="Sign In" />
     <div className="text-center mt-4">
-      <h2>Sema Communications Dashboard</h2>
+      <h2>Sema Dashboard</h2>
       <p className="lead">Sign in to your account to continue</p>
     </div>
 

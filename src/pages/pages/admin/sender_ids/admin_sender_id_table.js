@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Row, Table, Col, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import {
@@ -27,19 +27,40 @@ import CountryList from "./../../messaging/manage/senderID/countryList";
 import ModalForm from "../../../ui/ModalForm/modalForm";
 import AlertDialog from "../../../ui/AlertDialog/AlertDialog";
 import axios from "axios";
+import useAuth from "./../../../../hooks/useAuth";
 // import Matrix from "./Matrix/Matrix";
 import MatrixTable from "./Matrix/MatrixTable";
 import {
   createSenderIdInitialFormValues,
   formValuesValidation,
 } from "./sender_id_table_extensions/FormikForm";
+import NotyfContext from "../../../../contexts/NotyfContext";
 
 const AdminSenderIdTable = () => {
+  const { user } = useAuth();
+  const notyf = useContext(NotyfContext);
+  const [sidData, setSidData] = useState({
+    data_values: [...sid_data],
+  });
+
+  useEffect(() => {
+    function getIds() {
+      axios
+        .get("http://localhost/semaapi/public/api/list_senders")
+        .then((res) => {
+          // sid_data = [...res.data];
+          setSidData({ data_values: [...res.data] });
+        })
+        .catch((e) => console.log("getsender", e));
+    }
+    getIds();
+  }, []);
   //Modal State
   const [modalState, setModalState] = useState({
     modalOpen: false,
     alertOpen: false,
     alertContent: "",
+    senderIdToDelete: "",
   });
 
   const closeModal = () => {
@@ -72,7 +93,7 @@ const AdminSenderIdTable = () => {
     },
     registered_networks: {
       label: "MNO Registration Stauts",
-      type: "matrix",
+      type: "mno-matrix",
       placeHolder: "Registration state",
       required: false,
       options: ["Registered", "Pending", "Not Allowed"],
@@ -99,8 +120,9 @@ const AdminSenderIdTable = () => {
     // setModalState({ modalOpen: true });
     // const sender_ids = sid_data.filter((sid) => sid.id === id);
     // const sender_id = sender_ids[0];
-    console.log("inedt");
+
     const initialValues = { ...createSenderIdInitialFormValues };
+    initialValues["id"] = data.id;
     initialValues.sender_name = data.name;
     initialValues.country = data.country;
     initialValues.status = data.status;
@@ -108,6 +130,7 @@ const AdminSenderIdTable = () => {
 
     // createSenderIdInitialFormValues = { ...initialValues };
     // console.log(initialValues);
+    // console.log("edit", initialValues);
 
     setFormState({ initialValues: initialValues });
     // console.log(initialFormState.initialValues);
@@ -116,34 +139,54 @@ const AdminSenderIdTable = () => {
 
   const addSenderID = (parameters) => {
     console.log("from addsender", parameters);
-    axios
-      .get("http://localhost/semaapi/public/sanctum/csrf-cookie")
-      .then((response) => {
-        console.log(response);
-        axios
-          .post("http://localhost/semaapi/public/api/register_sender_id", {
-            params: parameters,
-          })
-          .then((res) => {
-            console.log("add", res);
-          })
-          .catch((err) => {
-            console.log("add", err);
-          });
-      })
-      .catch((err) => {
-        console.log("from add", err);
-      });
-    //   axios
-    //     .post("http://localhost/semaapi/public/api/register_sender_id", {
-    //       params: parameters,
-    //     })
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
+    if (parameters.id != null) {
+      axios
+        .put("http://localhost/semaapi/public/api/update_sender_id", {
+          id: parameters.id,
+          status: parameters.isActive,
+          country: parameters.country,
+          registered_networks: [...parameters.registered_networks],
+          name: parameters.sender_name,
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            notyf.success(res.data);
+            setModalState({ modalOpen: false });
+            console.log(res);
+          }
+        })
+        .catch((err) => {
+          notyf.error("Something went wrong");
+          console.log(err);
+        });
+    } else {
+      console.log("creating");
+      axios
+        .get("http://localhost/semaapi/public/sanctum/csrf-cookie")
+        .then((response) => {
+          console.log(response);
+          axios
+            .post("http://localhost/semaapi/public/api/register_sender_id", {
+              country: parameters.country,
+              sender_name: parameters.sender_name,
+              status: parameters.isActive,
+              registered_networks: parameters.registered_networks,
+              user: user.email,
+            })
+            .then((res) => {
+              console.log("add", res);
+              if (res.status === 200) {
+                notyf.success("Successfully Added Sender ID");
+              }
+            })
+            .catch((err) => {
+              notyf.error("Something went wrong");
+            });
+        })
+        .catch((err) => {
+          console.log("from add", err);
+        });
+    }
   };
   //For the modal form
   let form = modalState.modalOpen ? (
@@ -170,10 +213,42 @@ const AdminSenderIdTable = () => {
   };
 
   const openAlertModal = (sid_name, dd) => {
-    setModalState({ alertOpen: true, alertContent: sid_name });
+    console.log("open");
+    setModalState({
+      alertOpen: true,
+      alertContent: sid_name,
+      senderIdToDelete: dd,
+    });
   };
 
   const deleteSenderID = () => {
+    const id = modalState.senderIdToDelete;
+    console.log(id);
+
+    axios
+      .get("http://localhost/semaapi/public/sanctum/csrf-cookie")
+      .then((response) => {
+        console.log(response);
+        axios
+          .post("http://localhost/semaapi/public/api/delete_sender_id", { id })
+          .then((res) => {
+            if (res.status === 200) {
+              notyf.success("Deleted");
+              setModalState({ modalOpen: false });
+              //update data
+              const sid = sidData.data_values.filter(
+                (sid) => sid.id !== parseInt(id)
+              );
+              setSidData({ data_values: sid });
+              // console.log("sid", sid);
+            }
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => {
+        console.log("from add", err);
+      });
+
     console.log("Deleteing");
   };
 
@@ -187,9 +262,9 @@ const AdminSenderIdTable = () => {
 
   //Table data
   const data = React.useMemo(
-    () => sid_data,
+    () => sidData.data_values,
 
-    []
+    [sidData.data_values]
   );
   //End of Table data
   let i = 0;
@@ -236,46 +311,81 @@ const AdminSenderIdTable = () => {
         accessor: "actions",
         Filter: EmptyColumnFilter,
         disableSortby: true,
-        Cell: ({ value, row }) =>
-          value == null
-            ? "No actions"
-            : value.map((action) => {
-                const data = row.original;
+        Cell: ({ row }) => {
+          const row_data = row.values;
+          return (
+            <div className="d-flex flex-row justify-content-around w-75">
+              <div className="p-1 m-3">
+                <span
+                  {...row.getToggleRowExpandedProps()}
+                  onClick={() => row.toggleRowExpanded()}
+                >
+                  {row.isExpanded ? (
+                    <EyeOff color="#1E8E78" className="m-3" size={22} />
+                  ) : (
+                    <Eye color="#1E8E78" className="m-3" size={24} />
+                  )}
+                </span>
+              </div>
+              <div className="p-1 m-3">
+                <Edit2
+                  onClick={() => onEditButtonClicked(row_data)}
+                  className="m-3"
+                  color="#0392CE"
+                  size={24}
+                />
+              </div>
+              <div className="p-1 m-3">
+                <Trash
+                  onClick={() => openAlertModal(row_data.name, row_data.id)}
+                  className="m-3"
+                  color="#FFA4A1"
+                  size={24}
+                />
+              </div>
+            </div>
+          );
+        },
+        // Cell: ({ value, row }) =>
+        //   value == null
+        //     ? "No actions"
+        //     : value.map((action) => {
+        //         const data = row.original;
 
-                if (action === "edit") {
-                  return (
-                    <span
-                      className="p-1 m-3"
-                      onClick={() => onEditButtonClicked(data)}
-                    >
-                      <Edit2 size={24} />
-                    </span>
-                  );
-                } else if (action === "delete") {
-                  return (
-                    <Trash
-                      onClick={() => openAlertModal(data.name, data.id)}
-                      className="m-3"
-                      size={24}
-                    />
-                  );
-                } else if (action === "view") {
-                  return (
-                    <span
-                      {...row.getToggleRowExpandedProps()}
-                      onClick={() => row.toggleRowExpanded()}
-                    >
-                      {row.isExpanded ? (
-                        <EyeOff className="m-3" size={22} />
-                      ) : (
-                        <Eye className="m-3" size={24} />
-                      )}
-                    </span>
-                  );
-                } else {
-                  return "";
-                }
-              }),
+        //         if (action === "edit") {
+        //           return (
+        //             <span
+        //               className="p-1 m-3"
+        //               onClick={() => onEditButtonClicked(data)}
+        //             >
+        //               <Edit2 size={24} />
+        //             </span>
+        //           );
+        //         } else if (action === "delete") {
+        //           return (
+        //             <Trash
+        //               onClick={() => openAlertModal(data.name, data.id)}
+        //               className="m-3"
+        //               size={24}
+        //             />
+        //           );
+        //         } else if (action === "view") {
+        //           return (
+        //             <span
+        //               {...row.getToggleRowExpandedProps()}
+        //               onClick={() => row.toggleRowExpanded()}
+        //             >
+        //               {row.isExpanded ? (
+        //                 <EyeOff className="m-3" size={22} />
+        //               ) : (
+        //                 <Eye className="m-3" size={24} />
+        //               )}
+        //             </span>
+        //           );
+        //         } else {
+        //           return "";
+        //         }
+        //       }),
       },
     ],
     []

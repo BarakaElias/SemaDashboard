@@ -31,3 +31,23 @@ export const ColumnFilter = ({ column }) => {
 export const EmptyColumnFilter = () => {
   return <div className="mb-4">&nbsp;</div>;
 };
+
+export const SelectColumnFilter = ({
+  column: { filterValue, setFilter, preFilteredRows, id },
+}) => {
+  return (
+    <Form.Group className="mb-3">
+      <Form.Select
+        value={filterValue}
+        onChange={(e) => {
+          setFilter(e.target.value || undefined);
+        }}
+      >
+        <option value="">All</option>
+        <option value="Activated">Activated</option>
+        <option value="Requests Activation">Requests Activation</option>
+        <option value="Trial">Trial</option>
+      </Form.Select>
+    </Form.Group>
+  );
+};

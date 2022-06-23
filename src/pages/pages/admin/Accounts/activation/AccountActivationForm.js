@@ -30,6 +30,10 @@ const AccountActivationForm = () => {
           .max(255)
           .required("Email is required"),
         password: Yup.string().max(255).required("Password is required"),
+        user_email: Yup.string()
+          .email("Must be a valid email")
+          .max(255)
+          .required("User email is required"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         console.log(values);
@@ -76,7 +80,7 @@ const AccountActivationForm = () => {
             </Alert>
           )}
 
-          <Form.Group classname="mb-3">
+          <Form.Group classname="mb-5">
             <Form.Label>Email</Form.Label>
             <Form.Control
               size="lg"
@@ -103,6 +107,19 @@ const AccountActivationForm = () => {
               placeholder="Account Password"
               value={values.password}
               isInvalid={Boolean(touched.password && errors.password)}
+              onBlur={handleBlur}
+              onChange={handleChange}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>User email: (used when signed up)</Form.Label>
+            <Form.Control
+              size="lg"
+              type="text"
+              name="user_email"
+              placeholder="User email"
+              value={values.user_email}
+              isInvalid={Boolean(touched.user_email && errors.user_email)}
               onBlur={handleBlur}
               onChange={handleChange}
             />

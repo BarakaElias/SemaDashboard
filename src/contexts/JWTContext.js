@@ -133,9 +133,10 @@ function AuthProvider({ children }) {
 
   const get_csrf = async () => {
     axios.defaults.withCredentials = true;
-    const csrf = axios.get(
-      "http://localhost/semaapi/public/sanctum/csrf-cookie"
-    );
+    const csrf = await axios
+      .get("http://localhost/semaapi/public/sanctum/csrf-cookie")
+      .then((res) => console.log(res))
+      .catch((e) => console.log(e));
   };
 
   const signIn = async (email, password) => {
@@ -155,7 +156,8 @@ function AuthProvider({ children }) {
       dispatch({ type: SIGN_IN, payload: { user } });
       return user;
     } catch (e) {
-      console.log("sign in:", e);
+      console.log("sign in:", e.message);
+      return e.message;
     }
   };
 
@@ -228,9 +230,12 @@ function AuthProvider({ children }) {
     // });
   };
 
-  const resetPassword = async (password, new_password, user_id) => {
-    console.log(password);
-    return "reached reset password";
+  const resetPassword = async (email) => {
+    const response = await axios.get(
+      "http://localhost/semaapi/public/api/reset_password_request",
+      { email }
+    );
+    console.log("Password reset: ", response);
   };
 
   return (

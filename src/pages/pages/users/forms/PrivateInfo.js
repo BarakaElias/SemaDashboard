@@ -156,7 +156,7 @@ const PrivateInfo = () => {
                 <Col md={6}></Col>
               </Row>
 
-              <Button type="submmit" variant="primary">
+              <Button type="submit" variant="primary">
                 Save changes
               </Button>
             </Form>

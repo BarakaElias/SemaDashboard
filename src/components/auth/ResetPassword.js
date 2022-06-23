@@ -25,7 +25,7 @@ function ResetPassword() {
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
           resetPassword(values.email);
-          navigate("/auth/sign-in");
+          // navigate("/auth/sign-in");
         } catch (error) {
           const message = error.message || "Something went wrong";
 

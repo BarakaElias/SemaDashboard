@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Form, Container, Card, Row, Col, Button } from "react-bootstrap";
 import { Helmet } from "react-helmet-async";
 import { Formik } from "formik";
@@ -7,8 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
 import avatar1 from "../../../../assets/img/avatars/avatar.jpg";
+import axios from "axios";
+import useAuth from "../../../../hooks/useAuth";
+import NotyfContext from "../../../../contexts/NotyfContext";
 
 const CreateUserForm = () => {
+  const { user } = useAuth();
+  const notyf = useContext(NotyfContext);
+
   const CreateUserSchema = Yup.object().shape({
     first_name: Yup.string()
 
@@ -43,12 +49,34 @@ const CreateUserForm = () => {
           phone_number: "",
           password: "",
           send_user_notification: true,
-          role: "",
+          role: "Administrator",
           profile: "",
         }}
         enableReinitialize={true}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           console.log(values);
+          try {
+            const response = await axios.post(
+              "http://localhost/semaapi/public/api/create_user",
+              {
+                account_id: user.account_id,
+                email: values.email,
+                username: values.username,
+                password: values.password,
+                first_name: values.first_name,
+                last_name: values.last_name,
+                phone_number: values.phone_number,
+                role: values.role,
+              }
+            );
+            console.log("Create user: ", response);
+            if (response.status === 200) {
+              notyf.success("User Created Successfully!");
+            }
+          } catch (e) {
+            console.log("Create user", e);
+            notyf.error("Error creating user! " + e);
+          }
         }}
       >
         {({
@@ -177,8 +205,8 @@ const CreateUserForm = () => {
                 <Form.Group className="mb-3">
                   <Form.Label htmlFor="inputUsername">Select a role</Form.Label>
                   <Form.Select onChange={handleChange} name="role">
-                    <option>Administrator</option>
-                    <option>Helper</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Helper">Helper</option>
                   </Form.Select>
                 </Form.Group>
               </Col>

@@ -34,11 +34,11 @@ const gettingStartedSection = [
     children: [
       {
         href: "/admin/manage_accounts/new_accounts",
-        title: "All New Accounts",
+        title: "All Accounts",
       },
       {
         href: "/admin/manage_accounts/activate",
-        title: "Activate Account",
+        title: "Account Activation",
       },
     ],
   },

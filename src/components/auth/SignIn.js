@@ -29,11 +29,22 @@ function SignIn() {
         try {
           const useR = await signIn(values.email, values.password);
 
+          // console.log("alert error:", useR);
+
           // console.log("after awaiting", useR.isSemaAdmin);
-          if (useR.isSemaAdmin) {
-            navigate("/admin");
-          } else {
-            navigate("/dash");
+          if (useR === "Network Error") {
+            // setStatus({ success: false });
+            // setErrors({ submit: "Network Error" });
+            // setSubmitting(false);
+            // console.log("theres a network error");
+            throw "Network Error";
+          }
+          if (useR) {
+            if (useR.isSemaAdmin) {
+              navigate("/admin");
+            } else {
+              navigate("/dash");
+            }
           }
 
           // navigate("/admin/admin_manage_sender_ids");
@@ -46,6 +57,10 @@ function SignIn() {
           setErrors({ submit: message });
           if (error.message === "useR is undefined") {
             setErrors({ submit: "Email or password is wrong" });
+          } else if (error === "Network Error") {
+            setErrors({
+              submit: "Netwokr Error! Please check your internet connection.",
+            });
           }
           setSubmitting(false);
         }
@@ -61,12 +76,12 @@ function SignIn() {
         values,
       }) => (
         <Form onSubmit={handleSubmit}>
-          <Alert className="my-3" variant="primary">
+          {/* <Alert className="my-3" variant="primary">
             <div className="alert-message">
               Use <strong>demo@bootlab.io</strong> and{" "}
               <strong>unsafepassword</strong> to sign in
             </div>
-          </Alert>
+          </Alert> */}
           {errors.submit && (
             <Alert className="my-3" variant="danger">
               <div className="alert-message">{errors.submit}</div>

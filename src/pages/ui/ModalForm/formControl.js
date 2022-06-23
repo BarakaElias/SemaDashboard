@@ -114,13 +114,14 @@ const formControl = (props) => {
       );
       break;
     case "mno-matrix":
-      const mnos = [
+      const mnos = ["Vodacom", "Airtel", "Halotel", "Zantel"];
+      const vendors = [
         "Vodacom",
-        "Tigo",
         "Airtel",
         "Halotel",
         "Zantel",
         "TTCL",
+        "Tigo",
         "Smile",
       ];
 
@@ -131,8 +132,8 @@ const formControl = (props) => {
             <thead>
               <tr>
                 <th>Vendor/MNO</th>
-                {mnos.map((mno) => (
-                  <th key={mno + "theadth"}>{mno}</th>
+                {vendors.map((vendor) => (
+                  <th key={vendor + "theadth"}>{vendor}</th>
                 ))}
               </tr>
             </thead>
@@ -213,8 +214,19 @@ const formControl = (props) => {
           {(fieldArrayProps) => {
             const { push, remove, form } = fieldArrayProps;
             const { values } = form;
-            const { registered_networks } = values;
+            var { registered_networks } = values;
             // console.log("a", registered_networks);
+
+            if (registered_networks == null || "") {
+              registered_networks = [
+                {
+                  network: "",
+                  registerer: "",
+                  status: "",
+                },
+              ];
+              // return <div>h</div>;
+            }
 
             return (
               <div className="d-lg-flex flex-wrap">
@@ -222,7 +234,7 @@ const formControl = (props) => {
                   // console.log(props.initValue);
                   return (
                     <Form.Group className="p-1" key={index}>
-                      <Form.Label>Mobile Network {++index}</Form.Label>
+                      <Form.Label>Mobile Network {index}</Form.Label>
                       <br></br>
                       <label>Network</label>
                       <Field

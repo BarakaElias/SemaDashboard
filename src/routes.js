@@ -51,6 +51,9 @@ import ContactList from "./pages/pages/contactLists/contactList/contactList";
 import Users from "./pages/pages/users/users";
 import AddUser from "./pages/pages/users/add_user";
 import MyProfile from "./pages/pages/users/my_profile";
+import AccountGenerals from "./pages/pages/user_accounts/AccountGenerals";
+import AccountApi from "./pages/pages/user_accounts/AccountApi";
+import ActivateAccount from "./pages/pages/user_accounts/ActivateAccount";
 //ADDED ADMIN PAGES
 import AdminSenderIdManager from "./pages/pages/admin/sender_ids/admin_sender_id";
 import ActivateAccounts from "./pages/pages/admin/Accounts/activation/ActivateAccounts";
@@ -334,6 +337,46 @@ const routes = [
           <AuthGuard>
             {" "}
             <MyProfile />
+          </AuthGuard>
+        ),
+      },
+    ],
+  },
+  {
+    path: "account",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "general",
+        element: (
+          <AuthGuard>
+            <AccountGenerals />
+          </AuthGuard>
+        ),
+        // children: [
+        //   {
+        //     path: "activate_account",
+        //     element: (
+        //       <DashboardLayout>
+        //         <ActivateAccount />
+        //       </DashboardLayout>
+        //     ),
+        //   },
+        // ],
+      },
+      {
+        path: "activate_account",
+        element: (
+          <AuthGuard>
+            <ActivateAccount />
+          </AuthGuard>
+        ),
+      },
+      {
+        path: "api",
+        element: (
+          <AuthGuard>
+            <AccountApi />
           </AuthGuard>
         ),
       },
