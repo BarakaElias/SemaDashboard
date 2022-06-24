@@ -1,10 +1,11 @@
 import React from "react";
 // import { Helmet } from "react-helmet-async";
 
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Table } from "react-bootstrap";
 import { FieldArray, Field, ErrorMessage } from "formik";
 // import { Navigate } from "react-router";
 import { Check, Loader, X } from "react-feather";
+import MatrixRadioTable from "./complex/MatrixRadioTable";
 
 const formControl = (props) => {
   let inputControl = null;
@@ -125,88 +126,9 @@ const formControl = (props) => {
         "Smile",
       ];
 
-      inputControl = (
-        <Form.Group>
-          <Form.Label>{props.label}</Form.Label>
-          <table className="form-matrix">
-            <thead>
-              <tr>
-                <th>Vendor/MNO</th>
-                {vendors.map((vendor) => (
-                  <th key={vendor + "theadth"}>{vendor}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {mnos.map((mno_) => {
-                ind++;
-                return (
-                  <tr key={mno_ + "th"}>
-                    {/* <h1>{mno}</h1> */}
-                    <th>{mno_}</th>
-                    {/* <th>{mnos[i]}</th> */}
-                    {mnos.map((mno) => {
-                      // console.log(row);
+      let i = 0;
 
-                      return (
-                        <td key={mno + "td"}>
-                          <FieldArray
-                            name="registered_networks"
-                            render={(arrayHelpers) => {
-                              return (
-                                <Form.Group className="m-1">
-                                  <div className="tw-toggle">
-                                    <div className="toggle nr">
-                                      <input
-                                        type="radio"
-                                        onChange={props.handleChange}
-                                        name={`registered_networks.${ind}`}
-                                        value={{
-                                          network: mno,
-                                          registar: mno_,
-                                          status: "Not Registered",
-                                        }}
-                                      />
-                                      <div className="toggle pd">
-                                        <input
-                                          type="radio"
-                                          onChange={props.handleChange}
-                                          name={`registered_networks.${ind}`}
-                                          value={{
-                                            network: mno,
-                                            registar: mno_,
-                                            status: "Pending",
-                                          }}
-                                        />
-                                      </div>
-                                      <div className="toggle rd">
-                                        <input
-                                          type="radio"
-                                          onChange={props.handleChange}
-                                          name={`registered_networks.${ind}`}
-                                          value={{
-                                            network: mno,
-                                            registar: mno_,
-                                            status: "Registered",
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </Form.Group>
-                              );
-                            }}
-                          />
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </Form.Group>
-      );
+      inputControl = <MatrixRadioTable />;
       break;
     case "matrix":
       inputControl = (

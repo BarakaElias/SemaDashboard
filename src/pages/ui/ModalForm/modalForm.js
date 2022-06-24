@@ -4,7 +4,7 @@ import FormControl from "./formControl";
 
 import { Button, Modal, Form } from "react-bootstrap";
 import { useSelector, RootStateOrAny } from "react-redux";
-import { Formik } from "formik";
+import { Formik, FieldArray } from "formik";
 
 const ModalForm = (props) => {
   console.log("To see props", props);
