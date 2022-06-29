@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Formik } from "formik";
+import { Field, FieldArray } from "formik";
 import { Form, Row, Col, Table, Alert } from "react-bootstrap";
 
 import { useTable } from "react-table";
@@ -9,32 +9,37 @@ const MatrixRadioTable = (props) => {
   const columns = React.useMemo(
     () => [
       {
+        Header: "Vendors/MNO",
+        accessor: "vendor",
+      },
+      {
         Header: "Vodacom",
         accessor: "vodacom",
-        Cell: ({ row }) => {
-          const mnos = { ...row.original.mnos };
-          // console.log("vod", current_mno);
+        Cell: ({ row, column, value }) => {
           return (
             <div className="mb-3">
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                defaultChecked={value === "Not Registered" ? true : false}
+                name={column.Header + "-" + row.original.vendor}
                 value="Not Registered"
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 value="Pending"
+                defaultChecked={value === "Pending" ? true : false}
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 inline={true}
+                defaultChecked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -44,28 +49,31 @@ const MatrixRadioTable = (props) => {
       {
         Header: "Airtel",
         accessor: "airtel",
-        Cell: ({ value }) => {
+        Cell: ({ row, column, value }) => {
           return (
             <div className="mb-3">
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                checked={value === "Not Registered" ? true : false}
+                name={column.Header + "-" + row.original.vendor}
                 value="Not Registered"
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 value="Pending"
+                checked={value === "Pending" ? true : false}
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 inline={true}
+                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -75,28 +83,31 @@ const MatrixRadioTable = (props) => {
       {
         Header: "Halotel",
         accessor: "halotel",
-        Cell: ({ value }) => {
+        Cell: ({ row, column, value }) => {
           return (
             <div className="mb-3">
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                checked={value === "Not Registered" ? true : false}
+                name={column.Header + "-" + row.original.vendor}
                 value="Not Registered"
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 value="Pending"
+                checked={value === "Pending" ? true : false}
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 inline={true}
+                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -106,28 +117,31 @@ const MatrixRadioTable = (props) => {
       {
         Header: "Zantel",
         accessor: "zantel",
-        Cell: ({ value }) => {
+        Cell: ({ row, column, value }) => {
           return (
             <div className="mb-3">
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                checked={value === "Not Registered" ? true : false}
+                name={column.Header + "-" + row.original.vendor}
                 value="Not Registered"
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 value="Pending"
+                checked={value === "Pending" ? true : false}
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 inline={true}
+                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -137,28 +151,31 @@ const MatrixRadioTable = (props) => {
       {
         Header: "TTCL",
         accessor: "ttcl",
-        Cell: ({ value }) => {
+        Cell: ({ row, column, value }) => {
           return (
             <div className="mb-3">
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                checked={value === "Not Registered" ? true : false}
+                name={column.Header + "-" + row.original.vendor}
                 value="Not Registered"
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 value="Pending"
+                checked={value === "Pending" ? true : false}
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 inline={true}
+                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -168,28 +185,31 @@ const MatrixRadioTable = (props) => {
       {
         Header: "Tigo",
         accessor: "tigo",
-        Cell: ({ value }) => {
+        Cell: ({ row, column, value }) => {
           return (
             <div className="mb-3">
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                checked={value === "Not Registered" ? true : false}
+                name={column.Header + "-" + row.original.vendor}
                 value="Not Registered"
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 value="Pending"
+                checked={value === "Pending" ? true : false}
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 inline={true}
+                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -199,28 +219,31 @@ const MatrixRadioTable = (props) => {
       {
         Header: "Smile",
         accessor: "smile",
-        Cell: ({ value }) => {
+        Cell: ({ row, column, value }) => {
           return (
             <div className="mb-3">
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                checked={value === "Not Registered" ? true : false}
+                name={column.Header + "-" + row.original.vendor}
                 value="Not Registered"
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 value="Pending"
+                checked={value === "Pending" ? true : false}
               />
-              <Form.Check
+              <Field
                 className="m-1"
                 type="radio"
-                name="myradio"
+                name={column.Header + "-" + row.original.vendor}
                 inline={true}
+                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -234,49 +257,32 @@ const MatrixRadioTable = (props) => {
   const data = React.useMemo(
     () => [
       {
-        network: "Halotel",
-        mnos: [
-          { network: "Halotel", status: "Registered" },
-          { network: "Airtel", status: "Registered" },
-          { network: "TTCL", status: "Registered" },
-          { network: "Smile", status: "Pending" },
-        ],
+        vendor: "Halotel",
+        vodacom: "Registered",
+        halotel: "Registered",
+        airtel: "Registered",
       },
       {
-        network: "Vodacom",
-        mnos: [
-          { network: "Halotel", status: "Registered" },
-          { network: "Airtel", status: "Registered" },
-          { network: "TTCL", status: "Registered" },
-          { network: "Smile", status: "Pending" },
-        ],
+        vendor: "Vodacom",
+        vodacom: "Registered",
+        halotel: "Registered",
+        airtel: "Pending",
+        tigo: "Pending",
       },
       {
-        network: "Tigo",
-        mnos: [
-          { network: "Halotel", status: "Pending" },
-          { network: "Airtel", status: "Registered" },
-          { network: "TTCL", status: "Registered" },
-          { network: "Smile", status: "Pending" },
-        ],
+        vendor: "Airtel",
+        vodacom: "Registered",
+        halotel: "Registered",
+        airtel: "Pending",
+        tigo: "Pending",
       },
       {
-        network: "Smile",
-        mnos: [
-          { network: "Halotel", status: "Pending" },
-          { network: "Airtel", status: "Not Registered" },
-          { network: "TTCL", status: "Registered" },
-          { network: "Smile", status: "Pending" },
-        ],
-      },
-      {
-        network: "Airtel",
-        mnos: [
-          { network: "Halotel", status: "Registered" },
-          { network: "Airtel", status: "Registered" },
-          { network: "TTCL", status: "Registered" },
-          { network: "Smile", status: "Pending" },
-        ],
+        vendor: "Zantel",
+        vodacom: "Registered",
+        halotel: "Registered",
+        airtel: "Pending",
+        tigo: "Pending",
+        zantel: "Registered",
       },
     ],
     []
@@ -291,66 +297,47 @@ const MatrixRadioTable = (props) => {
   } = useTable({ columns, data });
 
   return (
-    <React.Fragment>
-      <Formik
-        initialValues={{}}
-        enableReinitialize={true}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          console.log("Matrix Radion Table", values);
-        }}
-      >
-        {({
-          errors,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-          isSubmitting,
-          touched,
-          values,
-        }) => (
-          <Form onSubmit={handleSubmit}>
-            {errors.submit && (
-              <Alert className="my-3" variant="danger">
-                {errors.submit}
-              </Alert>
-            )}
-            <Table {...getTableProps()} responsive>
-              <thead>
-                {headerGroups.map((headerGroup) => (
-                  <tr key={i++} {...headerGroup.getHeaderGroupProps()}>
-                    <td>Vendors/MNO</td>
-
-                    {headerGroup.headers.map((column) => (
-                      <th key={column.Header}>
-                        <div className="mb-1">{column.render("Header")}</div>
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {rows.map((row) => {
-                  prepareRow(row);
-                  return (
-                    <tr key={i++} {...row.getRowProps()}>
-                      <td>{row.original["network"]}</td>
-                      {row.cells.map((cell) => {
-                        //   console.log("Matrix Table", cell);
+    <Table {...getTableProps()} responsive>
+      <thead>
+        {headerGroups.map((headerGroup) => (
+          <tr key={i++} {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <th key={column.Header}>
+                <div className="mb-1">{column.render("Header")}</div>
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row) => {
+          prepareRow(row);
+          return (
+            <FieldArray name="registered_networks">
+              {(fieldArrayProps) => {
+                const { push, remove, form } = fieldArrayProps;
+                const { values } = form;
+                var { registered_networks } = values;
+                console.log("inside field array", registered_networks);
+                return (
+                  <tr key={i++} {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      registered_networks.map((vendor) => {
                         return (
                           <td key={i++ + "datacell"} {...cell.getCellProps()}>
                             {cell.render("Cell")}
                           </td>
                         );
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </Table>
-          </Form>
-        )}
-      </Formik>
-    </React.Fragment>
+                      });
+                    })}
+                  </tr>
+                );
+              }}
+            </FieldArray>
+          );
+        })}
+      </tbody>
+    </Table>
   );
 };
 

@@ -3,9 +3,7 @@ export const createSenderIdInitialFormValues = {
   country: "",
   sender_name: "",
   isActive: false,
-  registered_networks: [
-    { network: "Halotel", registerer: "Halotel", status: "Registered" },
-  ],
+  registered_networks: [],
 };
 
 export const formValuesValidation = Yup.object().shape({

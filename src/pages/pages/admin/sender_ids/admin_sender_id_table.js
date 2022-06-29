@@ -53,7 +53,7 @@ const AdminSenderIdTable = () => {
         })
         .catch((e) => console.log("getsender", e));
     }
-    getIds();
+    // getIds();
   }, []);
   //Modal State
   const [modalState, setModalState] = useState({
