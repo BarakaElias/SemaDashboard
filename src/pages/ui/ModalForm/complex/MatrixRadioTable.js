@@ -6,6 +6,37 @@ import { useTable } from "react-table";
 
 const MatrixRadioTable = (props) => {
   let i = 0;
+  let index = -1;
+  const [mnoData, setMnoData] = useState([
+    {
+      vendor: "Halotel",
+      vodacom: "Registered",
+      halotel: "Not Registered",
+      airtel: "Registered",
+    },
+    {
+      vendor: "Vodacom",
+      vodacom: "Not Registered",
+      halotel: "Registered",
+      airtel: "Pending",
+      tigo: "Pending",
+    },
+    {
+      vendor: "Airtel",
+      vodacom: "Registered",
+      halotel: "Registered",
+      airtel: "Pending",
+      tigo: "Pending",
+    },
+    {
+      vendor: "Zantel",
+      vodacom: "Registered",
+      halotel: "Registered",
+      airtel: "Pending",
+      tigo: "Pending",
+      zantel: "Registered",
+    },
+  ]);
   const columns = React.useMemo(
     () => [
       {
@@ -23,23 +54,21 @@ const MatrixRadioTable = (props) => {
                 type="radio"
                 inline={true}
                 defaultChecked={value === "Not Registered" ? true : false}
-                name={column.Header + "-" + row.original.vendor}
-                value="Not Registered"
+                name={`registered_netowrks[${row.id}][${column.id}]`}
+                value="Registered"
               />
               <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Pending"
-                defaultChecked={value === "Pending" ? true : false}
               />
               <Field
                 className="m-1"
                 type="radio"
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 inline={true}
-                defaultChecked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -56,24 +85,21 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
-                checked={value === "Not Registered" ? true : false}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
               <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Pending"
-                checked={value === "Pending" ? true : false}
               />
               <Field
                 className="m-1"
                 type="radio"
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 inline={true}
-                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -90,22 +116,20 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
-                checked={value === "Not Registered" ? true : false}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
               <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Pending"
-                checked={value === "Pending" ? true : false}
               />
               <Field
                 className="m-1"
                 type="radio"
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 inline={true}
                 checked={value === "Registered" ? true : false}
                 value="Registered"
@@ -124,24 +148,21 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
-                checked={value === "Not Registered" ? true : false}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
               <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Pending"
-                checked={value === "Pending" ? true : false}
               />
               <Field
                 className="m-1"
                 type="radio"
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 inline={true}
-                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -159,23 +180,21 @@ const MatrixRadioTable = (props) => {
                 type="radio"
                 inline={true}
                 checked={value === "Not Registered" ? true : false}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
               <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Pending"
-                checked={value === "Pending" ? true : false}
               />
               <Field
                 className="m-1"
                 type="radio"
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 inline={true}
-                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -192,24 +211,21 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
-                checked={value === "Not Registered" ? true : false}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
               <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Pending"
-                checked={value === "Pending" ? true : false}
               />
               <Field
                 className="m-1"
                 type="radio"
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 inline={true}
-                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -226,24 +242,21 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
-                checked={value === "Not Registered" ? true : false}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
               <Field
                 className="m-1"
                 type="radio"
                 inline={true}
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 value="Pending"
-                checked={value === "Pending" ? true : false}
               />
               <Field
                 className="m-1"
                 type="radio"
-                name={column.Header + "-" + row.original.vendor}
+                name={`registered_netowrks[${row.id}][${column.id}]`}
                 inline={true}
-                checked={value === "Registered" ? true : false}
                 value="Registered"
               />
             </div>
@@ -254,47 +267,10 @@ const MatrixRadioTable = (props) => {
     []
   );
 
-  const data = React.useMemo(
-    () => [
-      {
-        vendor: "Halotel",
-        vodacom: "Registered",
-        halotel: "Registered",
-        airtel: "Registered",
-      },
-      {
-        vendor: "Vodacom",
-        vodacom: "Registered",
-        halotel: "Registered",
-        airtel: "Pending",
-        tigo: "Pending",
-      },
-      {
-        vendor: "Airtel",
-        vodacom: "Registered",
-        halotel: "Registered",
-        airtel: "Pending",
-        tigo: "Pending",
-      },
-      {
-        vendor: "Zantel",
-        vodacom: "Registered",
-        halotel: "Registered",
-        airtel: "Pending",
-        tigo: "Pending",
-        zantel: "Registered",
-      },
-    ],
-    []
-  );
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    page,
-    prepareRow,
-    rows,
-  } = useTable({ columns, data });
+  const data = React.useMemo(() => mnoData, [mnoData]);
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
+    useTable({ columns, data });
+  let registered_networks = [];
 
   return (
     <Table {...getTableProps()} responsive>
@@ -312,28 +288,27 @@ const MatrixRadioTable = (props) => {
       <tbody {...getTableBodyProps()}>
         {rows.map((row) => {
           prepareRow(row);
+          console.log(row.original["vendor"]);
           return (
-            <FieldArray name="registered_networks">
-              {(fieldArrayProps) => {
-                const { push, remove, form } = fieldArrayProps;
-                const { values } = form;
-                var { registered_networks } = values;
-                console.log("inside field array", registered_networks);
-                return (
-                  <tr key={i++} {...row.getRowProps()}>
-                    {row.cells.map((cell) => {
-                      registered_networks.map((vendor) => {
+            <tr key={"row" + i++} {...row.getRowProps()}>
+              {
+                <FieldArray
+                  name={`registered_networks[${row.id}]`}
+                  render={(arrayHelpers) => (
+                    <React.Fragment>
+                      {row.cells.map((cell) => {
+                        registered_networks[row.id] = { vendor: "ddd" };
                         return (
                           <td key={i++ + "datacell"} {...cell.getCellProps()}>
                             {cell.render("Cell")}
                           </td>
                         );
-                      });
-                    })}
-                  </tr>
-                );
-              }}
-            </FieldArray>
+                      })}
+                    </React.Fragment>
+                  )}
+                />
+              }
+            </tr>
           );
         })}
       </tbody>

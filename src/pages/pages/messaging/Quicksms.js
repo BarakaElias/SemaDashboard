@@ -12,10 +12,13 @@ import AlertDialog from "../../../pages/ui/AlertDialog/AlertDialog";
 import Timezones from "../../../utils/timezones";
 import sendSMS from "../../../utils/sendSMS";
 // import { GetDeliveryReport } from "./deliveryStatus";
+import useAuth from "./../../../hooks/useAuth";
+// import NotyfContext from "../../../contexts/NotyfContext";
 
 const QuickSMS = () => {
-  // const notyf = useContext(NotyfContext);
-  const user = useSelector((state: RootStateOrAny) => state.user.value);
+  const notyf = useContext(NotyfContext);
+  // const user = useSelector((state: RootStateOrAny) => state.user.value);
+  const { user } = useAuth();
   const sender_ids = useSelector(
     (state: RootStateOrAny) => state.sender_ids.values
   );
@@ -28,6 +31,8 @@ const QuickSMS = () => {
     timezone: "",
     dateAndTime: "",
   });
+
+  console.log("check user api keys", user.api_keys);
 
   const charLength =
     quickState.formVals === null || quickState.formVals === undefined
@@ -53,8 +58,28 @@ const QuickSMS = () => {
     setQuickState({ alertOpen: true, formVals: { ...params } });
   };
 
-  const sendSMSHandler = () => {
-    sendSMS(quickState.formVals);
+  const sendSMSHandler = (params) => {
+    // sendSMS(quickState.formVals);
+    console.log("quick sms", "Sending sms");
+    console.log("params in param", params);
+    axios
+      .get("https://api.sema.co.tz/api/SendSMS", {
+        params: { ...params },
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        },
+      })
+      .then((res) => {
+        if (res.data["status"] === "S") {
+          notyf.success("Succesfully sent message");
+        }
+      })
+      .catch((err) => {
+        notyf.error("Error sending message!");
+        console.log("send sms error", err);
+      });
+    // sendSMS(params);
 
     setQuickState({
       alertOpen: false,
@@ -128,15 +153,15 @@ const QuickSMS = () => {
           <Card.Body>
             <Formik
               initialValues={{
-                api_id: user.api_id,
-                api_password: user.api_password,
+                api_id: "API213160153", //user.api_keys[0].api_secrets,
+                api_password: "ForDemoClient123", //user.api_keys[0].api_password,
                 sms_type: "T",
                 sender_id: "INFO",
                 encoding: "T",
                 phonenumber: "",
                 template_id: "",
                 textmessage: "",
-                schedule_sms: "no",
+                schedule_sms: "",
               }}
               validationSchema={Yup.object().shape({
                 sms_type: Yup.string().required("SMS type is required").max(1),
@@ -152,6 +177,7 @@ const QuickSMS = () => {
                 values,
                 { setErrors, setStatus, setSubmitting }
               ) => {
+                console.log(values);
                 openAlertModal(values);
               }}
             >
@@ -316,8 +342,8 @@ const QuickSMS = () => {
                           // name="sms_schedule"
                           onBlur={handleBlur}
                         >
-                          <option value="no">No</option>
-                          <option value="yes">Yes</option>
+                          <option value="">No</option>
+                          <option value="">Yes</option>
                         </Form.Select>
                       </Form.Group>
                     </Col>

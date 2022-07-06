@@ -31,7 +31,7 @@ export function retrieveSenderIDs() {
       const response = await axios.get(
         "https://api.sema.co.tz/api/GetSenderIDList",
         {
-          params: { api_id: "API3462965997", api_password: "Licks@2021!" },
+          params: { api_id: "API213160153", api_password: "ForDemoClient123" },
         }
       );
 
@@ -40,9 +40,9 @@ export function retrieveSenderIDs() {
       //   { params: { company_id: "2020" } }
       // );
       dispatch(senderIDSlice.actions.setSenderIDs(response.data));
-      console.log(response);
+      console.log("Getting IDs", response);
     } catch (err) {
-      console.log(err);
+      console.log("Sender id", err);
     }
   };
 }

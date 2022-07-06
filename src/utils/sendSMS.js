@@ -21,8 +21,8 @@ const sendSMS = (params) => {
         axios
           .get("https://api.sema.co.tz/api/GetDeliveryStatus", {
             params: {
-              api_id: "API3462965997",
-              api_password: "Licks@2021!",
+              api_id: "API213160153",
+              api_password: "ForDemoClient123",
               message_id: response.data["message_id"],
             },
           })

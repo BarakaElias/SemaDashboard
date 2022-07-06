@@ -2,16 +2,14 @@ import axios from "axios";
 
 const axiosInstance = axios.create();
 
-axios.defaults.withCredentials = true;
+// axios.interceptors.request.use((request) => {
+// add auth header with jwt if account is logged in and request is to the api url
 
-axios.interceptors.request.use((request) => {
-  // add auth header with jwt if account is logged in and request is to the api url
+// request.headers.common.Authorization = `Bearer 7|iGA0wE5O1J8wClcSAC5ZEFAr9hQeZl92qUvgmMxt`;
 
-  // request.headers.common.Authorization = `Bearer 7|iGA0wE5O1J8wClcSAC5ZEFAr9hQeZl92qUvgmMxt`;
-
-  console.log("from axios request:", request);
-  return request;
-});
+//   console.log("from axios request:", request);
+//   return request;
+// });
 
 axiosInstance.interceptors.response.use(
   (response) => response,
