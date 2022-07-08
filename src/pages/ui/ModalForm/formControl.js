@@ -126,83 +126,81 @@ const formControl = (props) => {
         "Smile",
       ];
 
-      let i = 0;
-
       inputControl = <MatrixRadioTable />;
       break;
-    case "matrix":
-      inputControl = (
-        <FieldArray name="registered_networks">
-          {(fieldArrayProps) => {
-            const { push, remove, form } = fieldArrayProps;
-            const { values } = form;
-            var { registered_networks } = values;
-            // console.log("a", registered_networks);
+    // case "matrix":
+    //   inputControl = (
+    //     <FieldArray name="registered_networks">
+    //       {(fieldArrayProps) => {
+    //         const { push, remove, form } = fieldArrayProps;
+    //         const { values } = form;
+    //         var { registered_networks } = values;
+    //         // console.log("a", registered_networks);
 
-            if (registered_networks == null || "") {
-              registered_networks = [
-                {
-                  network: "",
-                  registerer: "",
-                  status: "",
-                },
-              ];
-              // return <div>h</div>;
-            }
+    //         if (registered_networks == null || "") {
+    //           registered_networks = [
+    //             {
+    //               network: "",
+    //               registerer: "",
+    //               status: "",
+    //             },
+    //           ];
+    //           // return <div>h</div>;
+    //         }
 
-            return (
-              <div className="d-lg-flex flex-wrap">
-                {registered_networks.map((network, index) => {
-                  // console.log(props.initValue);
-                  return (
-                    <Form.Group className="p-1" key={index}>
-                      <Form.Label>Mobile Network {index}</Form.Label>
-                      <br></br>
-                      <label>Network</label>
-                      <Field
-                        className="form-control w-100"
-                        placeholder="Network"
-                        value={network.network}
-                        name={`registered_networks[${index}].network`}
-                      />
-                      <label>Registerer</label>
-                      <Field
-                        className="form-control w-100"
-                        placeholder="Network registered under"
-                        value={network.registerer}
-                        name={`registered_networks[${index}].registerer`}
-                      />
-                      <label>Status</label>
-                      <Field
-                        className="form-control w-100"
-                        placeholder="Pending/Registered"
-                        value={network.status}
-                        name={`registered_networks[${index}].status`}
-                      />
+    //         return (
+    //           <div className="d-lg-flex flex-wrap">
+    //             {registered_networks.map((network, index) => {
+    //               // console.log(props.initValue);
+    //               return (
+    //                 <Form.Group className="p-1" key={index}>
+    //                   <Form.Label>Mobile Network {index}</Form.Label>
+    //                   <br></br>
+    //                   <label>Network</label>
+    //                   <Field
+    //                     className="form-control w-100"
+    //                     placeholder="Network"
+    //                     value={network.network}
+    //                     name={`registered_networks[${index}].network`}
+    //                   />
+    //                   <label>Registerer</label>
+    //                   <Field
+    //                     className="form-control w-100"
+    //                     placeholder="Network registered under"
+    //                     value={network.registerer}
+    //                     name={`registered_networks[${index}].registerer`}
+    //                   />
+    //                   <label>Status</label>
+    //                   <Field
+    //                     className="form-control w-100"
+    //                     placeholder="Pending/Registered"
+    //                     value={network.status}
+    //                     name={`registered_networks[${index}].status`}
+    //                   />
 
-                      <button
-                        className="btn btn-secondary"
-                        type="button"
-                        onClick={() => remove(index)}
-                      >
-                        -
-                      </button>
-                      <button
-                        className="btn btn-success"
-                        type="button"
-                        onClick={() => push("")}
-                      >
-                        +
-                      </button>
-                    </Form.Group>
-                  );
-                })}
-              </div>
-            );
-          }}
-        </FieldArray>
-      );
-      break;
+    //                   <button
+    //                     className="btn btn-secondary"
+    //                     type="button"
+    //                     onClick={() => remove(index)}
+    //                   >
+    //                     -
+    //                   </button>
+    //                   <button
+    //                     className="btn btn-success"
+    //                     type="button"
+    //                     onClick={() => push("")}
+    //                   >
+    //                     +
+    //                   </button>
+    //                 </Form.Group>
+    //               );
+    //             })}
+    //           </div>
+    //         );
+    //       }}
+    //     </FieldArray>
+    //   );
+    //   break;
     default:
       break;
   }
