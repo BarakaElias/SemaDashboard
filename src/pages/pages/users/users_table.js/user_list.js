@@ -22,10 +22,10 @@ const UserList = () => {
   useEffect(() => {
     async function getUsers() {
       try {
-        const users = await axios.get(
-          "http://localhost/semaapi/public/api/list_users",
-          { account_id: user.account_id }
-        );
+        const users = await axios.get("list_users", {
+          account_id: user.account_id.toString(),
+        });
+        console.log("account id", user.account_id.toString());
 
         console.log("List users: ", users);
       } catch (e) {

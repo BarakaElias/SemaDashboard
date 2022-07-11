@@ -13,10 +13,7 @@ const AccountGenerals = () => {
 
   const resend_verification_email = () => {
     axios
-      .post(
-        "http://localhost/semaapi/public/api//email/verification-notification",
-        { user }
-      )
+      .post("email/verification-notification", { user })
       .then((res) => {
         notyf.success("Verification email sent!");
       })

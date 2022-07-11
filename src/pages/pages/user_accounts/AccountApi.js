@@ -10,7 +10,7 @@ const AccountGenerals = () => {
   const notyf = useContext(NotyfContext);
 
   axios
-    .get("http://localhost/semaapi/public/api/get_api_keys")
+    .get("get_api_keys")
     .then((res) => {
       console.log(res);
     })
@@ -59,14 +59,11 @@ const AccountGenerals = () => {
   };
   const submitFormFunc = async (values) => {
     try {
-      const response = await axios.post(
-        "http://localhost/semaapi/public/api/change_api_keys",
-        {
-          api_password: values.api_password,
-          company_id: "2020",
-          platform: "sms",
-        }
-      );
+      const response = await axios.post("change_api_keys", {
+        api_password: values.api_password,
+        company_id: "2020",
+        platform: "sms",
+      });
       console.log(response);
       if (response.status === 200) {
         notyf.success("Api password updated");

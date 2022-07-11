@@ -9,13 +9,10 @@ const AccountActivationForm = () => {
   const notyf = useContext(NotyfContext);
   const ActivateAccount = async (email, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost/semaapi/public/api/activate_account",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("activate_account", {
+        email,
+        password,
+      });
       return { status: response.status, message: response.data };
     } catch (e) {
       console.log(e);

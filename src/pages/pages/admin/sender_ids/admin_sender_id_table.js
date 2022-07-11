@@ -46,7 +46,7 @@ const AdminSenderIdTable = () => {
   useEffect(() => {
     function getIds() {
       axios
-        .get("http://localhost/semaapi/public/api/list_senders")
+        .get("list_senders")
         .then((res) => {
           // sid_data = [...res.data];
           setSidData({ data_values: [...res.data] });
@@ -141,7 +141,7 @@ const AdminSenderIdTable = () => {
     console.log("from addsender", parameters);
     if (parameters.id != null) {
       axios
-        .put("http://localhost/semaapi/public/api/update_sender_id", {
+        .put("update_sender_id", {
           id: parameters.id,
           status: parameters.isActive,
           country: parameters.country,
@@ -166,7 +166,7 @@ const AdminSenderIdTable = () => {
         .then((response) => {
           console.log(response);
           axios
-            .post("http://localhost/semaapi/public/api/register_sender_id", {
+            .post("register_sender_id", {
               country: parameters.country,
               sender_name: parameters.sender_name,
               status: parameters.isActive,
@@ -230,7 +230,7 @@ const AdminSenderIdTable = () => {
       .then((response) => {
         console.log(response);
         axios
-          .post("http://localhost/semaapi/public/api/delete_sender_id", { id })
+          .post("delete_sender_id", { id })
           .then((res) => {
             if (res.status === 200) {
               notyf.success("Deleted");

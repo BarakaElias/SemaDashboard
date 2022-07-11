@@ -143,10 +143,9 @@ function AuthProvider({ children }) {
     axios.defaults.withCredentials = true;
     const csrf_res = await get_csrf();
     try {
-      const response = await axios.post(
-        "http://localhost/semaapi/public/api/loginuser",
-        { params: { email, password } }
-      );
+      const response = await axios.post("loginuser", {
+        params: { email, password },
+      });
 
       console.log("sign in", response);
 
@@ -207,16 +206,13 @@ function AuthProvider({ children }) {
     last_name,
     phone_number
   ) => {
-    const response = await axios.post(
-      "http://localhost/semaapi/public/api/register_new_client",
-      {
-        email,
-        password,
-        first_name,
-        last_name,
-        phone_number,
-      }
-    );
+    const response = await axios.post("register_new_client", {
+      email,
+      password,
+      first_name,
+      last_name,
+      phone_number,
+    });
     console.log(response);
     // const { accessToken, user } = response.data;
 

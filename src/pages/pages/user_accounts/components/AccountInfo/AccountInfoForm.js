@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Card,
   Row,
@@ -13,8 +13,10 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import useAuth from "../../../../../hooks/useAuth";
+import NotyfContext from "../../../../../contexts/NotyfContext";
 
 const AccountInfoForm = () => {
+  const notyf = useContext(NotyfContext);
   const { user } = useAuth();
   const get_csrf = async () => {
     axios.defaults.withCredentials = true;
@@ -32,7 +34,7 @@ const AccountInfoForm = () => {
         .get("http://localhost/semaapi/public/sanctum/csrf-cookie")
         .then((res) => {
           axios
-            .post("http://localhost/semaapi/public/api/upload_file", fd, {
+            .post("upload_file", fd, {
               onUploadProgress: (ProgressEvent) => {
                 console.log(
                   "Upload progress " +
@@ -82,6 +84,32 @@ const AccountInfoForm = () => {
               { setErrors, setStatus, setSubmitting }
             ) => {
               console.log("Company info form: ", values);
+              try {
+                const response = await axios.post("activate_account", {
+                  email: user.email,
+                  company_name: values.company_name,
+                  company_email: values.company_email,
+                  billing_email: values.billing_email,
+                  support_email: values.support_email,
+                  phone_number: values.phone_number,
+                  incorporation_certificate: values.incorporation_certificate,
+                  business_license: values.business_license,
+                  tin_vrn_certificate: values.tin_vrn_certificate,
+                  directors_nida: values.directors_nida,
+                });
+                console.log("Account Activation", response);
+                if (response.status === 200) {
+                  if (response.data === "Account Activated") {
+                    notyf.success("Account Activation Request Sent!");
+                  } else if (response.data.email) {
+                    notyf.error("Cannot request another Activation");
+                  }
+                }
+              } catch (e) {
+                console.log("Account Activation", e);
+                notyf.success("Failed to Send Request! Try Again Later.");
+              }
+
               // const files = [];
               // let file = {
               //   file_name: "incorporation_certificate_",
@@ -91,9 +119,7 @@ const AccountInfoForm = () => {
               // console.log("Upload files request: ", uploadedFiles);
             }}
             validationSchema={Yup.object().shape({
-              company_name: Yup.string()
-                .email("Must be a valid email")
-                .required("Required"),
+              company_name: Yup.string().required("Required"),
               company_email: Yup.string()
                 .email("Must be a valid email")
                 .required("Required"),
@@ -190,7 +216,7 @@ const AccountInfoForm = () => {
                     <Form.Group className="mb-3">
                       <Form.Label>Phone number</Form.Label>
                       <Form.Control
-                        type="email"
+                        type="text"
                         name="phone_number"
                         onChange={handleChange}
                         placeholder="Eg: 255624327900"

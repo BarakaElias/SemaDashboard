@@ -11,6 +11,8 @@ const axiosInstance = axios.create();
 //   return request;
 // });
 
+axios.defaults.baseURL = "http://10.0.5.1/semaapi/public/api/";
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {

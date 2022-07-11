@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Table, Col, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
 import {
@@ -22,57 +22,94 @@ import {
 } from "../../sender_ids/sender_id_table_extensions/ColumnFilter";
 import { SelectColumnFilter } from "./table_extenstions/ColumnFilter";
 // import { GlobalFilter } from "../../sender_ids/sender_id_table_extensions/GlobalFilter";
-
+import axios from "axios";
 const NewAccountsTable = () => {
   let i = 0;
-  const data = React.useMemo(
-    () => [
+  const [accountsData, setAccountsData] = useState({
+    data: [
       {
         id: "1",
-        full_name: "Baraka Urio",
         email: "barakaurio@yahoo.com",
         phone_number: "0624327900",
         created_at: "2022-05-12 07:49:40",
+        updated_at: "2022-05-12 07:49:40",
         status: "Trial",
+        company_name: "Nexan Tech",
+        company_email: "directors@nexantech.com",
+        support_email: "support@nexantech.com",
+        billing_email: "bills@nexantech.com",
       },
       {
         id: "2",
-        full_name: "Isaac Urio",
-        email: "isaacurio@yahoo.com",
-        phone_number: "0624327900",
-        created_at: "2022-05-10 07:49:40",
-        status: "Activated",
-      },
-      {
-        id: "3",
-        full_name: "Marcella Carlos",
-        email: "marcellacarolos@yahoo.com",
+        email: "bakary@yahoo.com",
         phone_number: "0624327900",
         created_at: "2022-05-12 07:49:40",
-        status: "Requests Activation",
+        updated_at: "2022-05-12 07:49:40",
+        status: "Activated",
+        company_name: "BioLiv Tech",
+        company_email: "directors@nexantech.com",
+        support_email: "support@nexantech.com",
+        billing_email: "bills@nexantech.com",
       },
       {
-        id: "4",
-        full_name: "John Doe",
-        email: "johndoe@yahoo.com",
+        id: "1",
+        email: "barakaurio@yahoo.com",
         phone_number: "0624327900",
-        created_at: "2022-05-10 07:49:40",
-        status: "Activated",
+        created_at: "2022-05-12 07:49:40",
+        updated_at: "2022-05-12 07:49:40",
+        status: "Requests Activation",
+        company_name: "Haki Elimu",
+        company_email: "directors@nexantech.com",
+        support_email: "support@nexantech.com",
+        billing_email: "bills@nexantech.com",
       },
     ],
-    []
-  );
+  });
+
+  useEffect(() => {
+    function getAccounts() {
+      axios
+        .get("fetch_accounts")
+        .then((r) => {
+          if (r.status === 200) {
+            console.log("Fetching Accounts", r.data);
+            setAccountsData({ data: [...r.data] });
+          }
+        })
+        .catch((e) => {
+          console.log("Fetch Accounts: ", e);
+        });
+    }
+    // getAccounts();
+  });
+
+  const data = React.useMemo(() => accountsData.data, [accountsData.data]);
 
   const columns = React.useMemo(
     () => [
       {
-        Header: "Full name",
-        accessor: "full_name",
+        Header: "Company name",
+        accessor: "company_name",
         Filter: EmptyColumnFilter,
       },
       {
         Header: "Email",
         accessor: "email",
+        Filter: EmptyColumnFilter,
+      },
+      {
+        Header: "Company email",
+        accessor: "company_email",
+        Filter: EmptyColumnFilter,
+      },
+      {
+        Header: "Support email",
+        accessor: "support_email",
+        Filter: EmptyColumnFilter,
+      },
+      {
+        Header: "Billing email",
+        accessor: "billing_email",
         Filter: EmptyColumnFilter,
       },
       {
