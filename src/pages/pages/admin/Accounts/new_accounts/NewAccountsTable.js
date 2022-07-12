@@ -67,21 +67,18 @@ const NewAccountsTable = () => {
   });
 
   useEffect(() => {
-    function getAccounts() {
-      axios
-        .get("fetch_accounts")
-        .then((r) => {
-          if (r.status === 200) {
-            console.log("Fetching Accounts", r.data);
-            setAccountsData({ data: [...r.data] });
-          }
-        })
-        .catch((e) => {
-          console.log("Fetch Accounts: ", e);
-        });
+    let accounts = [];
+
+    async function getAccounts() {
+      accounts = await axios.get("fetch_accounts");
+      if (accounts.status === 200) {
+        if (accounts.data) {
+          setAccountsData({ data: [...accounts.data] });
+        }
+      }
     }
-    // getAccounts();
-  });
+    getAccounts();
+  }, []);
 
   const data = React.useMemo(() => accountsData.data, [accountsData.data]);
 
@@ -133,6 +130,8 @@ const NewAccountsTable = () => {
             return <span>Trial</span>;
           } else if (value === "Requests Activation") {
             return <span className="text-warning">Requests Activation</span>;
+          } else {
+            return <span className="text-danger">Unknown</span>;
           }
         },
       },

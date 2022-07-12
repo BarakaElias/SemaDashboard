@@ -30,14 +30,23 @@ import axios from "axios";
 import useAuth from "./../../../../hooks/useAuth";
 // import Matrix from "./Matrix/Matrix";
 import MatrixTable from "./Matrix/MatrixTable";
-import {
-  createSenderIdInitialFormValues,
-  formValuesValidation,
-} from "./sender_id_table_extensions/FormikForm";
+import { formValuesValidation } from "./sender_id_table_extensions/FormikForm";
 import NotyfContext from "../../../../contexts/NotyfContext";
 
 const AdminSenderIdTable = () => {
   const { user } = useAuth();
+  const createSenderIdInitialFormValues = {
+    country: "",
+    sender_name: "",
+    isActive: false,
+    user: user.email,
+    registered_networks: [
+      { vendor: "Halotel" },
+      { vendor: "Vodacom" },
+      { vendor: "Airtel" },
+      { vendor: "Zantel" },
+    ],
+  };
   const notyf = useContext(NotyfContext);
   const [sidData, setSidData] = useState({
     data_values: [...sid_data],
@@ -53,7 +62,7 @@ const AdminSenderIdTable = () => {
         })
         .catch((e) => console.log("getsender", e));
     }
-    // getIds();
+    getIds();
   }, []);
   //Modal State
   const [modalState, setModalState] = useState({

@@ -72,6 +72,7 @@ const MatrixRadioTable = (props) => {
               <Field
                 className="m-1"
                 type="radio"
+                variant="secondary"
                 inline={true}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Pending"
