@@ -1,68 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
-
+import { Formik } from "formik";
+import NotyfContext from "../../../../contexts/NotyfContext";
 import { Card, Container, Row, Form, Col, Button } from "react-bootstrap";
 import ContactListTable from "./contactListTable";
 import DashboardLayout from "../../../../layouts/Dashboard";
 
 const ContactList = (props) => {
-  const [formState, setFormState] = useState({
-    addContactForm: {
-      contact_name: {
-        required: true,
-        value: "",
-        hasError: false,
-      },
-      contact_number: {
-        required: true,
-        value: "",
-        hasError: false,
-      },
-    },
-    contact_list_id: "374",
-  });
-  const checkValidity = (value, isRequired) => {
-    let isValid = true;
-    if (isRequired) {
-      isValid = value.trim() === "";
-      return isValid;
-    }
-    return !isValid;
-  };
-
-  const addContactToList = () => {
-    const parameters = { ...formState.addContactForm };
-    const params = {
-      api_id: "API3462965997",
-      api_password: "Licks@2021!",
-      contact_list_id: formState.contact_list_id,
-      contact_name: parameters.contact_name.value,
-      contact_number: parameters.contact_number.value,
-    };
-    axios
-      .get("https://api.sema.co.tz/api/AddContact", { params: params })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch();
-  };
-
-  const inputChangedHandler = (event, inputIdentifier) => {
-    const updatedQuickSMSForm = { ...formState.addContactForm };
-    const updatedFormElement = { ...updatedQuickSMSForm[inputIdentifier] };
-    updatedFormElement.value = event.target.value;
-    updatedFormElement.hasError = checkValidity(
-      updatedFormElement.value,
-      updatedFormElement.required
-    );
-    updatedQuickSMSForm[inputIdentifier] = updatedFormElement;
-    setFormState({
-      addContactForm: updatedQuickSMSForm,
-      contact_list_id: "374",
-    });
-    console.log(formState.contact_list_id);
-  };
+  const notyf = useContext(NotyfContext);
 
   return (
     <DashboardLayout>
@@ -81,47 +27,110 @@ const ContactList = (props) => {
               {/* <Button onClick={onRequestButtonClicked}>
               ADD A NEW CONTACT LIST
             </Button> */}
-              <Form>
-                <Row>
-                  <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>
-                        Enter Phone number prefix (optional)
-                      </Form.Label>
-                      <Form.Control
-                        onChange={(event) =>
-                          inputChangedHandler(event, "contact_name")
-                        }
-                        type="text"
-                        name="smsPhoneNumberPrefix"
-                        placeholder="Enter name of contact"
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Enter Phone number</Form.Label>
-                      <Form.Control
-                        onChange={(event) =>
-                          inputChangedHandler(event, "contact_number")
-                        }
-                        type="text"
-                        name="smsPhoneNumberPrefix"
-                        placeholder="Enter contact number"
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col className="d-flex justify-content-start">
-                    <Button
-                      onClick={addContactToList}
-                      size="lg"
-                      variant="primary"
-                    >
-                      Add New Contact
-                    </Button>
-                  </Col>
-                </Row>
-              </Form>
+              <Formik
+                initialValues={{
+                  api_id: "API213160153",
+                  api_password: "ForDemoClient123",
+                  contact_id: "373",
+                  contact_name: "",
+                  contact_number: "",
+                }}
+                enableReinitialize={true}
+                onSubmit={async (
+                  values,
+                  { setErrors, setStatus, setSubmitting }
+                ) => {
+                  console.log("Add contact in Contact list", values);
+                  try {
+                    const response = await axios.post(
+                      "https://api.sema.co.tz/api/AddContact",
+                      {
+                        contact_id: values.contact_id,
+                        contact_name: values.contact_name,
+                        contact_number: values.contact_number,
+                      }
+                    );
+                    if (response.status === 200) {
+                      if (response.data.status === "S") {
+                        notyf.success(response.data.remarks);
+                      } else if (response.data.status === "F") {
+                        notyf.error(response.data.remarks);
+                      }
+                    }
+                  } catch (e) {
+                    console.log("Add Contact error", e);
+                    notyf.error("Failed to reach Server");
+                    setStatus({ success: false });
+                    setErrors({ submit: e.message });
+                    setSubmitting(false);
+                  }
+                }}
+              >
+                {({
+                  errors,
+                  handleBlur,
+                  handleChange,
+                  handleSubmit,
+                  isSubmitting,
+                  touched,
+                  values,
+                }) => (
+                  <Form onSubmit={handleSubmit}>
+                    <Row>
+                      <Col>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Contact name</Form.Label>
+                          <Form.Control
+                            onChange={handleChange}
+                            type="text"
+                            onBlur={handleBlur}
+                            isInvalid={Boolean(
+                              touched.contact_name && errors.contact_name
+                            )}
+                            name="contact_name"
+                            placeholder=""
+                          />
+                          {!!touched.contact_name && (
+                            <Form.Control.Feedback type="invalid">
+                              {errors.contact_name}
+                            </Form.Control.Feedback>
+                          )}
+                        </Form.Group>
+                      </Col>
+                      <Col>
+                        <Form.Group className="mb-3">
+                          <Form.Label>Phone number</Form.Label>
+                          <Form.Control
+                            onChange={handleChange}
+                            type="text"
+                            onBlur={handleBlur}
+                            isInvalid={Boolean(
+                              touched.contact_number && errors.contact_number
+                            )}
+                            name="contact_number"
+                            placeholder="Eg: 255624123123"
+                          />
+                          {!!touched.contact_number && (
+                            <Form.Control.Feedback type="invalid">
+                              {errors.contact_number}
+                            </Form.Control.Feedback>
+                          )}
+                        </Form.Group>
+                      </Col>
+                      <Col className="d-flex justify-content-start">
+                        <Button
+                          type="submit"
+                          size="lg"
+                          disabled={isSubmitting}
+                          variant="primary"
+                        >
+                          Add New Contact
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Form>
+                )}
+              </Formik>
             </Card.Header>
             <Card.Body>
               <Row>

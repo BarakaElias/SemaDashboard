@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Table, Col, Button, Form } from "react-bootstrap";
 import { Formik } from "formik";
+import { Link } from "react-router-dom";
 import {
   useSortBy,
   useTable,
@@ -123,13 +124,20 @@ const NewAccountsTable = () => {
         Header: "Status",
         accessor: "status",
         Filter: SelectColumnFilter,
-        Cell: ({ value }) => {
+        Cell: ({ value, row }) => {
           if (value === "Activated") {
             return <strong className="text-success">Activated</strong>;
           } else if (value === "Trial") {
             return <span>Trial</span>;
           } else if (value === "Requests Activation") {
-            return <span className="text-warning">Requests Activation</span>;
+            return (
+              <Link
+                to={`/admin/manage_accounts/activate?id=${row.original.id}`}
+                className="text-warning"
+              >
+                Requests Activation
+              </Link>
+            );
           } else {
             return <span className="text-danger">Unknown</span>;
           }

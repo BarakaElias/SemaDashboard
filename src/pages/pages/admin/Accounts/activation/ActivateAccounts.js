@@ -9,20 +9,20 @@ const ActivateAccounts = () => {
       <Helmet title="Activate Account" />
       <Container fluid className="p-0">
         <h1 className="h3 mb-3">Activate Account</h1>
-        <Row className="text-center">
+        <Row>
           <Card>
-            <Card.Header tag="h5">
+            <Card.Header className="text-center" tag="h5">
               Activate the Account here, after registering the Account<br></br>
               <span className="text-danger">Note</span>:Use the same credentials
               you used to create the Account
             </Card.Header>
             <Card.Body className="m-sm-4">
               <Row>
-                <Col md={4}></Col>
-                <Col md={4}>
+                <Col md={2}></Col>
+                <Col md={8}>
                   <AccountActivationForm />
                 </Col>
-                <Col md={4}></Col>
+                <Col md={2}></Col>
               </Row>
             </Card.Body>
           </Card>

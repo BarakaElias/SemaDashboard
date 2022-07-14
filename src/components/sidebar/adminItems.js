@@ -36,10 +36,10 @@ const gettingStartedSection = [
         href: "/admin/manage_accounts/new_accounts",
         title: "All Accounts",
       },
-      {
-        href: "/admin/manage_accounts/activate",
-        title: "Account Activation",
-      },
+      // {
+      //   href: "/admin/manage_accounts/activate",
+      //   title: "Account Activation",
+      // },
     ],
   },
 ];

@@ -43,10 +43,15 @@ const PrivateInfo = () => {
                 notyf.success("Password changed");
               } else {
                 notyf.error("Unable to change password");
+                setStatus({ success: false });
+                setErrors({ submit: "Could not change password" });
               }
             } catch (e) {
               console.log("reset error: ", e);
               notyf.error("Critical error occured");
+              setStatus({ success: false });
+              setErrors({ submit: "Could not change password" });
+              setSubmitting(false);
             }
 
             // try {
