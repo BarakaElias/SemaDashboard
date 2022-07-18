@@ -58,7 +58,11 @@ import ActivateAccount from "./pages/pages/user_accounts/ActivateAccount";
 import AdminSenderIdManager from "./pages/pages/admin/sender_ids/admin_sender_id";
 import ActivateAccounts from "./pages/pages/admin/Accounts/activation/ActivateAccounts";
 import NewAccounts from "./pages/pages/admin/Accounts/new_accounts/NewAccounts";
-
+import Statistics from "./pages/pages/admin/Dashboard/statistics/statistics";
+import Monitoring from "./pages/pages/admin/Dashboard/monitoring/monitoring";
+import CreateInvoice from "./pages/pages/admin/Dashboard/invoice/create_invoice/create_invoice";
+import RouteSimTesting from "./pages/pages/admin/Dashboard/administration/route_sim_testing/route_sim_testing";
+import AdminUsers from "./pages/pages/admin/Dashboard/administration/admin_users/admin_users";
 // Auth
 import Page500 from "./pages/auth/Page500";
 import Page404 from "./pages/auth/Page404";
@@ -386,6 +390,46 @@ const routes = [
     path: "admin",
     element: <AdminLayout />,
     children: [
+      {
+        path: "monitoring",
+        element: (
+          <AdminGuard>
+            <Monitoring />
+          </AdminGuard>
+        ),
+      },
+      {
+        path: "statistics",
+        element: (
+          <AdminGuard>
+            <Statistics />
+          </AdminGuard>
+        ),
+      },
+      {
+        path: "administration/admin_users",
+        element: (
+          <AdminGuard>
+            <AdminUsers />
+          </AdminGuard>
+        ),
+      },
+      {
+        path: "administration/route_sim_testing",
+        element: (
+          <AdminGuard>
+            <RouteSimTesting />
+          </AdminGuard>
+        ),
+      },
+      {
+        path: "invoice/create",
+        element: (
+          <AdminGuard>
+            <CreateInvoice />
+          </AdminGuard>
+        ),
+      },
       {
         path: "admin_manage_sender_ids",
         element: (

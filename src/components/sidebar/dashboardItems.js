@@ -26,28 +26,6 @@ const pagesSection = [
     icon: Sliders,
     title: "Dashboard",
     badge: "5",
-    // children: [
-    //   {
-    //     href: "/dashboard/default",
-    //     title: "Default",
-    //   },
-    //   {
-    //     href: "/dashboard/analytics",
-    //     title: "Analytics",
-    //   },
-    //   {
-    //     href: "/dashboard/saas",
-    //     title: "SaaS",
-    //   },
-    //   {
-    //     href: "/dashboard/social",
-    //     title: "Social",
-    //   },
-    //   {
-    //     href: "/dashboard/crypto",
-    //     title: "Crypto",
-    //   },
-    // ],
   },
   {
     href: "/messaging",

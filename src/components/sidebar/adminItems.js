@@ -13,14 +13,50 @@ import {
 
 const gettingStartedSection = [
   {
-    href: "/docs/introduction",
+    href: "/admin",
     icon: Info,
-    title: "Welcome",
+    title: "Dashboard",
+    children: [
+      {
+        href: "/admin/monitoring",
+        icon: User,
+        title: "Monitoring",
+      },
+      {
+        href: "/admin/statistics",
+        icon: User,
+        title: "Statistics",
+      },
+    ],
   },
   {
-    href: "/docs/getting-started",
+    href: "/admin/administration",
+    icon: Briefcase,
+    title: "Administration",
+    children: [
+      {
+        href: "/admin/administration/admin_users",
+        icon: User,
+        title: "Admin Users",
+      },
+      {
+        href: "/admin/administration/route_sim_testing",
+        icon: Briefcase,
+        title: "Route/SIM Testing",
+      },
+    ],
+  },
+  {
+    href: "/admin/invoice",
     icon: Code,
-    title: "Getting Started",
+    title: "Invoice",
+    children: [
+      {
+        href: "/admin/invoice/create",
+        icon: User,
+        title: "Create Invoice",
+      },
+    ],
   },
   {
     href: "/admin/admin_manage_sender_ids",
@@ -28,7 +64,7 @@ const gettingStartedSection = [
     title: "Manage SIDs",
   },
   {
-    href: "/admin/",
+    href: "/admin/mgm",
     icon: Briefcase,
     title: "Manage Accounts",
     children: [
@@ -36,10 +72,6 @@ const gettingStartedSection = [
         href: "/admin/manage_accounts/new_accounts",
         title: "All Accounts",
       },
-      // {
-      //   href: "/admin/manage_accounts/activate",
-      //   title: "Account Activation",
-      // },
     ],
   },
 ];
