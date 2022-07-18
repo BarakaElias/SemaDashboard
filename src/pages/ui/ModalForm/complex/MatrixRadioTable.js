@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Field, FieldArray } from "formik";
-import { Form, Row, Col, Table, Alert } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
 import { useTable } from "react-table";
 
@@ -73,6 +73,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 variant="secondary"
+                defaultChecked={value === "Pending" ? true : false}
                 inline={true}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Pending"
@@ -81,6 +82,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 name={`registered_networks[${row.id}][${column.id}]`}
+                defaultChecked={value === "Registered" ? true : false}
                 inline={true}
                 value="Registered"
               />
@@ -98,6 +100,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Not Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
@@ -105,12 +108,14 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Pending" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Pending"
               />
               <Field
                 className="m-1"
                 type="radio"
+                defaultChecked={value === "Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 inline={true}
                 value="Registered"
@@ -129,6 +134,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Not Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
@@ -136,12 +142,14 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Pending" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Pending"
               />
               <Field
                 className="m-1"
                 type="radio"
+                defaultChecked={value === "Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 inline={true}
                 value="Registered"
@@ -160,6 +168,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Not Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
@@ -167,12 +176,14 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Pending" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Pending"
               />
               <Field
                 className="m-1"
                 type="radio"
+                defaultChecked={value === "Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 inline={true}
                 value="Registered"
@@ -191,7 +202,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
-                checked={value === "Not Registered" ? true : false}
+                defaultChecked={value === "Not Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
@@ -199,6 +210,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Pending" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Pending"
               />
@@ -206,6 +218,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 name={`registered_networks[${row.id}][${column.id}]`}
+                defaultChecked={value === "Registered" ? true : false}
                 inline={true}
                 value="Registered"
               />
@@ -223,6 +236,7 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Not Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Not Registered"
               />
@@ -230,12 +244,14 @@ const MatrixRadioTable = (props) => {
                 className="m-1"
                 type="radio"
                 inline={true}
+                defaultChecked={value === "Pending" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Pending"
               />
               <Field
                 className="m-1"
                 type="radio"
+                defaultChecked={value === "Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 inline={true}
                 value="Registered"
@@ -253,6 +269,7 @@ const MatrixRadioTable = (props) => {
               <Field
                 className="m-1"
                 type="radio"
+                defaultChecked={value === "Not Registered" ? true : false}
                 inline={true}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Not Registered"
@@ -260,6 +277,7 @@ const MatrixRadioTable = (props) => {
               <Field
                 className="m-1"
                 type="radio"
+                defaultChecked={value === "Pending" ? true : false}
                 inline={true}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 value="Pending"
@@ -267,6 +285,7 @@ const MatrixRadioTable = (props) => {
               <Field
                 className="m-1"
                 type="radio"
+                defaultChecked={value === "Registered" ? true : false}
                 name={`registered_networks[${row.id}][${column.id}]`}
                 inline={true}
                 value="Registered"

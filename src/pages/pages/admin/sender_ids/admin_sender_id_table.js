@@ -126,20 +126,13 @@ const AdminSenderIdTable = () => {
     setModalState({ modalOpen: true });
   };
   const onEditButtonClicked = (data) => {
-    // setModalState({ modalOpen: true });
-    // const sender_ids = sid_data.filter((sid) => sid.id === id);
-    // const sender_id = sender_ids[0];
-
     const initialValues = { ...createSenderIdInitialFormValues };
     initialValues["id"] = data.id;
     initialValues.sender_name = data.name;
     initialValues.country = data.country;
     initialValues.status = data.status;
     initialValues.registered_networks = data.registered_networks;
-
-    // createSenderIdInitialFormValues = { ...initialValues };
-    // console.log(initialValues);
-    // console.log("edit", initialValues);
+    console.log("edit button clicked", initialValues);
 
     setFormState({ initialValues: initialValues });
     // console.log(initialFormState.initialValues);
@@ -304,11 +297,7 @@ const AdminSenderIdTable = () => {
         filter: "includes",
         Filter: SelectColumnFilter,
       },
-      // {
-      //   Header: "Date created",
-      //   accessor: "date_created",
-      //   Filter: EmptyColumnFilter,
-      // },
+
       {
         Header: "User",
         accessor: "user",
@@ -321,7 +310,8 @@ const AdminSenderIdTable = () => {
         Filter: EmptyColumnFilter,
         disableSortby: true,
         Cell: ({ row }) => {
-          const row_data = row.values;
+          console.log("row checking", row);
+          const row_data = row.original;
           return (
             <div className="d-flex flex-row justify-content-around w-75">
               <div className="p-1 m-3">
@@ -355,46 +345,6 @@ const AdminSenderIdTable = () => {
             </div>
           );
         },
-        // Cell: ({ value, row }) =>
-        //   value == null
-        //     ? "No actions"
-        //     : value.map((action) => {
-        //         const data = row.original;
-
-        //         if (action === "edit") {
-        //           return (
-        //             <span
-        //               className="p-1 m-3"
-        //               onClick={() => onEditButtonClicked(data)}
-        //             >
-        //               <Edit2 size={24} />
-        //             </span>
-        //           );
-        //         } else if (action === "delete") {
-        //           return (
-        //             <Trash
-        //               onClick={() => openAlertModal(data.name, data.id)}
-        //               className="m-3"
-        //               size={24}
-        //             />
-        //           );
-        //         } else if (action === "view") {
-        //           return (
-        //             <span
-        //               {...row.getToggleRowExpandedProps()}
-        //               onClick={() => row.toggleRowExpanded()}
-        //             >
-        //               {row.isExpanded ? (
-        //                 <EyeOff className="m-3" size={22} />
-        //               ) : (
-        //                 <Eye className="m-3" size={24} />
-        //               )}
-        //             </span>
-        //           );
-        //         } else {
-        //           return "";
-        //         }
-        //       }),
       },
     ],
     []
