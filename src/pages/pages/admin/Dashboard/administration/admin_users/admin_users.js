@@ -21,6 +21,8 @@ import {
   EmptyColumnFilter,
   ColumnFilter,
 } from "../../../sender_ids/sender_id_table_extensions/ColumnFilter";
+import ModalForm from "../../../../../ui/ModalForm/modalForm";
+import { formValuesValidation } from "./form_values";
 const AdminUsers = () => {
   const [adminUsers, setAdminUsers] = useState({
     data: [
@@ -36,6 +38,103 @@ const AdminUsers = () => {
       },
     ],
   });
+
+  const createUserInitialFormValues = {
+    role: "",
+    username: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    active: "",
+  };
+
+  const [modalState, setModalState] = useState({
+    modalOpen: false,
+  });
+
+  const closeModal = () => {
+    setModalState({ modalOpen: false });
+  };
+
+  const modalFormElements = {
+    title: {
+      value: "Add New Admin User",
+    },
+    role: {
+      type: "select",
+      label: "User Role",
+      placeHolder: "Select user role",
+      required: true,
+      options: ["Admin", "Support-1"],
+      value: "",
+    },
+    username: {
+      type: "text",
+      label: "Username",
+      placeHolder: "bk@company.com",
+      required: true,
+      options: null,
+      value: "",
+    },
+    first_name: {
+      type: "text",
+      label: "First Name",
+      placeHolder: "",
+      required: true,
+      options: null,
+      value: "",
+    },
+    last_name: {
+      type: "text",
+      label: "Last name",
+      placeHolder: "",
+      required: true,
+      options: null,
+      value: "",
+    },
+    email: {
+      type: "text",
+      label: "Email",
+      placeHolder: "jj@company.com",
+      required: true,
+      options: null,
+      value: "",
+    },
+    active: {
+      label: "Active",
+      type: "checkbox",
+      value: "Active",
+    },
+    submitButton: {
+      type: "button",
+      placeHolder: "Create New Admin User",
+    },
+  };
+
+  const [modalFormState, setModalFormState] = useState({
+    formState: modalFormElements,
+  });
+  const [initialFormState, setFormState] = useState({
+    initialValues: { ...createUserInitialFormValues },
+  });
+  const onAddButtonClicked = () => {
+    console.log("cliecked");
+    setFormState({ initialValues: { ...createUserInitialFormValues } });
+    setModalState({ modalOpen: true });
+  };
+  const addAdminUser = (params) => {
+    console.log("Adding Admin user", params);
+  };
+
+  let form = modalState.modalOpen ? (
+    <ModalForm
+      initialValues={initialFormState.initialValues}
+      validationSchema={formValuesValidation}
+      content={modalFormState.formState}
+      closeModalFunc={closeModal}
+      submitFormFunc={addAdminUser}
+    />
+  ) : null;
 
   const data = React.useMemo(() => adminUsers.data, [adminUsers.data]);
   const columns = React.useMemo(
@@ -128,13 +227,14 @@ const AdminUsers = () => {
   let i = 0;
   return (
     <React.Fragment>
+      {form}
       <Helmet title="Activate Account" />
       <Container fluid className="p-0">
         <h1 className="h3 mb-3">Admin Users</h1>
         <Row>
           <Card>
             <Card.Header tag="h5">
-              <Button size="lg" variant="success">
+              <Button onClick={onAddButtonClicked} size="lg" variant="success">
                 Add New User
               </Button>
             </Card.Header>
