@@ -142,6 +142,7 @@ import ProtectedPage from "./pages/protected/ProtectedPage";
 import DbCampaignSMS from "./pages/pages/messaging/DBCampaignSMS";
 import Channels from "./pages/pages/messaging/channels/channels";
 import Dashboard from "./layouts/Dashboard";
+import WelcomeDashboard from "./pages/pages/admin/welcome/welcome";
 
 const routes = [
   {
@@ -452,6 +453,14 @@ const routes = [
         element: (
           <AdminGuard>
             <ActivateAccounts />
+          </AdminGuard>
+        ),
+      },
+      {
+        path: "welcome",
+        element: (
+          <AdminGuard>
+            <WelcomeDashboard />
           </AdminGuard>
         ),
       },

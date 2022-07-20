@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import DBServerCpuRamUsageChart from "./charts/db_server_cpu_ram/db_server_cpu_ram_chart";
 import ConnectedVendorAccountsTable from "./tables/connected_vendor_accounts/connected_vendor_accounts";
 import DCMonitoring from "./tables/dc_monitoring/dc_monitoring";
+import HddStatsTable from "./tables/hdd_stats/hdd_stats_table";
 import NodesMonitoring from "./tables/nodes_monitoring/nodes_monitoring";
 import NotConnectedVendorAccountsTable from "./tables/not_connected_vendor_accounts/not_connected_vendor_accounts";
 import OfflineCa from "./tables/offlineca/offlineca";
@@ -22,7 +23,9 @@ const Monitoring = () => {
           <Col md={6} sm={12}>
             <Card>
               <Card.Header tag="h5">DB SERVER HDD STATS</Card.Header>
-              <Card.Body className="m-sm-4">C Drive table</Card.Body>
+              <Card.Body className="m-sm-4">
+                <HddStatsTable />
+              </Card.Body>
             </Card>
           </Col>
         </Row>

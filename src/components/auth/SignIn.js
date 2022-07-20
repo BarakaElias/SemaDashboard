@@ -41,7 +41,7 @@ function SignIn() {
           }
           if (useR) {
             if (useR.isSemaAdmin) {
-              navigate("/admin");
+              navigate("/admin/welcome");
             } else {
               navigate("/dash");
             }
